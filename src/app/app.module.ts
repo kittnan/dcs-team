@@ -11,11 +11,12 @@ import { LoginComponent } from './page/login/login.component';
 import { ProfileComponent } from './page/profile/profile.component';
 import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, NgxUiLoaderRouterModule, PB_DIRECTION, POSITION, SPINNER } from 'ngx-ui-loader';
 import { MasterMachineComponent } from './page/master-machine/master-machine.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TemplateInputComponent } from './page/template-input/template-input.component';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { SharedModule } from './shared/shared.module';
+import { JwtInterceptor } from './auth/jwt.interceptor';
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: "red",
   bgsPosition: POSITION.bottomCenter,
@@ -62,7 +63,12 @@ export const MY_FORMATS = {
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:JwtInterceptor,
+      multi:true
+    }
   ],
   bootstrap: [AppComponent]
 })
