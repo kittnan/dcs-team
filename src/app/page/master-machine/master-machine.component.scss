@@ -1,0 +1,90 @@
+.centered-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.line {
+  flex-grow: 1;
+  height: 8px;
+  background-color: black;
+}
+
+.text-in-line {
+  padding: 0 10px;
+}
+
+
+
+
+.input_select {
+  padding: 6px;
+  text-align: center;
+  border-radius: 8px;
+}
+
+select.input_select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+}
+
+
+// select.input_select {
+//     background: url('assets/add-file.png') no-repeat right center;
+//     // padding-right: 30px;
+// }
+
+table {
+  width: -webkit-fill-available
+}
+
+.btn-img-add {
+  width: 20px;
+  position: relative;
+  top: -1px;
+  left: 1px;
+}
+
+.btn-add {
+  color: black;
+  border-radius: 10px;
+  border: 1px solid;
+  background-color: #8deb8d;
+}
+
+.btn-select {
+  width: 15px;
+  position: absolute;
+  top: 13px;
+  left: 90px;
+}
+
+.btn-action {
+  background-color: inherit;
+  border: none;
+  padding: 4px
+}
+
+.btn-img-action {
+  width: 25px;
+  position: relative;
+  top: -1px;
+  left: 1px;
+}
+
+.btn-import-excel {
+  color: black;
+  border-radius: 10px;
+  border: 1px solid;
+  background-color: #8deb8d;
+}
+
+.btn-img-import-excel {
+  width: 20px;
+  position: relative;
+  top: -1px;
+  left: 1px;
+}

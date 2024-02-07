@@ -1,0 +1,29 @@
+<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="5">
+  <mat-form-field  fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
+    <mat-label>Customer Control No.</mat-label>
+    <input matInput>
+  </mat-form-field>
+  <mat-form-field  fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
+    <mat-label>Date Received Inv.</mat-label>
+    <input matInput [matDatepicker]="dateReceive_dp">
+    <mat-datepicker-toggle matSuffix [for]="dateReceive_dp"></mat-datepicker-toggle>
+    <mat-datepicker #dateReceive_dp></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field  fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
+    <mat-label>Use Appearancelication</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let item of options" [value]="item.itemValue">
+        {{item.itemName}} : {{item.itemValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
+    <mat-label>File Upload</mat-label>
+    <button mat-icon-button matSuffix (click)="informationFile.click()">
+      <mat-icon>attach_file</mat-icon>
+    </button>
+    <input  [readonly]="true" matInput type="text" (click)="informationFile.click()">
+    <input type="file" hidden #informationFile >
+  </mat-form-field>
+</div>
