@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TemplateInputComponent } from './page/template-input/template-input.component';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import { SharedModule } from './shared/shared.module';
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: "red",
   bgsPosition: POSITION.bottomCenter,
@@ -56,7 +57,8 @@ export const MY_FORMATS = {
     FormsModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     NgxUiLoaderHttpModule,
-    NgxUiLoaderRouterModule
+    NgxUiLoaderRouterModule,
+    SharedModule
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
