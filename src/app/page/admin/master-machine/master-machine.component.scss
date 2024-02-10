@@ -43,29 +43,29 @@ table {
 
 .btn-img-add {
   width: 20px;
+  display: inline;
   position: relative;
   top: -1px;
-  left: 1px;
+  left: -1px;
 }
 
 .btn-add {
   color: black;
-  border-radius: 10px;
+  border-radius: 8px;
   border: 1px solid;
   background-color: #8deb8d;
 }
 
 .btn-select {
-  width: 15px;
-  position: absolute;
-  top: 13px;
-  left: 90px;
+  width: 16px;
+  position: relative;
+  top: -27px;
+  left: 100px;
 }
 
 .btn-action {
   background-color: inherit;
   border: none;
-  padding: 4px
 }
 
 .btn-img-action {
@@ -75,16 +75,48 @@ table {
   left: 1px;
 }
 
+
+
 .btn-import-excel {
   color: black;
-  border-radius: 10px;
+  border-radius: 8px;
   border: 1px solid;
   background-color: #8deb8d;
 }
 
 .btn-img-import-excel {
   width: 20px;
+  display: inline;
   position: relative;
   top: -1px;
-  left: 1px;
+  left: -1px;
+}
+
+.setHover :hover {
+  outline: none;
+}
+
+
+
+
+
+.action-active {
+  border: 1px solid;
+  border-radius: 6px;
+}
+
+
+.select-first {
+  color: black;
+  border-radius: 8px;
+  border: 1px solid;
+  background-color: #e9e9e9;;
+  padding: 7.5px 18px 7.5px 18px;
+  font-size: 14px;
+  width: 130px;
+  text-align: center;
+}
+
+::ng-deep.select-first .mat-select-arrow {
+  display: none;
 }

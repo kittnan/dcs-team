@@ -9,7 +9,7 @@ import { AdminComponent } from './admin.component';
 @NgModule({
   declarations: [
     CustomerMasterComponent,
-    AdminComponent
+    AdminComponent,
   ],
   imports: [
     CommonModule,

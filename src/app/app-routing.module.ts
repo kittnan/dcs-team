@@ -9,6 +9,7 @@ import { SpecialModule } from './page/special/special.module';
 import { StoreModule } from './page/store/store.module';
 import { TemplateInputComponent } from './page/template-input/template-input.component';
 
+
 const routes: Routes = [
   {
     path: 'admin',
@@ -48,6 +49,7 @@ const routes: Routes = [
     path:'profile',
     component:ProfileComponent
   },
+
 ];
 
 @NgModule({

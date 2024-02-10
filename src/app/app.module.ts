@@ -10,7 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './page/login/login.component';
 import { ProfileComponent } from './page/profile/profile.component';
 import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, NgxUiLoaderRouterModule, PB_DIRECTION, POSITION, SPINNER } from 'ngx-ui-loader';
-import { MasterMachineComponent } from './page/master-machine/master-machine.component';
+import { MasterMachineComponent } from './page/admin/master-machine/master-machine.component';
+import { MasterManageComponent } from './page/admin/master-manage/master-manage.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TemplateInputComponent } from './page/template-input/template-input.component';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -43,6 +44,7 @@ export const MY_FORMATS = {
     LoginComponent,
     ProfileComponent,
     MasterMachineComponent,
+    MasterManageComponent,
     TemplateInputComponent
   ],
   imports: [
