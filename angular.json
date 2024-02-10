@@ -35,6 +35,7 @@
             "allowedCommonJsDependencies": [
               "lodash"
             ]
+
           },
           "configurations": {
             "production": {
