@@ -10,13 +10,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './page/login/login.component';
 import { ProfileComponent } from './page/profile/profile.component';
 import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, NgxUiLoaderRouterModule, PB_DIRECTION, POSITION, SPINNER } from 'ngx-ui-loader';
-// import { MasterMachineComponent } from './page/master-machine/master-machine.component';
+
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TemplateInputComponent } from './page/template-input/template-input.component';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { SharedModule } from './shared/shared.module';
 import { JwtInterceptor } from './auth/jwt.interceptor';
+import { MasterMachineComponent } from './page/admin/master-machine/master-machine.component';
+import { MasterManageComponent } from './page/admin/master-manage/master-manage.component';
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: "red",
   bgsPosition: POSITION.bottomCenter,
@@ -44,8 +46,8 @@ export const MY_FORMATS = {
     AppComponent,
     LoginComponent,
     ProfileComponent,
-    // MasterMachineComponent,
-    // MasterManageComponent,
+    MasterMachineComponent,
+    MasterManageComponent,
     TemplateInputComponent
   ],
   imports: [

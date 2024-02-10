@@ -57,7 +57,7 @@ export class MasterManageComponent {
 
 
   selectData() {
-    let data = this.dataSourceX.filter((d: any) => d['Province'] == this.var_Province)
+    let data = this.dataSourceX
     data = data.map((d: any, i: any) => {
       return {
         ...d,
@@ -162,7 +162,7 @@ export class MasterManageComponent {
 
   deleteBySelect(e: any) {
     Swal.fire({
-      title: `Do you want to delete data ?<br> ${e.Province}  <br> ${e.Customer} <br> ${e['M/C']}`,
+      title: `Do you want to delete data ?<br> ${e.Name}`,
       icon: 'question',
       showCancelButton: true,
     }).then(async r => {
@@ -199,20 +199,25 @@ export class MasterManageComponent {
       }
       </style>
       <table style="width:100%">
-      <tr style>
-        <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);width: 30%;"> Customer </td>
+      <tr>
+        <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);width: 30%;"> 	Fullname </td>
         <td><input id="swal-input1" class="swal2-input" style="margin: 0px;
-        width: -webkit-fill-available;text-align: center;" value='${e.Customer || ''}'></td>
+        width: -webkit-fill-available;text-align: center;" value='${e['Name'] || ''}'></td>
       </tr>
       <tr>
-        <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);">M/C</td>
+        <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);">Permission</td>
         <td><input id="swal-input2" class="swal2-input" style="margin: 0px;
-        width: -webkit-fill-available;text-align: center;" value='${e['M/C'] || ''}'></td>
+        width: -webkit-fill-available;text-align: center;" value='${e['Permission'] || ''}'></td>
       </tr>
       <tr>
-        <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);">S/N</td>
+        <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);">Username</td>
         <td><input id="swal-input3" class="swal2-input" style="margin: 0px;
-        width: -webkit-fill-available;text-align: center;" value='${e['S/N'] || ''}'></td>
+        width: -webkit-fill-available;text-align: center;" value='${e['Username'] || ''}'></td>
+      </tr>
+      <tr>
+        <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);">Password</td>
+        <td><input id="swal-input3" class="swal2-input" style="margin: 0px;
+        width: -webkit-fill-available;text-align: center;" type="password" value='${e['Password'] || ''}'></td>
       </tr>
       </table>
       `,
@@ -270,20 +275,27 @@ export class MasterManageComponent {
       }
       </style>
       <table style="width:100%">
-      <tr style>
-        <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);width: 30%;"> Customer </td>
+
+
+      <tr>
+        <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);width: 30%;"> 	Fullname </td>
         <td><input id="swal-input1" class="swal2-input" style="margin: 0px;
-        width: -webkit-fill-available;text-align: center;" ></td>
+        width: -webkit-fill-available;text-align: center;"></td>
       </tr>
       <tr>
-        <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);">M/C</td>
+        <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);">Permission</td>
         <td><input id="swal-input2" class="swal2-input" style="margin: 0px;
-        width: -webkit-fill-available;text-align: center;" ></td>
+        width: -webkit-fill-available;text-align: center;"></td>
       </tr>
       <tr>
-        <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);">S/N</td>
+        <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);">Username</td>
         <td><input id="swal-input3" class="swal2-input" style="margin: 0px;
         width: -webkit-fill-available;text-align: center;" ></td>
+      </tr>
+      <tr>
+        <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);">Password</td>
+        <td><input id="swal-input3" class="swal2-input" style="margin: 0px;
+        width: -webkit-fill-available;text-align: center;" type="password" ></td>
       </tr>
       </table>
 
