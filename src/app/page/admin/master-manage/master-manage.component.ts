@@ -187,7 +187,7 @@ export class MasterManageComponent {
 
         let data = this.dataSourceX.filter((d: any) => d._id == e._id)
         data = data.filter((d: any) => d._id != e._id)
-        console.log();
+        console.log(data);
 
         this.dataSource = new MatTableDataSource(data)
         this.dataSource.paginator = this.paginator;
