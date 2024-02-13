@@ -70,13 +70,7 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    if (!this.$local.getAuth()) {
-      this.$local.clear()
-      setTimeout(() => {
-      this.router.navigate(['login']).then(() => location.reload())
 
-      }, 1000);
-    }
   }
 
   checkLogin() {
