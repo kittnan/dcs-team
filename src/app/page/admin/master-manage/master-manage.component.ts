@@ -65,8 +65,7 @@ export class MasterManageComponent {
       }
     })
 
-    console.log(data);
-    data = data.sort((a: any, b: any) => a['no'] - b['no'])
+
 
     this.dataSource = new MatTableDataSource(data)
     this.dataSource.paginator = this.paginator;
