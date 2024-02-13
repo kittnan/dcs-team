@@ -15,16 +15,33 @@ export class LocalStorageService {
   getToken(): string | null {
     return localStorage.getItem('DCS_access_token')
   }
+  setToken(value: string) {
+    localStorage.setItem('DCS_access_token', value)
+  }
+
   getRefreshToken(): string | null {
     return localStorage.getItem('DCS_refresh_token')
   }
-  setToken(value:string) {
-    localStorage.setItem('DCS_access_token',value)
+  setRefreshToken(value: string) {
+    localStorage.setItem('DCS_refresh_token', value)
   }
-  setRefreshToken(value:string) {
-    localStorage.setItem('DCS_refresh_token',value)
+
+  getProfile(): string | null {
+    let profile :any= localStorage.getItem('DCS_profile')
+    return JSON.parse(profile)
   }
-  clear(){
+  setProfile(value: string) {
+    localStorage.setItem('DCS_profile', value)
+  }
+
+  getAuth(): string | null {
+    return localStorage.getItem('DCS_auth')
+  }
+  setAuth(value: string) {
+    localStorage.setItem('DCS_auth', value)
+  }
+
+  clear() {
     localStorage.clear()
   }
 

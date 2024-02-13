@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { AuthService } from './auth/auth.service';
 import { HttpUsersService } from './http/http-users.service';
+import { LocalStorageService } from './service/local-storage.service';
 interface SideItem {
   title: string,
   icon: string,
@@ -23,93 +24,33 @@ export class AppComponent {
 
   fillerNav: SideItem[] = [
     {
-      title: 'Users',
+      title: 'Master',
       icon: 'groups',
       path: '',
       items: [
         {
-          title: 'New',
+          title: 'customer',
           icon: 'person_add_alt',
-          path: 'admin/users-new',
+          path: 'admin/customer',
           items: []
         },
         {
-          title: 'Manage',
-          icon: 'manage_accounts',
-          path: 'admin/users-manage',
+          title: 'master_machine',
+          icon: 'person_add_alt',
+          path: 'admin/master_machine',
+          items: []
+        },
+        {
+          title: 'master_manage',
+          icon: 'person_add_alt',
+          path: 'admin/master_manage',
           items: []
         },
 
-      ]
-    },
-    {
-      title: 'Model',
-      icon: 'groups',
-      path: '',
-      items: [
-        {
-          title: 'Manage',
-          icon: 'manage_accounts',
-          path: 'admin/models-manage',
-          items: []
-        },
 
       ]
     },
-    {
-      title: 'Defect',
-      icon: 'groups',
-      path: '',
-      items: [
-        {
-          title: 'Defect',
-          icon: 'manage_accounts',
-          path: 'admin/defect-manage',
-          items: []
-        },
 
-      ]
-    },
-    {
-      title: 'Masters',
-      icon: 'groups',
-      path: '',
-      items: [
-        {
-          title: 'masters',
-          icon: 'manage_accounts',
-          path: 'admin/masters',
-          items: []
-        },
-
-      ]
-    },
-    {
-      title: 'RGAS',
-      icon: 'library_books',
-      path: '',
-      items: [
-        {
-          title: 'RGAS-1',
-          icon: 'post_add',
-          path: 'rgas/1',
-          items: []
-        },
-        {
-          title: 'RGAS-2',
-          icon: 'assignment',
-          path: 'rgas/2',
-          items: []
-        },
-        {
-          title: 'manage',
-          icon: 'view_list',
-          path: 'rgas/manage',
-          items: []
-        },
-
-      ]
-    },
 
   ]
   login: boolean = false
@@ -120,7 +61,8 @@ export class AppComponent {
     media: MediaMatcher,
     private router: Router,
     private auth: AuthService,
-    private $user: HttpUsersService
+    private $user: HttpUsersService,
+    private $local: LocalStorageService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -134,6 +76,10 @@ export class AppComponent {
       this.login = false
       this.router.navigate(['/login'])
     }
+  }
+
+  checkLogin() {
+    return this.$local.getAuth()
   }
 
   onLogin() {
