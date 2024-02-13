@@ -70,11 +70,12 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    if (localStorage.getItem('RGAS_login') == 'ok') {
-      this.login = true
-    } else {
-      this.login = false
-      this.router.navigate(['/login'])
+    if (!this.$local.getAuth()) {
+      this.$local.clear()
+      setTimeout(() => {
+      this.router.navigate(['login']).then(() => location.reload())
+
+      }, 1000);
     }
   }
 
