@@ -117,7 +117,7 @@ export class AppComponent {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
   onLogout() {
-    localStorage.removeItem('RGAS_login')
+    this.$local.clear()
     this.router.navigate(['/login']).then(() => location.reload())
   }
 }
