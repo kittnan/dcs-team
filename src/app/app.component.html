@@ -65,7 +65,7 @@
   </mat-sidenav-container>
 </div>
 
-<router-outlet *ngIf="!login"></router-outlet>
+<router-outlet *ngIf="!checkLogin()"></router-outlet>
 
 
 <ngx-ui-loader></ngx-ui-loader>
