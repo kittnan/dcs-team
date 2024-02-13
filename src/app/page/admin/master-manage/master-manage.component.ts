@@ -61,10 +61,12 @@ export class MasterManageComponent {
     data = data.map((d: any, i: any) => {
       return {
         ...d,
-        "No": i + 1
+        "no": `${i + 1}`
       }
     })
 
+    console.log(data);
+    data = data.sort((a: any, b: any) => a['no'] - b['no'])
 
     this.dataSource = new MatTableDataSource(data)
     this.dataSource.paginator = this.paginator;
@@ -138,39 +140,55 @@ export class MasterManageComponent {
       value.push(obj)
     }
 
-    value = value.filter((d: any) => d['No'] != null)
-
-
-    let del = await lastValueFrom(this.api.Master_User_DelByCondition({}))
-    if (del) {
-      for (const iterator of value) {
-        let add = lastValueFrom(this.api.Master_User_add(iterator))
+    value = value.filter((d: any) => d['no'] != null)
+    let getData = await lastValueFrom(this.api.Master_User_getall())
+    for (const item of value) {
+      let data = getData.filter((d: any) => d._id == item._id)
+      if (data.length != 0) {
+        let update = await lastValueFrom(this.api.Master_User_update(item._id, item))
+      } else {
+        item.password = '1234'
+        delete item._id
+        item.permission = item.permission.split(',')
+        let add = lastValueFrom(this.api.Master_User_add(item))
       }
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Success',
-        showConfirmButton: false,
-        timer: 1500,
-      }).then(() => {
-        this.getData()
-      })
     }
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Success',
+      showConfirmButton: false,
+      timer: 1500,
+    }).then(() => {
+      this.getData()
+    })
+    // console.log(value);
+
+
+    // let del = await lastValueFrom(this.api.Master_User_DelByCondition({}))
+    // if (del) {
+    //   for (const iterator of value) {
+    //     let add = lastValueFrom(this.api.Master_User_add(iterator))
+    //   }
+
+    // }
 
   }
 
 
   deleteBySelect(e: any) {
     Swal.fire({
-      title: `Do you want to delete data ?<br> ${e.Name}`,
+      title: `Do you want to delete data ?<br> ${e.name}`,
       icon: 'question',
       showCancelButton: true,
     }).then(async r => {
       if (r.isConfirmed) {
         //code start
 
-        let data = this.dataSourceX.filter((d: any) => d['Province'] == this.var_Province)
+        let data = this.dataSourceX.filter((d: any) => d._id == e._id)
         data = data.filter((d: any) => d._id != e._id)
+        console.log();
+
         this.dataSource = new MatTableDataSource(data)
         this.dataSource.paginator = this.paginator;
         // let del = await lastValueFrom(this.api.Master_User_DelByCondition({ _id: e._id }))
@@ -202,22 +220,22 @@ export class MasterManageComponent {
       <tr>
         <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);width: 30%;"> 	Fullname </td>
         <td><input id="swal-input1" class="swal2-input" style="margin: 0px;
-        width: -webkit-fill-available;text-align: center;" value='${e['Name'] || ''}'></td>
+        width: -webkit-fill-available;text-align: center;" value='${e['name'] || ''}'></td>
       </tr>
       <tr>
         <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);">Permission</td>
         <td><input id="swal-input2" class="swal2-input" style="margin: 0px;
-        width: -webkit-fill-available;text-align: center;" value='${e['Permission'] || ''}'></td>
+        width: -webkit-fill-available;text-align: center;" value='${e['permission'] || ''}'></td>
       </tr>
       <tr>
         <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);">Username</td>
         <td><input id="swal-input3" class="swal2-input" style="margin: 0px;
-        width: -webkit-fill-available;text-align: center;" value='${e['Username'] || ''}'></td>
+        width: -webkit-fill-available;text-align: center;" value='${e['username'] || ''}'></td>
       </tr>
       <tr>
         <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);">Password</td>
-        <td><input id="swal-input3" class="swal2-input" style="margin: 0px;
-        width: -webkit-fill-available;text-align: center;" type="password" value='${e['Password'] || ''}'></td>
+        <td><input id="swal-input4" class="swal2-input" style="margin: 0px;
+        width: -webkit-fill-available;text-align: center;" type="password" value='${e['password'] || ''}'></td>
       </tr>
       </table>
       `,
@@ -227,16 +245,18 @@ export class MasterManageComponent {
         let input1 = document.getElementById("swal-input1") as HTMLInputElement
         let input2 = document.getElementById("swal-input2") as HTMLInputElement
         let input3 = document.getElementById("swal-input3") as HTMLInputElement
+        let input4 = document.getElementById("swal-input4") as HTMLInputElement
         return {
           "_id": e._id,
-          "Customer": input1.value,
-          "M/C": input2.value,
-          "S/N": input3.value
+          "name": input1.value,
+          "permission": input2.value,
+          "username": input3.value,
+          "password": input4.value
         }
       }
     });
     if (formValues) {
-      if (formValues.Customer && formValues['M/C']) {
+      if (formValues.name && formValues.permission && formValues.username && formValues.password) {
         let update = await lastValueFrom(this.api.Master_User_update(formValues._id, formValues))
         if (update) {
           Swal.fire({
@@ -247,7 +267,7 @@ export class MasterManageComponent {
             timer: 1500,
           }).then(async () => {
             let data: any = await lastValueFrom(this.api.Master_User_getall())
-            this.dataSourceX = data.sort((a: any, b: any) => a['No'] - b['No'])
+            this.dataSourceX = data.sort((a: any, b: any) => a['no'] - b['no'])
             this.selectData()
           })
         }
@@ -294,7 +314,7 @@ export class MasterManageComponent {
       </tr>
       <tr>
         <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);">Password</td>
-        <td><input id="swal-input3" class="swal2-input" style="margin: 0px;
+        <td><input id="swal-input4" class="swal2-input" style="margin: 0px;
         width: -webkit-fill-available;text-align: center;" type="password" ></td>
       </tr>
       </table>
@@ -307,20 +327,23 @@ export class MasterManageComponent {
         let input1 = document.getElementById("swal-input1") as HTMLInputElement
         let input2 = document.getElementById("swal-input2") as HTMLInputElement
         let input3 = document.getElementById("swal-input3") as HTMLInputElement
+        let input4 = document.getElementById("swal-input4") as HTMLInputElement
         let data: any = await lastValueFrom(this.api.Master_User_getall())
-        this.dataSourceX = data.sort((a: any, b: any) => b['No'] - a['No'])
+        this.dataSourceX = data.sort((a: any, b: any) => b['no'] - a['no'])
         return {
-          "No": Number(this.dataSourceX[0].No) + 1,
-          "Province": this.var_Province,
-          "Customer": input1.value,
-          "M/C": input2.value,
-          "S/N": input3.value
+          "no": Number(this.dataSourceX[0].No) + 1,
+          "name": input1.value,
+          "permission": input2.value,
+          "username": input3.value,
+          "password": input4.value
         }
       }
     });
     if (formValues) {
+      console.log(formValues);
+
       if (
-        formValues.Province && formValues.Customer && formValues['M/C']
+        formValues.name && formValues.permission && formValues.username && formValues.password
       ) {
         let update = await lastValueFrom(this.api.Master_User_add(formValues))
         if (update) {
@@ -332,7 +355,7 @@ export class MasterManageComponent {
             timer: 1500,
           }).then(async () => {
             let data: any = await lastValueFrom(this.api.Master_User_getall())
-            this.dataSourceX = data.sort((a: any, b: any) => a['No'] - b['No'])
+            this.dataSourceX = data.sort((a: any, b: any) => a['no'] - b['no'])
             this.selectData()
           })
         }
@@ -371,11 +394,12 @@ export class MasterManageComponent {
 
                   // if (this.dataTable == 4) {
                   let header = [
-                    'No',
-                    'Province',
-                    'Customer',
-                    'M/C',
-                    'S/N',
+
+                    'no',
+                    'name',
+                    'permission',
+                    'username',
+                    '_id',
                   ]
 
 
@@ -383,6 +407,7 @@ export class MasterManageComponent {
                     for (const [position, name] of header.entries()) {
                       if (item[name]) {
                         worksheet.getCell(`${ABC[position]}${index + firstRow}`).value = { 'richText': [{ 'text': `${item[name]}`, 'font': { 'bold': false, 'size': 11, 'name': 'arial' } }] }
+                        worksheet.getCell(`${ABC[position]}${index + firstRow}`).protection = { locked: true }
                       }
                     }
 
