@@ -77,28 +77,6 @@ export class AppComponent {
     return this.$local.getAuth()
   }
 
-  onLogin() {
-    this.auth.login({
-      username: 'boat'
-    }).subscribe(res => {
-      console.log(res);
-      localStorage.setItem('DCS_access', JSON.stringify(res))
-    })
-  }
-  onRefresh() {
-    this.auth.login({
-      username: 'boat'
-    }).subscribe(res => {
-      console.log(res);
-
-
-    })
-  }
-
-  async foo() {
-    await lastValueFrom(this.$user.get())
-  }
-
 
   toggleTheme() {
     this.theme = !this.theme;
