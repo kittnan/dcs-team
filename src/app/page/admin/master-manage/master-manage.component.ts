@@ -47,7 +47,8 @@ export class MasterManageComponent {
     let data: any = await lastValueFrom(this.api.Master_User_getall())
     if (data.length != 0) {
       this.data = data
-      this.dataSourceX = data.sort((a: any, b: any) => a['No'] - b['No'])
+      console.log("🚀 ~ getData ~ data:", data)
+      this.dataSourceX = data.sort((a: any, b: any) => a['no'] - b['no'])
       this.Province = [...new Set(data.map((item: any) => item.Province))]; // [ 'A', 'B']
       this.Province = this.Province.sort()
       this.var_Province = this.Province[12]
@@ -144,10 +145,10 @@ export class MasterManageComponent {
     for (const item of value) {
       let data = getData.filter((d: any) => d._id == item._id)
       if (data.length != 0) {
+        item.permission = item.permission.split(',')
         let update = await lastValueFrom(this.api.Master_User_update(item._id, item))
       } else {
         item.password = '1234'
-        delete item._id
         item.permission = item.permission.split(',')
         let add = lastValueFrom(this.api.Master_User_add(item))
       }
@@ -184,13 +185,13 @@ export class MasterManageComponent {
       if (r.isConfirmed) {
         //code start
 
-        let data = this.dataSourceX.filter((d: any) => d._id == e._id)
-        data = data.filter((d: any) => d._id != e._id)
+        let data = this.dataSourceX.filter((d: any) => d._id != e._id)
+        // data = data.filter((d: any) => d._id != e._id)
         console.log(data);
 
         this.dataSource = new MatTableDataSource(data)
         this.dataSource.paginator = this.paginator;
-        // let del = await lastValueFrom(this.api.Master_User_DelByCondition({ _id: e._id }))
+        let del = await lastValueFrom(this.api.Master_User_DelByCondition({ _id: e._id }))
         //code end
         setTimeout(() => {
           Swal.fire({
@@ -199,6 +200,8 @@ export class MasterManageComponent {
             title: 'Success',
             showConfirmButton: false,
             timer: 1500,
+          }).then(()=>{
+            this.getData()
           })
         }, 200);
       }
@@ -330,17 +333,15 @@ export class MasterManageComponent {
         let data: any = await lastValueFrom(this.api.Master_User_getall())
         this.dataSourceX = data.sort((a: any, b: any) => b['no'] - a['no'])
         return {
-          "no": Number(this.dataSourceX[0].No) + 1,
+          "no": Number(this.dataSourceX[0].no) + 1,
           "name": input1.value,
-          "permission": input2.value,
+          "permission": input2.value.split(','),
           "username": input3.value,
           "password": input4.value
         }
       }
     });
     if (formValues) {
-      console.log(formValues);
-
       if (
         formValues.name && formValues.permission && formValues.username && formValues.password
       ) {
