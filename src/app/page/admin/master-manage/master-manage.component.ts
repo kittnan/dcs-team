@@ -6,9 +6,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { lastValueFrom } from 'rxjs';
 import { HttpUsersService } from 'src/app/http/http-api';
 // import { HttpService } from 'src/app/service/http.service';
+import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 import { Cell, Row, Workbook, Worksheet } from 'ExcelJs';
+import { MasterManageEditorComponent } from '../master-manage-editor/master-manage-editor.component';
 var fs = require('file-saver');
 
 @Component({
@@ -34,7 +36,8 @@ export class MasterManageComponent {
 
   constructor(
     private api: HttpUsersService,
-    private http: HttpClient
+    private http: HttpClient,
+    private dialog: MatDialog
   ) { }
 
 
@@ -284,6 +287,15 @@ export class MasterManageComponent {
       }
 
     }
+  }
+
+  edit(item: any) {
+    let closeDialog = this.dialog.open(MasterManageEditorComponent, {
+      width: '1000px',
+      data: item
+    });
+    closeDialog.afterClosed().subscribe(close => {
+    })
   }
 
 
