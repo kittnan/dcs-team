@@ -10,6 +10,8 @@ import { HttpUsersService } from 'src/app/http/http-api';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 import { Cell, Row, Workbook, Worksheet } from 'ExcelJs';
+import { MatDialog } from '@angular/material/dialog';
+import { MasterMachineEditorComponent } from '../master-machine-editor/master-machine-editor.component';
 var fs = require('file-saver');
 
 @Component({
@@ -19,7 +21,7 @@ var fs = require('file-saver');
 })
 export class MasterMachineComponent {
 
-  displayedColumns: string[] = ['No', 'Customer', 'Machine', 'S/N', 'Action'];
+  displayedColumns: string[] = ['No', 'Customer', 'Machine', 'S/N', 'PIC', 'TARGETS', 'Action'];
   dataSource: any = new MatTableDataSource
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
 
@@ -30,12 +32,13 @@ export class MasterMachineComponent {
   Province: any
 
   var_Province: any
-  data :any
+  data: any
 
 
   constructor(
     private api: HttpUsersService,
-    private http: HttpClient
+    private http: HttpClient,
+    private dialog: MatDialog
   ) { }
 
 
@@ -48,7 +51,7 @@ export class MasterMachineComponent {
     let data: any = await lastValueFrom(this.api.Master_getall())
     if (data.length != 0) {
       this.data = data
-      this.dataSourceX = data.sort((a: any, b: any) => a['No'] - b['No'])
+      this.dataSourceX = data
       this.Province = [...new Set(data.map((item: any) => item.Province))]; // [ 'A', 'B']
       this.Province = this.Province.sort()
       this.var_Province = this.Province[12]
@@ -138,8 +141,13 @@ export class MasterMachineComponent {
       })
       value.push(obj)
     }
-    value = value.filter((d:any) => d['No'] != null)
-
+    value = value.filter((d: any) => d['Province'] != null)
+    value = value.map((d: any) => {
+      return {
+        ...d,
+        PIC: d.PIC ? d.PIC.split(",") : []
+      }
+    })
 
 
     let del = await lastValueFrom(this.api.Master_DelByCondition({}))
@@ -190,75 +198,7 @@ export class MasterMachineComponent {
   }
 
 
-  async EditBySelect(e: any) {
-    const { value: formValues } = await Swal.fire({
-      title: "Master manage",
-      html: `
-      <style>
-      table, th, td {
-        border:1px solid black;
-      }
-      </style>
-      <table style="width:100%">
-      <tr style>
-        <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);width: 30%;"> Customer </td>
-        <td><input id="swal-input1" class="swal2-input" style="margin: 0px;
-        width: -webkit-fill-available;text-align: center;" value='${e.Customer || ''}'></td>
-      </tr>
-      <tr>
-        <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);">Machine</td>
-        <td><input id="swal-input2" class="swal2-input" style="margin: 0px;
-        width: -webkit-fill-available;text-align: center;" value='${e['Machine'] || ''}'></td>
-      </tr>
-      <tr>
-        <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);">S/N</td>
-        <td><input id="swal-input3" class="swal2-input" style="margin: 0px;
-        width: -webkit-fill-available;text-align: center;" value='${e['S/N'] || ''}'></td>
-      </tr>
-      </table>
-      `,
-      focusConfirm: true,
-      showCancelButton: true,
-      preConfirm: () => {
-        let input1 = document.getElementById("swal-input1") as HTMLInputElement
-        let input2 = document.getElementById("swal-input2") as HTMLInputElement
-        let input3 = document.getElementById("swal-input3") as HTMLInputElement
-        return {
-          "_id": e._id,
-          "Customer": input1.value,
-          "Machine": input2.value,
-          "S/N": input3.value
-        }
-      }
-    });
-    if (formValues) {
-      if (formValues.Customer && formValues['Machine']) {
-        let update = await lastValueFrom(this.api.Master_update(formValues._id, formValues))
-        if (update) {
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Success',
-            showConfirmButton: false,
-            timer: 1500,
-          }).then(async () => {
-            let data :any = await lastValueFrom(this.api.Master_getall())
-            this.dataSourceX = data.sort((a: any, b: any) => a['No'] - b['No'])
-            this.selectData()
-          })
-        }
-      } else {
-        Swal.fire({
-          position: 'center',
-          icon: 'error',
-          title: 'Error',
-          showConfirmButton: false,
-          timer: 1500,
-        })
-      }
 
-    }
-  }
 
 
   async addData() {
@@ -356,7 +296,7 @@ export class MasterMachineComponent {
                     "AA", "AB", "AC", "AD", "AE", "AF", "AG", "AH", "AI", "AJ", "AK", "AL", "AM", "AN", "AO", "AP", "AQ", "AR", "AS", "AT", "AU", "AV", "AW", "AX", "AY", "AZ"
                     , "BA", "BB", "BC", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BK", "BL", "BM", "BN", "BO", "BP", "BQ", "BR", "BS", "BT", "BU", "BV", "BW", "BX", "BY", "BZ"]
                   // console.log(ABC.split(""));
-                  const worksheet:any = workbook.getWorksheet(1);
+                  const worksheet: any = workbook.getWorksheet(1);
 
                   // if (this.dataTable == 4) {
                   let header = [
@@ -369,7 +309,7 @@ export class MasterMachineComponent {
 
 
                   for (const [index, item] of this.data.entries()) {
-                    for (const [position,name] of header.entries()) {
+                    for (const [position, name] of header.entries()) {
                       if (item[name]) {
                         worksheet.getCell(`${ABC[position]}${index + firstRow}`).value = { 'richText': [{ 'text': `${item[name]}`, 'font': { 'bold': false, 'size': 11, 'name': 'arial' } }] }
                       }
@@ -435,6 +375,27 @@ export class MasterMachineComponent {
     }
   }
 
+
+  edit(item: any) {
+    let closeDialog = this.dialog.open(MasterMachineEditorComponent, {
+      width: '300px',
+      data: item
+    });
+    closeDialog.afterClosed().subscribe(close => {
+      if (close == 'ok') {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Success',
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(()=>{
+          this.getData()
+        })
+
+      }
+    })
+  }
   //---------------------------------------------------------------//
 
 }

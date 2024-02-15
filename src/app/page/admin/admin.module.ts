@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { MasterMachineEditorComponent } from './master-machine-editor/master-machine-editor.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CustomerMasterComponent,
     AdminComponent,
     MasterManageEditorComponent,
+    MasterMachineEditorComponent,
   ],
   imports: [
     CommonModule,

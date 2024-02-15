@@ -29,56 +29,82 @@
 
 <div fxLayout="row wrap" fxLayoutAlign="center center">
   <div fxFlex="80">
-    <mat-form-field  style="width: -webkit-fill-available;padding: 0px;">
+    <mat-form-field style="width: -webkit-fill-available;padding: 0px;">
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input />
     </mat-form-field>
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource">
+
         <ng-container matColumnDef="No">
-          <th mat-header-cell *matHeaderCellDef style="text-align: center; font-size: medium; font-weight: bold">
+          <th mat-header-cell *matHeaderCellDef style="text-align: center; font-size: medium; font-weight: bold"
+            fxFlex="8" fxLayoutAlign="center center">
             No.
           </th>
-          <td mat-cell *matCellDef="let element; let i = index" style="width: 15%; text-align: center">
+          <td mat-cell *matCellDef="let element; let i = index" style="width: 15%; text-align: center" fxFlex="8"
+            fxLayoutAlign="center center">
             {{ element["No"] }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="Customer">
-          <th mat-header-cell *matHeaderCellDef style="font-size: medium; font-weight: bold">
+          <th mat-header-cell *matHeaderCellDef style="font-size: medium; font-weight: bold" fxFlex
+            fxLayoutAlign="start center">
             Customer
           </th>
-          <td mat-cell *matCellDef="let element" style="width: 25%">
+          <td mat-cell *matCellDef="let element" fxFlex fxLayoutAlign="start center">
             {{ element["Customer"] }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="Machine">
-          <th mat-header-cell *matHeaderCellDef style="font-size: medium; font-weight: bold">
+          <th mat-header-cell *matHeaderCellDef style="font-size: medium; font-weight: bold" fxFlex="20"
+            fxLayoutAlign="start center">
             Machine
           </th>
-          <td mat-cell *matCellDef="let element" style="width: 20%">
+          <td mat-cell *matCellDef="let element" fxFlex="20" fxLayoutAlign="start center">
             {{ element["Machine"] }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="S/N">
-          <th mat-header-cell *matHeaderCellDef style="font-size: medium; font-weight: bold">
+          <th mat-header-cell *matHeaderCellDef style="font-size: medium; font-weight: bold" fxFlex="15" fxLayoutAlign="start center">
             S/N
           </th>
-          <td mat-cell *matCellDef="let element" style="width: 20%">
+          <td mat-cell *matCellDef="let element" fxFlex="15" fxLayoutAlign="start center">
             {{ element["S/N"] }}
           </td>
         </ng-container>
 
+        <ng-container matColumnDef="PIC">
+          <th mat-header-cell *matHeaderCellDef style="font-size: medium; font-weight: bold" fxFlex="10"
+            fxLayoutAlign="center center">
+            PIC
+          </th>
+          <td mat-cell *matCellDef="let element" fxFlex="10" fxLayoutAlign="center center">
+            {{ element["PIC"] }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="TARGETS">
+          <th mat-header-cell *matHeaderCellDef style="font-size: medium; font-weight: bold" fxFlex="10"
+            fxLayoutAlign="center center">
+            Targets
+          </th>
+          <td mat-cell *matCellDef="let element" fxFlex="10" fxLayoutAlign="center center">
+            {{ element["TARGETS"] }}
+          </td>
+        </ng-container>
+
         <ng-container matColumnDef="Action">
-          <th mat-header-cell *matHeaderCellDef style="text-align: center; font-size: medium; font-weight: bold">
+          <th mat-header-cell *matHeaderCellDef style="text-align: center; font-size: medium; font-weight: bold" fxFlex="10"
+            fxLayoutAlign="center center">
             Action
           </th>
-          <td mat-cell *matCellDef="let element" style="width: 20%">
+          <td mat-cell *matCellDef="let element" fxFlex="10" fxLayoutAlign="center center">
             <div fxLayout="row wrap" fxLayoutAlign="center none">
               <div>
-                <button mat-icon-button (click)="EditBySelect(element)">
+                <button mat-icon-button (click)="edit(element)">
                   <mat-icon>
                     <img src="assets/img/master-machine/edit.png" alt="Custom Icon">
                   </mat-icon>
@@ -276,7 +302,7 @@
 
 
 
-    <!-- <table style="width:100%">
+<!-- <table style="width:100%">
       <tr style>
         <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);"> Customer </td>
         <td>${e.Customer || ''}</td>
