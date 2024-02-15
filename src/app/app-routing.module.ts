@@ -12,6 +12,11 @@ import { TemplateInputComponent } from './page/template-input/template-input.com
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
+  {
     path: 'admin',
     loadChildren: () => AdminModule,
     canActivate: []
