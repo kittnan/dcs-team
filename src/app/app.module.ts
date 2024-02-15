@@ -59,10 +59,10 @@ export const MY_FORMATS = {
     FlexLayoutModule,
     ReactiveFormsModule,
     FormsModule,
+    SharedModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     NgxUiLoaderHttpModule,
     NgxUiLoaderRouterModule,
-    SharedModule
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

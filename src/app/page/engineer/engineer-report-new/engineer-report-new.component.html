@@ -1,0 +1,110 @@
+<div fxLayout="row wrap" fxLayoutAlign="center center">
+  <app-title fxFlex="100" [title]="'Engineer Report'"></app-title>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10">
+    <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
+      <mat-label>โรงพยาบาล/ลูกค้า</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let item of options" [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
+      <mat-label>เครื่อง</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let item of options" [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
+      <mat-label>งานบริการ</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let item of options" [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" class="mb-4">
+    <button mat-raised-button class="pr-4" (click)="onPrint()">
+      <div fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="5">
+        <span>
+          PRINT PDF
+        </span>
+        <mat-icon class="mat-18">done</mat-icon>
+      </div>
+    </button>
+  </div>
+  <div class="overflow-auto">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" style="width: 1600px" id="print" class="mb-9">
+      <!-- <div fxLayout="row wrap" fxLayoutAlign="start start" style="width: 1600px" *ngFor="let p of pageArr; let p_i = index"
+    id="print" class="mb-9"> -->
+      <div id="head" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
+        <div fxFlex="20" fxLayout="row wrap" fxLayoutAlign="start center" class="bl bt">
+          <span class="ps-4 pe-4">
+            โรงพยาบาล/ลูกค้า <span class="font-normal">ธนาคารเลือด รพ ศูนย์ ลำปาง</span>
+          </span>
+        </div>
+        <div fxFlex="10" fxLayout="row wrap" fxLayoutAlign="start center" class="bt">
+          <span class="ps-4 pe-4">
+            อำเภอ <span class="font-normal">เมืองลำปาง</span>
+          </span>
+        </div>
+        <div fxFlex="10" fxLayout="row wrap" fxLayoutAlign="start center" class="bt">
+          <span class="ps-4 pe-4">
+            จังหวัด <span class="font-normal">ลำปาง</span>
+          </span>
+        </div>
+        <div fxFlex="auto" fxLayout="row wrap" fxLayoutAlign="end center" class="bt br">
+          <span class="ps-4 pe-4">
+            เลขที่ <span class="font-normal">202401001</span>
+          </span>
+        </div>
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="bl br">
+          <span class="ps-4 pe-4 pb-2">
+            งานบริการ <span class="font-normal">ติดตั้งเครื่อง (Installation)</span>
+          </span>
+        </div>
+      </div>
+
+      <div id="body" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+          <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center">
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="bl bb bt br">
+              <span >
+                รูปภาพประกอบ
+              </span>
+            </div>
+          </div>
+          <div fxFlex="65" fxLayout="row wrap" fxLayoutAlign="start center">
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="bb bt br">
+              <span >
+                ปัญหาและการแก้ไข
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <ng-container *ngFor="let item of getData(0); let i = index">
+          <!-- <ng-container *ngFor="let item of getData('p_i'); let i = index"> -->
+          <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start stretch">
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="bl bb br p-3">
+              <img src="./assets/img/logo/logo.png" alt="" style="width: 200px; height: 200px;">
+            </div>
+          </div>
+          <div fxFlex="65" fxLayout="row wrap" fxLayoutAlign="start stretch">
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" class="bb br">
+              <span class="font-normal">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, cum ab. Ea, quos quo? Fuga temporibus
+                expedita voluptas placeat hic.
+              </span>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+    </div>
+  </div>
+
+</div>

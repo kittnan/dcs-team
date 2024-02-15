@@ -1,13 +1,5 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center">
-  <div fxFlex="90">
-    <div class="centered-line">
-      <div class="line"></div>
-      <div class="text-in-line">
-        <span style="font-size: large">User manage</span>
-      </div>
-      <div class="line"></div>
-    </div>
-  </div>
+  <app-title fxFlex="90" [title]="'User manage'"></app-title>
 </div>
 
 <div fxLayout="row wrap" fxLayoutAlign="center center" class="mt-3">
@@ -25,7 +17,7 @@
 
 <div fxLayout="row wrap" fxLayoutAlign="center center">
   <div fxFlex="80">
-    <mat-form-field  style="width: -webkit-fill-available;padding: 0px;">
+    <mat-form-field style="width: -webkit-fill-available;padding: 0px;">
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input />
     </mat-form-field>

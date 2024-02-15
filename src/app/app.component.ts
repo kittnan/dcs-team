@@ -50,6 +50,19 @@ export class AppComponent {
 
       ]
     },
+    {
+      title: 'Engineer',
+      icon: 'groups',
+      path: '',
+      items: [
+        {
+          title: 'engineer',
+          icon: 'person_add_alt',
+          path: 'engineer/report',
+          items: []
+        },
+      ]
+    },
 
 
   ]

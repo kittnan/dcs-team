@@ -5,8 +5,18 @@
 @import "material-icons/iconfont/material-icons.scss";
 // @import '@sweetalert2/theme-borderless/borderless.scss';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field .mdc-notched-outline__notch {
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-form-field.mat-form-field.mat-form-field.mat-form-field.mat-form-field .notched-outline__notch {
   border-right-style: hidden;
 }
+
+
