@@ -291,13 +291,45 @@ export class MasterManageComponent {
 
   edit(item: any) {
     let closeDialog = this.dialog.open(MasterManageEditorComponent, {
-      width: '1000px',
+      width: '300px',
       data: item
     });
     closeDialog.afterClosed().subscribe(close => {
+      if (close == 'ok') {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Success',
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(()=>{
+          this.getData()
+        })
+
+      }
     })
   }
 
+  add() {
+    let closeDialog = this.dialog.open(MasterManageEditorComponent, {
+      width: '300px',
+      data: null
+    });
+    closeDialog.afterClosed().subscribe(close => {
+      if (close == 'ok') {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Success',
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(()=>{
+          this.getData()
+        })
+
+      }
+    })
+  }
 
   async addData() {
     const { value: formValues } = await Swal.fire({
