@@ -110,7 +110,8 @@ table {
   color: black;
   border-radius: 8px;
   border: 1px solid;
-  background-color: #e9e9e9;;
+  background-color: #e9e9e9;
+  ;
   padding: 7.5px 18px 7.5px 18px;
   font-size: 14px;
   width: 130px;
@@ -119,4 +120,35 @@ table {
 
 ::ng-deep.select-first .mat-select-arrow {
   display: none;
+}
+
+
+table {
+  width: 100%;
+}
+
+
+.shaDown {
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+
+// .koo>.mat-form-field-appearance-outline>.mat-form-field-infix {
+//   padding: 0px 0px 10px 0px !important;
+// }
+.mat-form-field-infix.ng-tns-c98-4 {
+  padding: 0 !important;
+}
+
+
+::ng-deep.koo.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0px 0px 10px 0px;
+  /* height: 0px; */
+}
+
+
+
+::ng-deep.koo.mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin: .25em 0;
+  padding: 0;
 }

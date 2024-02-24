@@ -1,38 +1,93 @@
-<div fxLayout="row wrap" fxLayoutAlign="center center">
-  <div fxFlex="100">
-    <mat-card>
+<mat-dialog-content>
+  <div fxLayout="row wrap" fxLayoutAlign="center center">
+    <div fxFlex="100">
+      <mat-card>
 
-      <div fxLayout="row wrap" fxLayoutAlign="center center">
-        <div fxFlex="100" fxLayoutAlign="center center">
-          <h4 *ngIf="this.data">Edit</h4>
-          <h4 *ngIf="!this.data">Add</h4>
+        <div fxLayout="row wrap" fxLayoutAlign="center center">
+          <div fxFlex="100" fxLayoutAlign="center center">
+            <h4  *ngIf="this.data">Edit</h4>
+            <h4 *ngIf="!this.data">Add</h4>
+          </div>
         </div>
-      </div>
 
-      <div fxLayout="column wrap" fxLayoutAlign="center center" class="mt-3">
-        <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
-          <mat-label>Customer</mat-label>
-          <input matInput style="text-align: center;" [(ngModel)]="rawData['Customer']" (change)="debug_before()">
-        </mat-form-field>
-        <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
-          <mat-label>Machine</mat-label>
-          <input matInput style="text-align: center;" [(ngModel)]="rawData['Machine']" (change)="debug_before()">
-        </mat-form-field>
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>S/N</mat-label>
-          <input matInput style="text-align: center;"  [(ngModel)]="rawData['S/N']" (change)="debug_before()">
-        </mat-form-field>
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>PIC</mat-label>
-          <input matInput style="text-align: center;"  [(ngModel)]="rawData['PIC']" (change)="debug_before()">
-        </mat-form-field>
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>TARGETS</mat-label>
-          <input matInput style="text-align: center;"  [(ngModel)]="rawData['TARGETS']" (change)="debug_before()">
-        </mat-form-field>
+        <div fxLayout="column wrap" fxLayoutAlign="center center" class="mt-3" >
+
+          <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
+            <mat-label>Province</mat-label>
+            <input  type="text" matInput style="text-align: center;" [matAutocomplete]="auto_1" (change)="debug_before()" [readonly]="input_readonly"
+              [(ngModel)]="rawData['Province']" [disabled]="this.data">
+            <mat-autocomplete  #auto_1="matAutocomplete" >
+              <mat-option *ngFor="let option of filterOptions(rawData['Province'],province)" [value]="option.list" (onSelectionChange)="debug_before()">
+                {{option.list}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
+            <mat-label>Customer</mat-label>
+            <input  type="text" matInput style="text-align: center;" [matAutocomplete]="auto_2" (change)="debug_before()" [readonly]="input_readonly"
+              [(ngModel)]="rawData['Customer']" >
+            <mat-autocomplete  #auto_2="matAutocomplete">
+              <mat-option *ngFor="let option of filterOptions(rawData['Customer'],customer)" [value]="option.list" (onSelectionChange)="debug_before()">
+                {{option.list}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
+            <mat-label>Machine</mat-label>
+            <input id="start"  type="text" matInput style="text-align: center;" [matAutocomplete]="auto_3" (change)="debug_before()"
+              [(ngModel)]="rawData['Machine']" >
+            <mat-autocomplete  #auto_3="matAutocomplete">
+              <mat-option *ngFor="let option of filterOptions(rawData['Machine'],machine)" [value]="option.list" (onSelectionChange)="debug_before()">
+                {{option.list}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>S/N</mat-label>
+            <input matInput style="text-align: center;" [(ngModel)]="rawData['S/N']" >
+          </mat-form-field>
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>PIC</mat-label>
+            <mat-select multiple [(ngModel)]="this.rawData['PIC']" >
+              <mat-select-trigger>
+                <span>{{this.rawData['PIC']?.length ? this.rawData['PIC']?.length + ' รายการถูกเลือก' : 'เลือกผู้ใช้งาน'}}</span>
+              </mat-select-trigger>
+              <mat-option *ngFor="let user of PIC" [value]="user._id">{{user.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>TARGETS</mat-label>
+            <input matInput style="text-align: center;" type="number" [(ngModel)]="rawData['Targets']"
+              (change)="debug_before()">
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutAlign="center none" class="mt-1">
+          <div fxFlex="100" fxLayoutAlign="center none" *ngIf="!check">
+            <span style="color: red;">*กรุณากรอกข้อมูลให้ครบ</span>
+          </div>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutAlign="center none" class="mt-5">
+          <div fxFlex="100">
+            <div fxLayout="row wrap" fxLayoutAlign="center none" fxLayoutGap="5">
+              <div>
+                <button mat-raised-button color="primary" (click)="submit()" [disabled]="!check"
+                  *ngIf="this.data">OK</button>
+                <button mat-raised-button color="primary" (click)="submit_add()" [disabled]="!check"
+                  *ngIf="!this.data">OKs</button>
+              </div>
+              <div>
+                <button mat-raised-button (click)="cancel()">CANCEL</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </mat-card>
     </div>
-
-
-    </mat-card>
   </div>
-</div>
+</mat-dialog-content>

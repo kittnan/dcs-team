@@ -50,7 +50,6 @@ export class MasterManageComponent {
     let data: any = await lastValueFrom(this.api.Master_User_getall())
     if (data.length != 0) {
       this.data = data
-      console.log("🚀 ~ getData ~ data:", data)
       this.dataSourceX = data.sort((a: any, b: any) => a['no'] - b['no'])
       this.Province = [...new Set(data.map((item: any) => item.Province))]; // [ 'A', 'B']
       this.Province = this.Province.sort()
@@ -143,16 +142,20 @@ export class MasterManageComponent {
       value.push(obj)
     }
 
-    value = value.filter((d: any) => d['no'] != null)
+    value = value.filter((d: any) => d['name'] != null)
+
+
     let getData = await lastValueFrom(this.api.Master_User_getall())
     for (const item of value) {
       let data = getData.filter((d: any) => d._id == item._id)
       if (data.length != 0) {
         item.permission = item.permission.split(',')
+        console.log(item);
         let update = await lastValueFrom(this.api.Master_User_update(item._id, item))
       } else {
         item.password = '1234'
         item.permission = item.permission.split(',')
+        console.log(item);
         let add = lastValueFrom(this.api.Master_User_add(item))
       }
     }
@@ -212,8 +215,6 @@ export class MasterManageComponent {
   }
 
 
-
-
   edit(item: any) {
     let closeDialog = this.dialog.open(MasterManageEditorComponent, {
       width: '300px',
@@ -234,6 +235,7 @@ export class MasterManageComponent {
       }
     })
   }
+
 
   add() {
     let closeDialog = this.dialog.open(MasterManageEditorComponent, {
@@ -257,7 +259,6 @@ export class MasterManageComponent {
   }
 
 
-
   export() {
     if (this.data.length > 0) {
       this.http.get('assets/excel/user.xlsx', { responseType: "arraybuffer" })
@@ -279,8 +280,6 @@ export class MasterManageComponent {
 
                   // if (this.dataTable == 4) {
                   let header = [
-
-                    'no',
                     'name',
                     'permission',
                     'username',
@@ -310,7 +309,7 @@ export class MasterManageComponent {
 
                     // let loo = await this.api.sendExcelData({ test: data }).toPromise()
 
-                    fs.saveAs(blob, `Report.xlsx`);
+                    fs.saveAs(blob, `master_user.xlsx`);
                   });
                 });
             });

@@ -12,6 +12,7 @@ import * as XLSX from 'xlsx';
 import { Cell, Row, Workbook, Worksheet } from 'ExcelJs';
 import { MatDialog } from '@angular/material/dialog';
 import { MasterMachineEditorComponent } from '../master-machine-editor/master-machine-editor.component';
+import * as moment from 'moment';
 var fs = require('file-saver');
 
 @Component({
@@ -33,7 +34,7 @@ export class MasterMachineComponent {
 
   var_Province: any
   data: any
-
+  province: any = ''
 
   constructor(
     private api: HttpUsersService,
@@ -54,24 +55,39 @@ export class MasterMachineComponent {
       this.dataSourceX = data
       this.Province = [...new Set(data.map((item: any) => item.Province))]; // [ 'A', 'B']
       this.Province = this.Province.sort()
+      this.province = this.Province.map((d: any) => {
+        return {
+          list: `${d}`,
+        }
+      })
       this.var_Province = this.Province[12]
       this.selectData()
     }
   }
 
 
-  selectData() {
-    let data = this.dataSourceX.filter((d: any) => d['Province'] == this.var_Province)
-    data = data.map((d: any, i: any) => {
-      return {
-        ...d,
-        "No": i + 1
-      }
-    })
+  async selectData() {
+    setTimeout(async () => {
+      // console.log(this.var_Province);
+      let data = this.dataSourceX.filter((d: any) => d['Province'] == this.var_Province)
+      let user = await lastValueFrom(this.api.Master_User_getall())
+      data = data.map((d: any, i: any) => {
+        let koo = d['PIC'].map((e: any) => {
+          let data = user.filter((s: any) => s._id == e)
+          return data.length != 0 ? data[0].name : ''
+        })
+        return {
+          ...d,
+          "No": i + 1,
+          "name": koo
 
+        }
+      })
 
-    this.dataSource = new MatTableDataSource(data)
-    this.dataSource.paginator = this.paginator;
+      this.dataSource = new MatTableDataSource(data)
+      this.dataSource.paginator = this.paginator;
+    }, 100);
+
   }
 
 
@@ -120,40 +136,39 @@ export class MasterMachineComponent {
     input.value = null
     const wsname: string = wb.SheetNames[0];
     const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+    var timestamp = Number(wsname); // timestamp ที่ต้องการถอดค่ากลับ
+    var momentObject = moment.unix(timestamp / 1000);
+    if (momentObject.diff(moment(), 'hour') < 5) {
 
-    // this.fullData = []
-    let text = "OfficePC"
-    if (wsname == text) {
+      // /* save data */
+      this.dataExcel = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
 
-    }
-
-    // /* save data */
-    this.dataExcel = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
-
-
-
-    let value: any = []
-    for (let row = 1; row < this.dataExcel.length; row++) {
-      let obj: any = {}
-      let temp = this.dataExcel[0].map((a: any, index: any) => {
-        let data = this.dataExcel[row][index]
-        obj[`${a.toString().replace('.', '')}`] = data || null
-      })
-      value.push(obj)
-    }
-    value = value.filter((d: any) => d['Province'] != null)
-    value = value.map((d: any) => {
-      return {
-        ...d,
-        PIC: d.PIC ? d.PIC.split(",") : []
+      let value: any = []
+      for (let row = 1; row < this.dataExcel.length; row++) {
+        let obj: any = {}
+        let temp = this.dataExcel[0].map((a: any, index: any) => {
+          let data = this.dataExcel[row][index]
+          obj[`${a.toString().replace('.', '')}`] = data || null
+        })
+        value.push(obj)
       }
-    })
+      value = value.filter((d: any) => d['Province'] != null)
+      value = value.map((d: any) => {
+        return {
+          ...d,
+          PIC: d.PIC ? d.PIC.split(",") : []
+        }
+      })
 
-
-    let del = await lastValueFrom(this.api.Master_DelByCondition({}))
-    if (del) {
       for (const iterator of value) {
-        let add = lastValueFrom(this.api.Master_add(iterator))
+        if (iterator.id) {
+          //update
+          delete iterator.PIC
+          let add = lastValueFrom(this.api.Master_update(iterator.id, iterator))
+        } else {
+          //add
+          let add = lastValueFrom(this.api.Master_add(iterator))
+        }
       }
       Swal.fire({
         position: 'center',
@@ -164,7 +179,12 @@ export class MasterMachineComponent {
       }).then(() => {
         this.getData()
       })
+    }else{
+      Swal.fire('"ไฟล์ ( master_machine.xlsx ) หมดอายุ"', '', 'error')
     }
+
+
+
 
   }
 
@@ -182,7 +202,7 @@ export class MasterMachineComponent {
         data = data.filter((d: any) => d._id != e._id)
         this.dataSource = new MatTableDataSource(data)
         this.dataSource.paginator = this.paginator;
-        // let del = await lastValueFrom(this.api.Master_DelByCondition({ _id: e._id }))
+        let del = await lastValueFrom(this.api.Master_DelByCondition({ _id: e._id }))
         //code end
         setTimeout(() => {
           Swal.fire({
@@ -196,9 +216,6 @@ export class MasterMachineComponent {
       }
     })
   }
-
-
-
 
 
   async addData() {
@@ -279,6 +296,7 @@ export class MasterMachineComponent {
     }
   }
 
+
   export() {
     if (this.data.length > 0) {
       this.http.get('assets/excel/master_mc.xlsx', { responseType: "arraybuffer" })
@@ -291,22 +309,46 @@ export class MasterMachineComponent {
             let firstRow = 2
             arrayBuffer.then((data) => {
               workbook.xlsx.load(data)
-                .then(() => {
+                .then(async () => {
                   let ABC = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
                     "AA", "AB", "AC", "AD", "AE", "AF", "AG", "AH", "AI", "AJ", "AK", "AL", "AM", "AN", "AO", "AP", "AQ", "AR", "AS", "AT", "AU", "AV", "AW", "AX", "AY", "AZ"
                     , "BA", "BB", "BC", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BK", "BL", "BM", "BN", "BO", "BP", "BQ", "BR", "BS", "BT", "BU", "BV", "BW", "BX", "BY", "BZ"]
                   // console.log(ABC.split(""));
                   const worksheet: any = workbook.getWorksheet(1);
+                  var now = moment();
+                  var timestamp = now.valueOf();
+                  worksheet._name = timestamp
+
+                  let user = await lastValueFrom(this.api.Master_User_getall())
+                  if (user.length) {
+                    this.data = this.data.map((d: any, i: any) => {
+                      let koo = d['PIC'].map((e: any) => {
+                        let data = user.filter((s: any) => s._id == e)
+                        return data.length != 0 ? data[0].name : ''
+                      })
+                      return {
+                        ...d,
+                        "PIC": koo
+                      }
+                    })
+                  }
 
                   // if (this.dataTable == 4) {
                   let header = [
-                    'No',
                     'Province',
                     'Customer',
                     'Machine',
                     'S/N',
+                    'CODE',
+                    'PIC',
+                    'Last PM',
+                    'Targets',
+                    '_id'
                   ]
 
+
+
+                  // console.log(this.data);
 
                   for (const [index, item] of this.data.entries()) {
                     for (const [position, name] of header.entries()) {
@@ -323,13 +365,13 @@ export class MasterMachineComponent {
 
                   }
 
-
                   workbook.xlsx.writeBuffer().then(async (data: any) => {
                     const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
                     // let loo = await this.api.sendExcelData({ test: data }).toPromise()
+                    this.getData()
+                    fs.saveAs(blob, `master_machine.xlsx`);
 
-                    fs.saveAs(blob, `Report.xlsx`);
                   });
                 });
             });
@@ -389,8 +431,14 @@ export class MasterMachineComponent {
           title: 'Success',
           showConfirmButton: false,
           timer: 1500,
-        }).then(()=>{
-          this.getData()
+        }).then(async () => {
+          let data: any = await lastValueFrom(this.api.Master_getall())
+          console.log("🚀 ~ closeDialog.afterClosed ~ data:", data)
+          if (data.length != 0) {
+            this.dataSourceX = data.filter((d: any) => d['Province'] == this.var_Province)
+            this.selectData()
+          }
+
         })
 
       }
@@ -398,5 +446,37 @@ export class MasterMachineComponent {
   }
   //---------------------------------------------------------------//
 
+  add() {
+    let closeDialog = this.dialog.open(MasterMachineEditorComponent, {
+      width: '300px',
+      data: null
+    });
+    closeDialog.afterClosed().subscribe(close => {
+      if (close == 'ok') {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Success',
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(() => {
+          this.getData()
+        })
+
+      }
+    })
+  }
+
+  filterOptions(list: string, data: any) {
+    const filterValue = list?.toLowerCase();
+    return data.filter((option: any) => option.list?.toLowerCase()?.includes(filterValue));
+  }
+
+  clear() {
+    console.log('4444444444444444');
+    let doo = document.getElementById("clear") as HTMLInputElement
+    doo.value = ""
+    this.var_Province = ''
+  }
 }
 

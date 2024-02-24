@@ -16,12 +16,12 @@
 </div>
 
 <div fxLayout="row wrap" fxLayoutAlign="center center">
-  <div fxFlex="80">
+  <div fxFlex="100"  fxFlex.gt-xs="80">
     <mat-form-field style="width: -webkit-fill-available;padding: 0px;">
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input />
     </mat-form-field>
-    <div class="mat-elevation-z8">
+    <div class="mat-elevation-z8" style="overflow: auto;">
       <table mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="No">
           <th mat-header-cell *matHeaderCellDef style="text-align: center; font-size: medium; font-weight: bold">
@@ -87,10 +87,10 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
 
-      <mat-paginator [pageSizeOptions]="[8, 20, 100]" showFirstLastButtons
-        aria-label="Select page of periodic elements">
-      </mat-paginator>
     </div>
+    <mat-paginator [pageSizeOptions]="[8, 20, 100]" showFirstLastButtons
+      aria-label="Select page of periodic elements" class="shaDown">
+    </mat-paginator>
   </div>
 </div>
 
