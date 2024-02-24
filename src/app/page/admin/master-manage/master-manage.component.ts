@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 import { Cell, Row, Workbook, Worksheet } from 'ExcelJs';
 import { MasterManageEditorComponent } from '../master-manage-editor/master-manage-editor.component';
+import * as moment from 'moment';
 var fs = require('file-saver');
 
 @Component({
@@ -122,52 +123,53 @@ export class MasterManageComponent {
     const ws: XLSX.WorkSheet = wb.Sheets[wsname];
 
     // this.fullData = []
-    let text = "OfficePC"
-    if (wsname == text) {
-
-    }
-
-    // /* save data */
-    this.dataExcel = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
+    var timestamp = Number(wsname); // timestamp ที่ต้องการถอดค่ากลับ
+    var momentObject = moment.unix(timestamp / 1000);
+    if (momentObject.diff(moment(), 'hour') < 5) {
+      // /* save data */
+      this.dataExcel = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
 
 
 
-    let value: any = []
-    for (let row = 1; row < this.dataExcel.length; row++) {
-      let obj: any = {}
-      let temp = this.dataExcel[0].map((a: any, index: any) => {
-        let data = this.dataExcel[row][index]
-        obj[`${a.toString().replace('.', '')}`] = data || null
-      })
-      value.push(obj)
-    }
-
-    value = value.filter((d: any) => d['name'] != null)
-
-
-    let getData = await lastValueFrom(this.api.Master_User_getall())
-    for (const item of value) {
-      let data = getData.filter((d: any) => d._id == item._id)
-      if (data.length != 0) {
-        item.permission = item.permission.split(',')
-        console.log(item);
-        let update = await lastValueFrom(this.api.Master_User_update(item._id, item))
-      } else {
-        item.password = '1234'
-        item.permission = item.permission.split(',')
-        console.log(item);
-        let add = lastValueFrom(this.api.Master_User_add(item))
+      let value: any = []
+      for (let row = 1; row < this.dataExcel.length; row++) {
+        let obj: any = {}
+        let temp = this.dataExcel[0].map((a: any, index: any) => {
+          let data = this.dataExcel[row][index]
+          obj[`${a.toString().replace('.', '')}`] = data || null
+        })
+        value.push(obj)
       }
+
+      value = value.filter((d: any) => d['name'] != null)
+
+
+      let getData = await lastValueFrom(this.api.Master_User_getall())
+      for (const item of value) {
+        let data = getData.filter((d: any) => d._id == item._id)
+        if (data.length != 0) {
+          item.permission = item.permission.split(',')
+          console.log(item);
+          let update = await lastValueFrom(this.api.Master_User_update(item._id, item))
+        } else {
+          item.password = '1234'
+          item.permission = item.permission.split(',')
+          console.log(item);
+          let add = lastValueFrom(this.api.Master_User_add(item))
+        }
+      }
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Success',
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => {
+        this.getData()
+      })
     }
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Success',
-      showConfirmButton: false,
-      timer: 1500,
-    }).then(() => {
-      this.getData()
-    })
+
+
     // console.log(value);
 
 
@@ -206,7 +208,7 @@ export class MasterManageComponent {
             title: 'Success',
             showConfirmButton: false,
             timer: 1500,
-          }).then(()=>{
+          }).then(() => {
             this.getData()
           })
         }, 200);
@@ -228,7 +230,7 @@ export class MasterManageComponent {
           title: 'Success',
           showConfirmButton: false,
           timer: 1500,
-        }).then(()=>{
+        }).then(() => {
           this.getData()
         })
 
@@ -250,7 +252,7 @@ export class MasterManageComponent {
           title: 'Success',
           showConfirmButton: false,
           timer: 1500,
-        }).then(()=>{
+        }).then(() => {
           this.getData()
         })
 
@@ -277,7 +279,9 @@ export class MasterManageComponent {
                     , "BA", "BB", "BC", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BK", "BL", "BM", "BN", "BO", "BP", "BQ", "BR", "BS", "BT", "BU", "BV", "BW", "BX", "BY", "BZ"]
                   // console.log(ABC.split(""));
                   const worksheet: any = workbook.getWorksheet(1);
-
+                  var now = moment();
+                  var timestamp = now.valueOf();
+                  worksheet._name = timestamp
                   // if (this.dataTable == 4) {
                   let header = [
                     'name',
