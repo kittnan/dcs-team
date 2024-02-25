@@ -5,6 +5,7 @@ import { TitleComponent } from './title/title.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../material/material.module';
+import { SignaturePadComponent } from './signature-pad/signature-pad.component';
 
 let items = [
   SubTitleComponent,
@@ -14,7 +15,8 @@ let items = [
 
 @NgModule({
   declarations: [
-    ...items
+    ...items,
+    SignaturePadComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,8 @@ let items = [
     MaterialModule
   ],
   exports:[
-    ...items
+    ...items,
+    SignaturePadComponent
   ]
 })
 export class SharedModule { }
