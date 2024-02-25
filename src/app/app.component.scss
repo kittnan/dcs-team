@@ -31,10 +31,35 @@ h1.example-app-name {
 }
 
 
-::ng-deep .mat-mdc-form-field-flex > .mat-mdc-form-field-infix { padding: 0.4em 0px !important;}
-::ng-deep .mat-mdc-form-field-label-wrapper { top: -1.5em; }
+::ng-deep .mat-mdc-form-field-flex>.mat-mdc-form-field-infix {
+  padding: 0.4em 0px !important;
+}
+
+::ng-deep .mat-mdc-form-field-label-wrapper {
+  top: -1.5em;
+}
 
 ::ng-deep .mat-mdc-form-field-appearance-outline.mat-mdc-form-field-can-float.mat-mdc-form-field-should-float .mat-mdc-form-field-label {
-    transform: translateY(-1.1em) scale(.75);
-    width: 133.33333%;
+  transform: translateY(-1.1em) scale(.75);
+  width: 133.33333%;
+}
+
+::ng-deep .mat-toolbar.mat-primary {
+  background-color: #8AE3FF !important;
+  color: black;
+}
+
+::ng-deep.mat-drawer-inner-container {
+  background-color: #b8eeff !important;
+  color: black;
+}
+
+::ng-deep .mat-divider {
+  background-color: black;
+}
+
+.bg-side-menu {
+  background-color: azure;
+  padding: 2px;
+  border-radius: 6px;
 }
