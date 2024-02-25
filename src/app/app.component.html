@@ -10,7 +10,7 @@
           contact_mail
         </mat-icon>
         <span class="text-sm">
-          Kittinan xx
+          Admin
         </span>
       </div>
     </button>
@@ -23,18 +23,27 @@
       <mat-nav-list>
         <div *ngFor="let nav of fillerNav; let i=index" class="block p-4" style="max-width: 17rem;">
           <div class="flex justify-start items-center gap-2">
-            <mat-icon class="mat-18">
+            <!-- <mat-icon class="mat-18">
               {{nav.icon}}
-            </mat-icon>
+            </mat-icon> -->
+            <img [src]="nav.icon" style="width: 30px;margin-right: 5px;margin-bottom: 4px;border-radius: 70%;">
             <span class="uppercase font-black">
               {{nav.title}}
             </span>
           </div>
-          <a mat-list-item [routerLink]="item.path" *ngFor="let item of nav.items" class="capitalize">
+          <!-- <a mat-list-item [routerLink]="item.path" *ngFor="let item of nav.items" class="capitalize">
             <div class="flex justify-start items-center gap-1">
               <mat-icon class="mat-18">
                 {{item.icon}}
               </mat-icon>
+              <span class="capitalize font-medium">
+                {{item.title}}
+              </span>
+            </div>
+          </a> -->
+          <a mat-list-item [routerLink]="item.path" *ngFor="let item of nav.items" class="capitalize">
+            <div class="flex justify-start items-center gap-1">
+              <img [src]="item.icon" style="width: 25px;margin-right: 5px;margin-bottom: 4px;border-radius: 70%;">
               <span class="capitalize font-medium">
                 {{item.title}}
               </span>

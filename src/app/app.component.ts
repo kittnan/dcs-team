@@ -25,24 +25,24 @@ export class AppComponent {
   fillerNav: SideItem[] = [
     {
       title: 'Master',
-      icon: 'groups',
+      icon: 'assets/img/icon_sidebar/master.png',
       path: '',
       items: [
-        {
-          title: 'customer',
-          icon: 'person_add_alt',
-          path: 'admin/customer',
-          items: []
-        },
+        // {
+        //   title: 'customer',
+        //   icon: 'person_add_alt',
+        //   path: 'admin/customer',
+        //   items: []
+        // },
         {
           title: 'master_machine',
-          icon: 'person_add_alt',
+          icon: 'assets/img/icon_sidebar/master_manage.png',
           path: 'admin/master_machine',
           items: []
         },
         {
           title: 'master_manage',
-          icon: 'person_add_alt',
+          icon: 'assets/img/icon_sidebar/user_manage_icon.png',
           path: 'admin/master_manage',
           items: []
         },
@@ -50,14 +50,16 @@ export class AppComponent {
 
       ]
     },
+
+
     {
       title: 'Engineer',
-      icon: 'groups',
+      icon: 'assets/img/icon_sidebar/engineer.png',
       path: '',
       items: [
         {
           title: 'engineer',
-          icon: 'person_add_alt',
+          icon: 'assets/img/icon_sidebar/report.png',
           path: 'engineer/report',
           items: []
         },

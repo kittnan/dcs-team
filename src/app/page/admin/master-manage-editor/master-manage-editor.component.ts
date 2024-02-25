@@ -23,8 +23,6 @@ export class MasterManageEditorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.data);
-
     if (this.data) {
       this.rawData = {...this.data}
       this.permission = {
@@ -40,6 +38,7 @@ export class MasterManageEditorComponent implements OnInit {
     }
 
   }
+
 
   debug_before(){
     if (this.rawData.name && this.rawData.username && this.rawData.password && (this.permission.admin || this.permission.member)) {
@@ -65,6 +64,7 @@ export class MasterManageEditorComponent implements OnInit {
     }).then(async r => {
       if (r.isConfirmed) {
         //code start
+        delete this.rawData['no']
         let update = await lastValueFrom(this.api.Master_User_update(this.rawData._id, this.rawData))
         if (update) {
             this.dialog.close("ok")
@@ -91,6 +91,7 @@ export class MasterManageEditorComponent implements OnInit {
     }).then(async r => {
       if (r.isConfirmed) {
         //code start
+        delete this.rawData['no']
         let update = await lastValueFrom(this.api.Master_User_add(this.rawData))
         if (update) {
             this.dialog.close("ok")
@@ -99,6 +100,7 @@ export class MasterManageEditorComponent implements OnInit {
       }
     })
   }
+
 
   cancel() {
     this.dialog.close()
