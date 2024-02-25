@@ -12,16 +12,24 @@
       <div fxLayout="column wrap" fxLayoutAlign="center center" class="mt-3">
           <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
             <mat-label>Full name</mat-label>
-            <input matInput style="text-align: center;" [(ngModel)]="rawData['name']" (change)="debug_before()">
+            <input matInput style="text-align: center;" [(ngModel)]="rawData['name']" (keyup)="debug_before()">
           </mat-form-field>
           <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
             <mat-label>Username</mat-label>
-            <input matInput style="text-align: center;" [(ngModel)]="rawData['username']" (change)="debug_before()">
+            <input matInput style="text-align: center;" [(ngModel)]="rawData['username']" (keyup)="debug_before()">
           </mat-form-field>
-          <mat-form-field appearance="outline" floatLabel="always">
+          <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
             <mat-label>Password</mat-label>
-            <input matInput style="text-align: center;" type="password" [(ngModel)]="rawData['password']" (change)="debug_before()">
+            <input matInput style="text-align: center;" type="password" [(ngModel)]="rawData['password']" (keyup)="debug_before()">
           </mat-form-field>
+          <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
+            <mat-label>Tel.</mat-label>
+            <input matInput style="text-align: center;" [(ngModel)]="rawData['telephone']" maxlength="10" (keyup)="debug_before()" [value]="formattedTelephone">
+          </mat-form-field>
+          <!-- <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
+            <mat-label>Tel.</mat-label>
+            <input matInput style="text-align: center;" [(ngModel)]="rawData['Telephone']" (change)="debug_before()">
+          </mat-form-field> -->
       </div>
 
 

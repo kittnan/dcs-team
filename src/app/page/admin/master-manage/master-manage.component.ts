@@ -21,7 +21,7 @@ var fs = require('file-saver');
 })
 export class MasterManageComponent {
 
-  displayedColumns: string[] = ['No', 'Fullname', 'Permission', 'Username', 'Action'];
+  displayedColumns: string[] = ['No', 'Fullname', 'Permission', 'Username','Telephone', 'Action'];
   dataSource: any = new MatTableDataSource
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
 
@@ -65,10 +65,10 @@ export class MasterManageComponent {
     data = data.map((d: any, i: any) => {
       return {
         ...d,
-        "no": `${i + 1}`
+        "no": `${i + 1}`,
+        'telephone' : d['telephone'].replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3')
       }
     })
-
 
 
     this.dataSource = new MatTableDataSource(data)
@@ -149,12 +149,10 @@ export class MasterManageComponent {
         let data = getData.filter((d: any) => d._id == item._id)
         if (data.length != 0) {
           item.permission = item.permission.split(',')
-          console.log(item);
           let update = await lastValueFrom(this.api.Master_User_update(item._id, item))
         } else {
           item.password = '1234'
           item.permission = item.permission.split(',')
-          console.log(item);
           let add = lastValueFrom(this.api.Master_User_add(item))
         }
       }

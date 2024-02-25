@@ -41,7 +41,7 @@ export class MasterManageEditorComponent implements OnInit {
 
 
   debug_before(){
-    if (this.rawData.name && this.rawData.username && this.rawData.password && (this.permission.admin || this.permission.member)) {
+    if (this.rawData.name && this.rawData.username && this.rawData.password && this.rawData.telephone.length == 12 &&  (this.permission.admin || this.permission.member)) {
       this.check = true
     }else{
       this.check = false
@@ -65,6 +65,7 @@ export class MasterManageEditorComponent implements OnInit {
       if (r.isConfirmed) {
         //code start
         delete this.rawData['no']
+        this.rawData.telephone = this.rawData.telephone.replaceAll('-', '')
         let update = await lastValueFrom(this.api.Master_User_update(this.rawData._id, this.rawData))
         if (update) {
             this.dialog.close("ok")
@@ -104,5 +105,15 @@ export class MasterManageEditorComponent implements OnInit {
 
   cancel() {
     this.dialog.close()
+  }
+
+
+  get formattedTelephone(): string {
+    let tel = this.rawData['telephone'];
+    // Format the telephone number for Thailand (assuming 10 digits)
+    if (tel && tel.length === 10) {
+      return tel.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+    }
+    return tel; // Return as is if not 10 characters
   }
 }
