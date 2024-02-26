@@ -20,6 +20,7 @@ export class MasterMachineEditorComponent implements OnInit {
   province: any = []
   customer: any = []
   machine: any = []
+  district :any = []
 
   input_readonly :any = true
   constructor(
@@ -36,6 +37,7 @@ export class MasterMachineEditorComponent implements OnInit {
       this.rawData['Province'] = ''
       this.rawData['Customer'] = ''
       this.rawData['Machine'] = ''
+      this.rawData['District'] = ''
     }
     this.debug_before()
     setTimeout(() => {
@@ -55,6 +57,14 @@ export class MasterMachineEditorComponent implements OnInit {
         list: `${d}`,
       }
     })
+    let district = [...new Set(data.map((item: any) => item.District))]; // [ 'A', 'B']
+    this.district = district.map((d: any) => {
+      return {
+        list: `${d}`,
+      }
+    })
+
+
     let customer = [...new Set(data.map((item: any) => item.Customer))]; // [ 'A', 'B']
     this.customer = customer.map((d: any) => {
       return {
@@ -67,6 +77,7 @@ export class MasterMachineEditorComponent implements OnInit {
         list: `${d}`,
       }
     })
+    console.log(this.machine);
 
 
 
@@ -135,8 +146,8 @@ export class MasterMachineEditorComponent implements OnInit {
   }
 
   filterOptions(list: string, data: any) {
-    const filterValue = list.toLowerCase();
-    return data.filter((option: any) => option.list.toLowerCase().includes(filterValue));
+    const filterValue = list?.toLowerCase();
+    return data.filter((option: any) => option.list?.toLowerCase().includes(filterValue));
   }
 
 

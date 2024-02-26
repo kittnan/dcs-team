@@ -24,10 +24,21 @@
           </mat-form-field>
 
           <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
-            <mat-label>Customer</mat-label>
+            <mat-label>District</mat-label>
             <input  type="text" matInput style="text-align: center;" [matAutocomplete]="auto_2" (change)="debug_before()" [readonly]="input_readonly"
-              [(ngModel)]="rawData['Customer']" >
+              [(ngModel)]="rawData['District']" >
             <mat-autocomplete  #auto_2="matAutocomplete">
+              <mat-option *ngFor="let option of filterOptions(rawData['District'],district)" [value]="option.list" (onSelectionChange)="debug_before()">
+                {{option.list}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
+            <mat-label>Customer</mat-label>
+            <input  type="text" matInput style="text-align: center;" [matAutocomplete]="auto_3" (change)="debug_before()" [readonly]="input_readonly"
+              [(ngModel)]="rawData['Customer']" >
+            <mat-autocomplete  #auto_3="matAutocomplete">
               <mat-option *ngFor="let option of filterOptions(rawData['Customer'],customer)" [value]="option.list" (onSelectionChange)="debug_before()">
                 {{option.list}}
               </mat-option>
@@ -36,9 +47,9 @@
 
           <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
             <mat-label>Machine</mat-label>
-            <input id="start"  type="text" matInput style="text-align: center;" [matAutocomplete]="auto_3" (change)="debug_before()"
+            <input id="start"  type="text" matInput style="text-align: center;" [matAutocomplete]="auto_4" (change)="debug_before()"
               [(ngModel)]="rawData['Machine']" >
-            <mat-autocomplete  #auto_3="matAutocomplete">
+            <mat-autocomplete  #auto_4="matAutocomplete">
               <mat-option *ngFor="let option of filterOptions(rawData['Machine'],machine)" [value]="option.list" (onSelectionChange)="debug_before()">
                 {{option.list}}
               </mat-option>

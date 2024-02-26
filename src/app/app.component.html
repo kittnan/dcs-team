@@ -1,14 +1,16 @@
 <div *ngIf="checkLogin()" class="example-container" [class.example-is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary" class="example-toolbar">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <h1 class="example-app-name">DEVELOP</h1>
+    <!-- <h1 class="example-app-name">DEVELOP</h1> -->
+    <img class="mx-auto h-10 w-auto" src="assets/img/logo/logo-removebg-preview.png" alt="Your Company">
     <div class="flex-auto"></div>
 
     <button (click)="onLogout()">
       <div class="flex justify-around items-center gap-1">
-        <mat-icon class="mat-18">
+        <!-- <mat-icon class="mat-18">
           contact_mail
-        </mat-icon>
+        </mat-icon> -->
+        <img src="assets/img/login/user.png" style="width: 25px;margin-right: 5px;margin-bottom: 4px;border-radius: 70%;">
         <span class="text-sm">
           Admin
         </span>

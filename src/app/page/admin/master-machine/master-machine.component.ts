@@ -22,7 +22,7 @@ var fs = require('file-saver');
 })
 export class MasterMachineComponent {
 
-  displayedColumns: string[] = ['No', 'Customer', 'Machine', 'S/N', 'PIC', 'TARGETS', 'Action'];
+  displayedColumns: string[] = ['No','District', 'Customer', 'Machine', 'S/N', 'PIC', 'TARGETS', 'Action'];
   dataSource: any = new MatTableDataSource
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
 
@@ -138,7 +138,7 @@ export class MasterMachineComponent {
     const ws: XLSX.WorkSheet = wb.Sheets[wsname];
     var timestamp = Number(wsname); // timestamp ที่ต้องการถอดค่ากลับ
     var momentObject = moment.unix(timestamp / 1000);
-    if (momentObject.diff(moment(), 'hour') < 5) {
+    if (moment().diff(momentObject, 'hour') < 5) {
 
       // /* save data */
       this.dataExcel = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
@@ -336,6 +336,7 @@ export class MasterMachineComponent {
                   // if (this.dataTable == 4) {
                   let header = [
                     'Province',
+                    'District',
                     'Customer',
                     'Machine',
                     'S/N',

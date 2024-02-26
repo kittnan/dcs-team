@@ -125,7 +125,9 @@ export class MasterManageComponent {
     // this.fullData = []
     var timestamp = Number(wsname); // timestamp ที่ต้องการถอดค่ากลับ
     var momentObject = moment.unix(timestamp / 1000);
-    if (momentObject.diff(moment(), 'hour') < 5) {
+    console.log(momentObject.diff(moment(), 'hour'));
+
+    if (moment().diff(momentObject, 'hour') < 5) {
       // /* save data */
       this.dataExcel = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
 
@@ -149,10 +151,12 @@ export class MasterManageComponent {
         let data = getData.filter((d: any) => d._id == item._id)
         if (data.length != 0) {
           item.permission = item.permission.split(',')
+          item.telephone = item.telephone.toString()
           let update = await lastValueFrom(this.api.Master_User_update(item._id, item))
         } else {
           item.password = '1234'
           item.permission = item.permission.split(',')
+          item.telephone = item.telephone.toString()
           let add = lastValueFrom(this.api.Master_User_add(item))
         }
       }
@@ -165,6 +169,8 @@ export class MasterManageComponent {
       }).then(() => {
         this.getData()
       })
+    }else{
+      Swal.fire('"ไฟล์ ( master_machine.xlsx ) หมดอายุ"', '', 'error')
     }
 
 
@@ -285,6 +291,7 @@ export class MasterManageComponent {
                     'name',
                     'permission',
                     'username',
+                    'telephone',
                     '_id',
                   ]
 

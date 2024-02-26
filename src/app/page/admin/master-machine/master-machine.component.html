@@ -64,6 +64,15 @@
           </td>
         </ng-container>
 
+        <ng-container matColumnDef="District">
+          <th mat-header-cell *matHeaderCellDef style="font-size: medium; font-weight: bold">
+            District
+          </th>
+          <td mat-cell *matCellDef="let element" >
+            {{ element["District"] }}
+          </td>
+        </ng-container>
+
         <ng-container matColumnDef="Machine">
           <th mat-header-cell *matHeaderCellDef style="font-size: medium; font-weight: bold">
             Machine

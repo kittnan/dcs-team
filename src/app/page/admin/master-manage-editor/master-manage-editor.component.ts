@@ -41,7 +41,7 @@ export class MasterManageEditorComponent implements OnInit {
 
 
   debug_before(){
-    if (this.rawData.name && this.rawData.username && this.rawData.password && this.rawData.telephone.length == 12 &&  (this.permission.admin || this.permission.member)) {
+    if (this.rawData.name && this.rawData.username && this.rawData.password  &&  (this.permission.admin || this.permission.member)) {
       this.check = true
     }else{
       this.check = false
