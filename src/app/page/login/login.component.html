@@ -45,12 +45,9 @@
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
     <ul fxLayout="column wrap" fxLayoutAlign="center start" fxLayoutGap="5">
-      <li fxFlex="100" *ngFor="let item of userLogin.permission; let i=index">
-        <span (click)="goLink(item)">
-          <button mat-raised-button color="primary">{{item}}</button>
-        </span>
+      <li fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="w-full" *ngFor="let item of userLogin.permission; let i=index">
+        <button mat-raised-button color="primary" class="w-full uppercase" (click)="goLink(item)">{{item}}</button>
       </li>
     </ul>
   </div>
 </div>
-

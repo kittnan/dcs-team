@@ -1,9 +1,10 @@
-<div fxLayout="row wrap" fxLayoutAlign="center center">
+<div *ngIf="form" fxLayout="row wrap" fxLayoutAlign="center center">
   <app-title fxFlex="100" [title]="'Engineer Report'"></app-title>
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10">
     <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
       <mat-label>โรงพยาบาล/ลูกค้า</mat-label>
-      <mat-select [(ngModel)]="customerSelected" (selectionChange)="onSelectCustomer()">
+      <mat-select [(ngModel)]="form.customer" (selectionChange)="onSelectCustomer()"
+        [compareWith]="objectComparisonFunction_id">
         <mat-option *ngFor="let item of customerOption" [value]="item">
           {{item.Customer}}
         </mat-option>
@@ -11,7 +12,7 @@
     </mat-form-field>
     <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
       <mat-label>เครื่อง</mat-label>
-      <mat-select [(ngModel)]="machineSelected">
+      <mat-select [(ngModel)]="form.machine">
         <mat-option *ngFor="let item of machineOption" [value]="item.Machine">
           {{item.Machine}}
         </mat-option>
@@ -19,7 +20,7 @@
     </mat-form-field>
     <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
       <mat-label>งานบริการ</mat-label>
-      <mat-select [(ngModel)]="serviceTypeSelected">
+      <mat-select [(ngModel)]="form.serviceType" [compareWith]="objectComparisonFunction_id">
         <mat-option *ngFor="let item of serviceTypeOption" [value]="item">
           {{item.name}}
         </mat-option>
@@ -44,7 +45,7 @@
       </div>
     </button>
   </div>
-  <div class="overflow-auto">
+  <div  class="overflow-auto">
     <!-- <div fxLayout="row wrap" fxLayoutAlign="start start" style="width: 1600px" id="print" class="mb-9"> -->
     <div fxLayout="row wrap" fxLayoutAlign="start start" style="width: 1600px"
       *ngFor="let p of pageArr; let p_i = index" id="print" class="mb-9">
@@ -52,18 +53,18 @@
         <div fxFlex="30" fxLayout="row wrap" fxLayoutAlign="start center" class="bl bt">
           <span class="ps-4 pe-4">
             โรงพยาบาล/ลูกค้า <span class="font-normal">
-              {{customerSelected?.Customer}}
+              {{form.customer?.Customer}}
             </span>
           </span>
         </div>
         <div fxFlex="20" fxLayout="row wrap" fxLayoutAlign="start center" class="bt">
           <span class="ps-4 pe-4">
-            อำเภอ <span class="font-normal">{{customerSelected?.Province}}</span>
+            อำเภอ <span class="font-normal">{{form.customer?.Province}}</span>
           </span>
         </div>
         <div fxFlex="20" fxLayout="row wrap" fxLayoutAlign="start center" class="bt">
           <span class="ps-4 pe-4">
-            จังหวัด <span class="font-normal">{{customerSelected?.Province}}</span>
+            จังหวัด <span class="font-normal">{{form.customer?.Province}}</span>
           </span>
         </div>
         <div fxFlex="auto" fxLayout="row wrap" fxLayoutAlign="end center" class="bt br">
@@ -73,7 +74,7 @@
         </div>
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="bl br">
           <span class="ps-4 pe-4 pb-2">
-            งานบริการ <span class="font-normal">{{serviceTypeSelected?.name}}</span>
+            งานบริการ <span class="font-normal">{{form.serviceType?.name}}</span>
           </span>
         </div>
       </div>
@@ -97,27 +98,38 @@
         </div>
 
         <!-- <ng-container *ngFor="let item of getData(0); let i = index"> -->
-        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div *ngIf="form?.data?.length>0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <ng-container *ngFor="let item of getData(p_i); let i = index">
             <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start stretch">
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="bl bb br p-3">
                 <ng-container *ngIf="item?.img">
                   <img [src]="item.img" style="width: 250px; height: 250px;">
-                </ng-container>
-                <ng-container *ngIf="!item?.img">
-                  <button mat-raised-button>
-                    <div fxLayout="row wrap" fxLayoutAlign="center center" style="width: 250px; height: 250px;" fxLayoutGap="5">
+                  <button mat-raised-button (click)="fileUpload.click()">
+                    <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
                       <mat-icon class="mat-18">image</mat-icon>
                       <span>อัปโหลดรูปภาพ</span>
+                      {{item.no}}
                     </div>
                   </button>
+                  <input hidden type="file" #fileUpload (change)="onUpload($event,item.no)">
+                </ng-container>
+                <ng-container *ngIf="!item?.img">
+                  <button mat-raised-button (click)="fileUpload.click()">
+                    <div fxLayout="row wrap" fxLayoutAlign="center center" style="width: 250px; height: 250px;"
+                      fxLayoutGap="5">
+                      <mat-icon class="mat-18">image</mat-icon>
+                      <span>อัปโหลดรูปภาพ</span>
+                      {{item.no}}
+                    </div>
+                  </button>
+                  <input hidden type="file" #fileUpload (change)="onUpload($event,item.no)">
                 </ng-container>
 
               </div>
             </div>
             <div fxFlex="65" fxLayout="row wrap" fxLayoutAlign="start stretch">
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" class="bb br p-3">
-                <textarea fxFlex="98" rows="10" style="border: 1px solid;"></textarea>
+                <textarea fxFlex="98" rows="10" [(ngModel)]="item.text" style="border: 1px solid;"></textarea>
               </div>
             </div>
           </ng-container>
@@ -246,7 +258,7 @@
     </div>
   </div>
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
-    <button mat-raised-button>
+    <button mat-raised-button (click)="onSave()">
       <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
         <mat-icon class="mat-18">
           save
