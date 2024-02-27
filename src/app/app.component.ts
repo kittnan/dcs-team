@@ -116,4 +116,8 @@ export class AppComponent {
     if (nav.access.some((v: any) => v == this.$local.getAuth())) return true
     return false
   }
+  // todo displayAccess
+  displayAccess(){
+   return this.$local.getAuth()
+  }
 }

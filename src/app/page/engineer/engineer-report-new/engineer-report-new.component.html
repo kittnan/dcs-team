@@ -28,7 +28,7 @@
     </mat-form-field>
   </div>
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" class="mb-4">
-    <button mat-raised-button class="pr-4" (click)="onAddPage()">
+    <!-- <button mat-raised-button class="pr-4" (click)="onAddPage()">
       <div fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="5">
         <span>
           เพิ่มหน้า
@@ -43,11 +43,11 @@
         </span>
         <mat-icon class="mat-18">done</mat-icon>
       </div>
-    </button>
+    </button> -->
   </div>
-  <div  class="overflow-auto">
+  <div class="overflow-auto">
     <!-- <div fxLayout="row wrap" fxLayoutAlign="start start" style="width: 1600px" id="print" class="mb-9"> -->
-    <div fxLayout="row wrap" fxLayoutAlign="start start" style="width: 1600px"
+    <div fxLayout="row wrap" fxLayoutAlign="start start" style="width: 1200px"
       *ngFor="let p of pageArr; let p_i = index" id="print" class="mb-9">
       <div id="head" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center stretch">
         <div fxFlex="30" fxLayout="row wrap" fxLayoutAlign="start center" class="bl bt">
@@ -145,25 +145,25 @@
               <span class="me-3">
                 1.
               </span>
-              <input fxFlex="auto" type="text" style="border-bottom: 1px solid;">
+              <input [(ngModel)]="form.part1" fxFlex="auto" type="text" style="border-bottom: 1px solid;">
             </div>
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-4 mb-3">
               <span class="me-3">
                 2.
               </span>
-              <input fxFlex="auto" type="text" style="border-bottom: 1px solid;">
+              <input [(ngModel)]="form.part2" fxFlex="auto" type="text" style="border-bottom: 1px solid;">
             </div>
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-4 mb-3">
               <span class="me-3">
                 3.
               </span>
-              <input fxFlex="auto" type="text" style="border-bottom: 1px solid;">
+              <input [(ngModel)]="form.part3" fxFlex="auto" type="text" style="border-bottom: 1px solid;">
             </div>
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-4 mb-3">
               <span class="me-3">
                 4.
               </span>
-              <input fxFlex="auto" type="text" style="border-bottom: 1px solid;">
+              <input [(ngModel)]="form.part4" fxFlex="auto" type="text" style="border-bottom: 1px solid;">
             </div>
           </div>
           <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="bl bb br">
@@ -173,7 +173,7 @@
               </span>
             </div>
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-2 mt-4">
-              <textarea fxFlex="98" rows="3" class="mb-3" style="border: 1px solid;"></textarea>
+              <textarea [(ngModel)]="form.description" fxFlex="98" rows="3" class="mb-3" style="border: 1px solid;"></textarea>
             </div>
           </div>
           <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="bl bb br">
@@ -200,7 +200,7 @@
                   </span>
                 </div>
                 <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="start stretch">
-                  08222234345
+                  {{userLogin.telephone}}
                 </div>
               </div>
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
@@ -212,30 +212,33 @@
                 <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="start stretch">
                   <mat-form-field appearance="outline" floatLabel="always">
                     <mat-label></mat-label>
-                    <input matInput [matDatepicker]="picker">
+                    <input [(ngModel)]="date" matInput [matDatepicker]="picker">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
                 </div>
               </div>
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
-                <div fxFlex="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                <div fxFlex="20" fxLayout="row wrap" fxLayoutAlign="start center">
                   <span>
                     เวลาเริ่มงาน
                   </span>
                 </div>
-                <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="start stretch">
-                  <input type="time" name="" id="">
+                <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="start center">
+                  <input [(ngModel)]="time" type="time" name="" id="">
                 </div>
               </div>
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
-                <div fxFlex="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                <div fxFlex="20" fxLayout="row wrap" fxLayoutAlign="start center">
                   <span>
                     เวลาเสร็จงาน
                   </span>
                 </div>
-                <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="start stretch">
-                  [user login]
+                <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="start center">
+                  <span class="me-4">
+                    {{end}}
+                  </span>
+                  <input [(ngModel)]="endTime" type="time" name="" id="">
                 </div>
               </div>
             </div>
@@ -268,6 +271,16 @@
         </span>
       </div>
     </button>
+    <!-- <button mat-raised-button (click)="onFinish()">
+      <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+        <mat-icon class="mat-18">
+          save
+        </mat-icon>
+        <span>
+          เสร็จสิ้น
+        </span>
+      </div>
+    </button> -->
   </div>
 
 </div>

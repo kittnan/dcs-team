@@ -1,11 +1,5 @@
 <!-- <h4>Please Add your signature here</h4> -->
-<canvas
-  #canvas
-  (touchstart)="startDrawing($event)"
-  (touchmove)="moved($event)"
-  width="700"
-  height="200"
-></canvas>
+<canvas #canvas (touchstart)="startDrawing($event)" (touchmove)="moved($event)" height="200" width="500"></canvas>
 <p class="error-message" *ngIf="signatureNeeded">Signature is required</p>
 
 <div class="buttons flex justify-between">
