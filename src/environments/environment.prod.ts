@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  API:"http://localhost:8888"
+  API:"https://api_web.sodacanhomelab.uk"
+  // API:"http://localhost:8888"
 };
