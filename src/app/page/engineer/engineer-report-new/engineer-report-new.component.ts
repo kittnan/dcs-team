@@ -1,6 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as moment from 'moment';
 import { lastValueFrom } from 'rxjs';
 import { HttpUsersService } from 'src/app/http/http-api';
 import { HttpReportService } from 'src/app/http/http-report.service';
@@ -25,6 +26,10 @@ export class EngineerReportNewComponent implements OnInit {
     no: null
   }
   form: any = null
+  date = new Date()
+  time = null
+  end = moment().format('DD-MMM-YY')
+  endTime = null
 
   customerOption: any = []
   machineOption: any = []
@@ -66,7 +71,6 @@ export class EngineerReportNewComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-
     this.route.queryParams.subscribe(async (params: any) => {
       if (params && params['_id']) {
         let _id = params['_id']
@@ -152,6 +156,7 @@ export class EngineerReportNewComponent implements OnInit {
   // todo signed
   signChange($event: any) {
     console.log($event);
+    this.form.sign = $event
   }
 
   // todo onAddPage
@@ -163,6 +168,10 @@ export class EngineerReportNewComponent implements OnInit {
       insertArray.push(newData)
     }
     this.form.data.splice(this.form.data.length - 6, 0, ...insertArray);
+    this.form.data = this.form.data.map((item: any, index: number) => {
+      item.no = index + 1
+      return item
+    })
     console.log("🚀 ~ this.form.data:", this.form.data)
     this.page = this.calculatorPageBreak(this.form.data.length);
     this.pageArr = Array.from(
@@ -191,6 +200,7 @@ export class EngineerReportNewComponent implements OnInit {
   async save() {
     try {
       console.log(this.form);
+      this.form.userLogin = this.userLogin
       this.form.data = this.form.data
       const res = await lastValueFrom(this.$report.save(this.form))
       console.log("🚀 ~ res:", res)
@@ -222,6 +232,15 @@ export class EngineerReportNewComponent implements OnInit {
       console.log("🚀 ~ error:", error)
     }
 
+  }
+
+  onFinish(){
+    try {
+
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+
+    }
   }
 
   public objectComparisonFunction_id = function (option: any, value: any): boolean {
