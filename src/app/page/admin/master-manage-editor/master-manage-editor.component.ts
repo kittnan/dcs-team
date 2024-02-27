@@ -27,13 +27,13 @@ export class MasterManageEditorComponent implements OnInit {
       this.rawData = {...this.data}
       this.permission = {
         admin: this.rawData.permission.filter((d: any) => d == 'admin').length != 0 ? true : false,
-        member: this.rawData.permission.filter((d: any) => d == 'member').length != 0 ? true : false
+        engineer: this.rawData.permission.filter((d: any) => d == 'engineer').length != 0 ? true : false
       }
       this.debug_before()
     }else{
       this.permission = {
         admin: false,
-        member: true
+        engineer: true
       }
     }
 
@@ -41,7 +41,7 @@ export class MasterManageEditorComponent implements OnInit {
 
 
   debug_before(){
-    if (this.rawData.name && this.rawData.username && this.rawData.password  &&  (this.permission.admin || this.permission.member)) {
+    if (this.rawData.name && this.rawData.username && this.rawData.password  &&  (this.permission.admin || this.permission.engineer)) {
       this.check = true
     }else{
       this.check = false
@@ -54,8 +54,8 @@ export class MasterManageEditorComponent implements OnInit {
     if (this.permission.admin) {
       this.rawData.permission.push('admin')
     }
-    if (this.permission.member) {
-      this.rawData.permission.push('member')
+    if (this.permission.engineer) {
+      this.rawData.permission.push('engineer')
     }
     Swal.fire({
       title: 'Do you want to update data ?',
@@ -82,8 +82,8 @@ export class MasterManageEditorComponent implements OnInit {
     if (this.permission.admin) {
       this.rawData.permission.push('admin')
     }
-    if (this.permission.member) {
-      this.rawData.permission.push('member')
+    if (this.permission.engineer) {
+      this.rawData.permission.push('engineer')
     }
     Swal.fire({
       title: 'Do you want to add data ?',

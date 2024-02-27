@@ -60,7 +60,7 @@ export class MasterMachineComponent {
           list: `${d}`,
         }
       })
-      this.var_Province = this.Province[12]
+      this.var_Province = this.Province[0]
       this.selectData()
     }
   }

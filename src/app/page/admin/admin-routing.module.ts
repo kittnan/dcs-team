@@ -7,7 +7,7 @@ import { MasterManageComponent } from './master-manage/master-manage.component';
 const routes: Routes = [
   {
     path:'',
-    redirectTo:'report',
+    redirectTo:'master_manage',
     pathMatch:'full'
   },
   {
