@@ -10,7 +10,8 @@
         <!-- <mat-icon class="mat-18">
           contact_mail
         </mat-icon> -->
-        <img src="assets/img/login/user.png" style="width: 25px;margin-right: 5px;margin-bottom: 4px;border-radius: 70%;">
+        <img src="assets/img/login/user.png"
+          style="width: 25px;margin-right: 5px;margin-bottom: 4px;border-radius: 70%;">
         <span class="text-sm">
           Admin
         </span>
@@ -23,23 +24,27 @@
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
       fixedTopGap="56" [opened]="true">
       <mat-nav-list>
-        <div *ngFor="let nav of fillerNav; let i=index" class="block p-4" style="max-width: 17rem;">
-          <div class="flex justify-start items-center gap-2 bg-side-menu">
-            <img [src]="nav.icon" style="width: 30px;margin-right: 5px;margin-bottom: 4px;border-radius: 70%;">
-            <span class="uppercase font-black">
-              {{nav.title}}
-            </span>
-          </div>
-          <a mat-list-item [routerLink]="item.path" *ngFor="let item of nav.items" class="capitalize">
-            <div class="flex justify-start items-center gap-1 ">
-              <img [src]="item.icon" style="width: 25px;margin-right: 5px;margin-bottom: 4px;border-radius: 70%;">
-              <span class="capitalize font-medium">
-                {{item.title}}
+        <ng-container *ngFor="let nav of fillerNav; let i=index">
+          <div *ngIf="checkAccess(nav)" class="block p-4" style="max-width: 17rem;">
+            <div class="flex justify-start items-center gap-2 bg-side-menu">
+              <img [src]="nav.icon" style="width: 30px;margin-right: 5px;margin-bottom: 4px;border-radius: 70%;">
+              <span class="uppercase font-black">
+                {{nav.title}}
               </span>
             </div>
-          </a>
-          <mat-divider class="w-full"></mat-divider>
-        </div>
+            <a mat-list-item [routerLink]="item.path" *ngFor="let item of nav.items" class="capitalize">
+              <div class="flex justify-start items-center gap-1 ">
+                <img [src]="item.icon" style="width: 25px;margin-right: 5px;margin-bottom: 4px;border-radius: 70%;">
+                <span class="capitalize font-medium">
+                  {{item.title}}
+                </span>
+              </div>
+            </a>
+            <mat-divider class="w-full"></mat-divider>
+          </div>
+        </ng-container>
+
+
       </mat-nav-list>
     </mat-sidenav>
 

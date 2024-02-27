@@ -65,19 +65,23 @@ export class LoginComponent {
     this.$local.setAuth(auth)
     if (auth == 'admin') {
       this.router.navigate(['admin'])
-    }
-    if (auth == 'engineer') {
-      this.router.navigate(['engineer'])
-    }
-    if (auth == 'special') {
-      this.router.navigate(['special'])
-    }
-    if (auth == 'store') {
-      this.router.navigate(['store'])
-    }
-    if (auth == 'full-admin') {
-      this.router.navigate(['full-admin'])
-    }
+    } else
+      if (auth == 'engineer') {
+        this.router.navigate(['engineer'])
+      } else
+        if (auth == 'special') {
+          this.router.navigate(['special'])
+        } else
+          if (auth == 'store') {
+            this.router.navigate(['store'])
+          } else
+            if (auth == 'full-admin') {
+              this.router.navigate(['full-admin'])
+            } else {
+              alert('Not access')
+              this.$local.clear()
+              this.router.navigate(['/']).then(()=>location.reload())
+            }
 
   }
 }

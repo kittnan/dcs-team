@@ -9,7 +9,8 @@ interface SideItem {
   title: string,
   icon: string,
   path: string,
-  items: SideItem[]
+  items: SideItem[],
+  access: string[]
 }
 @Component({
   selector: 'app-root',
@@ -27,46 +28,40 @@ export class AppComponent {
       title: 'Master',
       icon: 'assets/img/icon_sidebar/master.png',
       path: '',
+      access: ['admin'],
       items: [
-        // {
-        //   title: 'customer',
-        //   icon: 'person_add_alt',
-        //   path: 'admin/customer',
-        //   items: []
-        // },
         {
           title: 'master_machine',
           icon: 'assets/img/icon_sidebar/master_manage.png',
           path: 'admin/master_machine',
-          items: []
+          items: [],
+          access: ['']
         },
         {
           title: 'master_manage',
           icon: 'assets/img/icon_sidebar/user_manage_icon.png',
           path: 'admin/master_manage',
-          items: []
+          items: [],
+          access: ['']
+
         },
-
-
       ]
     },
-
-
     {
       title: 'Engineer',
       icon: 'assets/img/icon_sidebar/engineer.png',
       path: '',
+      access: ['admin', 'engineer'],
       items: [
         {
           title: 'engineer',
           icon: 'assets/img/icon_sidebar/report.png',
           path: 'engineer/report',
-          items: []
+          items: [],
+          access: ['']
         },
       ]
     },
-
-
   ]
   login: boolean = false
   private _mobileQueryListener: () => void;
@@ -85,7 +80,9 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
+    if (this.$local.getAuth() == 'admin') {
 
+    }
   }
 
   checkLogin() {
@@ -112,5 +109,11 @@ export class AppComponent {
   onLogout() {
     this.$local.clear()
     this.router.navigate(['/login']).then(() => location.reload())
+  }
+
+  // todo checkAccess
+  checkAccess(nav: SideItem) {
+    if (nav.access.some((v: any) => v == this.$local.getAuth())) return true
+    return false
   }
 }
