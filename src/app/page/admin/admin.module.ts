@@ -11,6 +11,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MasterMachineEditorComponent } from './master-machine-editor/master-machine-editor.component';
+import { MasterServiceTypeOptionComponent } from './master-service-type-option/master-service-type-option.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { MasterMachineEditorComponent } from './master-machine-editor/master-mac
     AdminComponent,
     MasterManageEditorComponent,
     MasterMachineEditorComponent,
+    MasterServiceTypeOptionComponent,
   ],
   imports: [
     CommonModule,

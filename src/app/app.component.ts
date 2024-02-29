@@ -43,7 +43,13 @@ export class AppComponent {
           path: 'admin/master_manage',
           items: [],
           access: ['']
-
+        },
+        {
+          title: 'ServiceType',
+          icon: 'assets/img/icon_sidebar/service.png',
+          path: 'admin/master_service_type_option',
+          items: [],
+          access: ['']
         },
       ]
     },

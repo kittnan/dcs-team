@@ -79,8 +79,7 @@ export class MasterMachineComponent {
         return {
           ...d,
           "No": i + 1,
-          "name": koo
-
+          "PIC": koo
         }
       })
 
@@ -211,6 +210,8 @@ export class MasterMachineComponent {
             title: 'Success',
             showConfirmButton: false,
             timer: 1500,
+          }).then(()=>{
+            this.getData()
           })
         }, 200);
       }
@@ -218,83 +219,7 @@ export class MasterMachineComponent {
   }
 
 
-  async addData() {
-    const { value: formValues } = await Swal.fire({
-      title: "Master manage",
-      html: `
-      <style>
-      table, th, td {
-        border:1px solid black;
-      }
-      </style>
-      <table style="width:100%">
-      <tr style>
-        <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);width: 30%;"> Customer </td>
-        <td><input id="swal-input1" class="swal2-input" style="margin: 0px;
-        width: -webkit-fill-available;text-align: center;" ></td>
-      </tr>
-      <tr>
-        <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);">Machine</td>
-        <td><input id="swal-input2" class="swal2-input" style="margin: 0px;
-        width: -webkit-fill-available;text-align: center;" ></td>
-      </tr>
-      <tr>
-        <td style="text-align: end;padding-right: 5px;background-color: rgba(128, 128, 128, 0.116);">S/N</td>
-        <td><input id="swal-input3" class="swal2-input" style="margin: 0px;
-        width: -webkit-fill-available;text-align: center;" ></td>
-      </tr>
-      </table>
 
-
-      `,
-      focusConfirm: false,
-      showCancelButton: true,
-      preConfirm: async () => {
-        let input1 = document.getElementById("swal-input1") as HTMLInputElement
-        let input2 = document.getElementById("swal-input2") as HTMLInputElement
-        let input3 = document.getElementById("swal-input3") as HTMLInputElement
-        let data: any = await lastValueFrom(this.api.Master_getall())
-        this.dataSourceX = data.sort((a: any, b: any) => b['No'] - a['No'])
-        return {
-          "No": Number(this.dataSourceX[0].No) + 1,
-          "Province": this.var_Province,
-          "Customer": input1.value,
-          "Machine": input2.value,
-          "S/N": input3.value
-        }
-      }
-    });
-    if (formValues) {
-      if (
-        formValues.Province && formValues.Customer && formValues['Machine']
-      ) {
-        let update = await lastValueFrom(this.api.Master_add(formValues))
-        if (update) {
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Success',
-            showConfirmButton: false,
-            timer: 1500,
-          }).then(async () => {
-            let data: any = await lastValueFrom(this.api.Master_getall())
-            this.dataSourceX = data.sort((a: any, b: any) => a['No'] - b['No'])
-            this.selectData()
-          })
-        }
-
-      } else {
-        Swal.fire({
-          position: 'center',
-          icon: 'error',
-          title: 'Error',
-          showConfirmButton: false,
-          timer: 1500,
-        })
-      }
-
-    }
-  }
 
 
   export() {
