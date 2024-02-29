@@ -61,4 +61,28 @@ export class HttpUsersService {
   }
   //#endregion
 
+//#region Master User
+serviceTypeOption_getall(): Observable<any> {
+  return this.http.get(this.Url + "/serviceTypeOption/")
+}
+
+serviceTypeOption_add(data: any): Observable<any> {
+  return this.http.post(this.Url + "/serviceTypeOption/", data)
+}
+
+serviceTypeOption_update(id: any, data: any): Observable<any> {
+  return this.http.put(this.Url + "/serviceTypeOption/insert/" + id, data)
+}
+
+serviceTypeOption_GetByCondition(data: any): Observable<any> {
+  return this.http.post(this.Url + "/serviceTypeOption/getByCondition/", data)
+}
+
+serviceTypeOption_DelByCondition(data: any): Observable<any> {
+  return this.http.post(this.Url + "/serviceTypeOption/delByCondition/", data)
+}
+//#endregion
+
+
+
 }
