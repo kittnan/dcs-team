@@ -162,17 +162,23 @@ export class EngineerReportNewComponent implements OnInit {
   // todo onAddPage
   onAddPage() {
     let insertArray = [];
+    let lastNo = this.form.data.slice(-1)
+    lastNo = lastNo[0].no
     for (let index = 0; index < this.dataPerPage; index++) {
       let newData: any = { ...this.dataTemplate }
-      newData.no = index + 1
+      newData.no = lastNo + 1 + index
       insertArray.push(newData)
     }
-    this.form.data.splice(this.form.data.length - 6, 0, ...insertArray);
-    this.form.data = this.form.data.map((item: any, index: number) => {
-      item.no = index + 1
-      return item
-    })
+    console.log("🚀 ~ insertArray:", insertArray)
+    this.form.data.push(...insertArray)
     console.log("🚀 ~ this.form.data:", this.form.data)
+
+    // this.form.data.splice(this.form.data.length - 6, 0, ...insertArray);
+    // this.form.data = this.form.data.map((item: any, index: number) => {
+    //   item.no = index + 1
+    //   return item
+    // })
+    // console.log("🚀 ~ this.form.data:", this.form.data)
     this.page = this.calculatorPageBreak(this.form.data.length);
     this.pageArr = Array.from(
       { length: this.page },
