@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { HttpUsersService } from 'src/app/http/http-serviceType.service';
+import { HttpServiceTypeService } from 'src/app/http/http-serviceType.service';
 
 @Component({
   selector: 'app-master-service-type-option',
@@ -10,7 +10,7 @@ import { HttpUsersService } from 'src/app/http/http-serviceType.service';
 export class MasterServiceTypeOptionComponent implements OnInit {
 
   constructor(
-    private api: HttpUsersService,
+    private api: HttpServiceTypeService,
   ) { }
 
   ngOnInit(): void {

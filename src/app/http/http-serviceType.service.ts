@@ -6,7 +6,7 @@ const AUTH_API = environment.API
 @Injectable({
   providedIn: 'root'
 })
-export class HttpUsersService {
+export class HttpServiceTypeService {
 
   Url: any = environment.API
 
