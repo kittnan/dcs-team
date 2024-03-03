@@ -57,6 +57,15 @@ export class MasterManageEditorComponent implements OnInit {
     if (this.permission.engineer) {
       this.rawData.permission.push('engineer')
     }
+    if (this.permission.special) {
+      this.rawData.permission.push('special')
+    }
+    if (this.permission.store) {
+      this.rawData.permission.push('store')
+    }
+    if (this.permission.fullAdmin) {
+      this.rawData.permission.push('fullAdmin')
+    }
     Swal.fire({
       title: 'Do you want to update data ?',
       icon: 'question',
@@ -84,6 +93,15 @@ export class MasterManageEditorComponent implements OnInit {
     }
     if (this.permission.engineer) {
       this.rawData.permission.push('engineer')
+    }
+    if (this.permission.special) {
+      this.rawData.permission.push('special')
+    }
+    if (this.permission.store) {
+      this.rawData.permission.push('store')
+    }
+    if (this.permission.fullAdmin) {
+      this.rawData.permission.push('fullAdmin')
     }
     Swal.fire({
       title: 'Do you want to add data ?',

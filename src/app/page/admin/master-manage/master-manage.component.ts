@@ -66,9 +66,11 @@ export class MasterManageComponent {
       return {
         ...d,
         "no": `${i + 1}`,
-        'telephone' : d['telephone'].replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3')
+        'telephone' : d['telephone'].replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'),
+        // 'permission_list' : d['telephone'].split,
       }
     })
+    console.log(data);
 
 
     this.dataSource = new MatTableDataSource(data)
