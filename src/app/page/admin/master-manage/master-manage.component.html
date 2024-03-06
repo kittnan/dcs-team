@@ -46,7 +46,9 @@
             Permission
           </th>
           <td mat-cell *matCellDef="let element" style="width: 20%">
-            {{ element["permission"] }}
+            <span *ngFor="let item of element['permission']">
+              ● {{ item }}<br>
+            </span>
           </td>
         </ng-container>
 

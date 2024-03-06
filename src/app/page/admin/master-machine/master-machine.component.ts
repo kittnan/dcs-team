@@ -79,7 +79,7 @@ export class MasterMachineComponent {
         return {
           ...d,
           "No": i + 1,
-          "PIC": koo
+          "name": koo
         }
       })
 
@@ -345,6 +345,7 @@ export class MasterMachineComponent {
 
 
   edit(item: any) {
+    delete item.name
     let closeDialog = this.dialog.open(MasterMachineEditorComponent, {
       width: '300px',
       data: item

@@ -1,4 +1,4 @@
-<mat-dialog-content>
+<mat-dialog-content *ngIf="this.rawData">
   <div fxLayout="row wrap" fxLayoutAlign="center center">
     <div fxFlex="100">
       <mat-card>
@@ -68,11 +68,12 @@
               (change)="debug_before()">
           </mat-form-field>
         </div>
+
         <mat-form-field appearance="outline" floatLabel="always">
           <mat-label>PIC</mat-label>
           <mat-select multiple [(ngModel)]="this.rawData['PIC']" >
             <mat-select-trigger>
-              <span>{{this.rawData['PIC']?.length ? this.rawData['PIC']?.length + ' รายการถูกเลือก' : 'เลือกผู้ใช้งาน'}}</span>
+              <span>{{this.rawData['PIC']?.length != 0 ? this.rawData['PIC']?.length + ' รายการถูกเลือก' : 'เลือกผู้ใช้งาน'}}</span>
             </mat-select-trigger>
             <mat-option *ngFor="let user of PIC" [value]="user._id">{{user.name}}</mat-option>
           </mat-select>

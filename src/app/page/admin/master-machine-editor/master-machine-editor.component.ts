@@ -33,6 +33,7 @@ export class MasterMachineEditorComponent implements OnInit {
 
     if (this.data) {
       this.rawData = { ...this.data }
+      console.log(this.rawData);
     } else {
       this.rawData['Province'] = ''
       this.rawData['Customer'] = ''
@@ -107,6 +108,8 @@ export class MasterMachineEditorComponent implements OnInit {
       icon: 'question',
       showCancelButton: true,
     }).then(async r => {
+      console.log(this.rawData);
+
       if (r.isConfirmed) {
         //code start
         delete this.rawData.No
