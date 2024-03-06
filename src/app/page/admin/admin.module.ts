@@ -12,6 +12,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MasterMachineEditorComponent } from './master-machine-editor/master-machine-editor.component';
 import { MasterServiceTypeOptionComponent } from './master-service-type-option/master-service-type-option.component';
+import { MasterServiceTypeOptionEditorComponent } from './master-service-type-option-editor/master-service-type-option-editor.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { MasterServiceTypeOptionComponent } from './master-service-type-option/m
     MasterManageEditorComponent,
     MasterMachineEditorComponent,
     MasterServiceTypeOptionComponent,
+    MasterServiceTypeOptionEditorComponent,
   ],
   imports: [
     CommonModule,
