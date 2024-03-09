@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { lastValueFrom } from 'rxjs';
-import { HttpUsersService } from 'src/app/http/http-api';
 import { HttpMastersService } from 'src/app/http/http-masters.service';
 import { HttpReportService } from 'src/app/http/http-report.service';
 import { HttpServiceTypeService } from 'src/app/http/http-serviceType.service';
