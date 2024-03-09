@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { lastValueFrom } from 'rxjs';
 import { HttpUsersService } from 'src/app/http/http-api';
 import { HttpReportService } from 'src/app/http/http-report.service';
+import { HttpServiceTypeService } from 'src/app/http/http-serviceType.service';
 import { GenerateInvoicePdfService } from 'src/app/service/generate-invoice-pdf.service';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
@@ -65,12 +66,16 @@ export class EngineerReportNewComponent implements OnInit {
     private $local: LocalStorageService,
     private router: Router,
     private route: ActivatedRoute,
-    private $report: HttpReportService
+    private $report: HttpReportService,
+    private $serviceType: HttpServiceTypeService
   ) {
 
   }
 
   async ngOnInit(): Promise<void> {
+    let serviceType = await lastValueFrom(this.$serviceType.getAll())
+    this.serviceTypeOption = serviceType
+
     this.route.queryParams.subscribe(async (params: any) => {
       if (params && params['_id']) {
         let _id = params['_id']
@@ -240,7 +245,7 @@ export class EngineerReportNewComponent implements OnInit {
 
   }
 
-  onFinish(){
+  onFinish() {
     try {
 
     } catch (error) {
