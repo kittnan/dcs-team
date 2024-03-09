@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { lastValueFrom } from 'rxjs';
 import { HttpUsersService } from 'src/app/http/http-api';
+import { HttpMastersService } from 'src/app/http/http-masters.service';
 import { HttpReportService } from 'src/app/http/http-report.service';
 import { HttpServiceTypeService } from 'src/app/http/http-serviceType.service';
 import { GenerateInvoicePdfService } from 'src/app/service/generate-invoice-pdf.service';
@@ -62,7 +63,8 @@ export class EngineerReportNewComponent implements OnInit {
   userLogin: any
   constructor(
     private $pdf: GenerateInvoicePdfService,
-    private $api: HttpUsersService,
+    // private $api: HttpUsersService,
+    private $master: HttpMastersService,
     private $local: LocalStorageService,
     private router: Router,
     private route: ActivatedRoute,
@@ -83,7 +85,7 @@ export class EngineerReportNewComponent implements OnInit {
         if (resReport && resReport.length > 0) {
           this.form = resReport[0]
           console.log("🚀 ~ this.form:", this.form)
-          const machine = await lastValueFrom(this.$api.Master_getall())
+          const machine = await lastValueFrom(this.$master.Master_getall())
           this.customerOption = machine
 
           if (this.form.data && this.form.data.length > 0) {
@@ -117,7 +119,7 @@ export class EngineerReportNewComponent implements OnInit {
           newData.no = index + 1
           this.form.data.push(newData)
         }
-        const machine = await lastValueFrom(this.$api.Master_getall())
+        const machine = await lastValueFrom(this.$master.Master_getall())
         this.customerOption = machine
         this.page = this.calculatorPageBreak(this.form.data.length);
         this.pageArr = Array.from(

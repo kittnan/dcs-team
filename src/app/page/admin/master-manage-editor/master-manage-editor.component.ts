@@ -1,7 +1,7 @@
 import { filter } from 'rxjs/operators';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { HttpUsersService } from 'src/app/http/http-api';
+import { HttpUsersService } from 'src/app/http/http-users.service';
 import { lastValueFrom } from 'rxjs';
 import Swal from 'sweetalert2';
 

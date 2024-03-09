@@ -4,7 +4,7 @@ import { ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { lastValueFrom } from 'rxjs';
-import { HttpUsersService } from 'src/app/http/http-api';
+import { HttpUsersService } from 'src/app/http/http-users.service';
 // import { HttpService } from 'src/app/service/http.service';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
@@ -176,17 +176,6 @@ export class MasterManageComponent {
     }
 
 
-    // console.log(value);
-
-
-    // let del = await lastValueFrom(this.api.Master_User_DelByCondition({}))
-    // if (del) {
-    //   for (const iterator of value) {
-    //     let add = lastValueFrom(this.api.Master_User_add(iterator))
-    //   }
-
-    // }
-
   }
 
 
@@ -318,7 +307,7 @@ export class MasterManageComponent {
                   workbook.xlsx.writeBuffer().then(async (data: any) => {
                     const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
-                    // let loo = await this.api.sendExcelData({ test: data }).toPromise()
+
 
                     fs.saveAs(blob, `master_user.xlsx`);
                   });

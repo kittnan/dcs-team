@@ -1,7 +1,7 @@
 import { filter } from 'rxjs/operators';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { HttpUsersService } from 'src/app/http/http-serviceType.service';
+import { HttpServiceTypeService } from 'src/app/http/http-serviceType.service';
 import { lastValueFrom } from 'rxjs';
 import Swal from 'sweetalert2';
 
@@ -19,7 +19,7 @@ export class MasterServiceTypeOptionEditorComponent implements OnInit {
   constructor(
     private dialog: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private api: HttpUsersService,
+    private api: HttpServiceTypeService,
   ) { }
 
   ngOnInit(): void {

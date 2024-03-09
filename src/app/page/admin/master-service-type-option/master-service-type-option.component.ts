@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { HttpUsersService } from 'src/app/http/http-serviceType.service';
+import { HttpServiceTypeService } from 'src/app/http/http-serviceType.service';
 import {ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
@@ -19,7 +19,7 @@ export class MasterServiceTypeOptionComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
   data:any
   constructor(
-    private api: HttpUsersService,
+    private api: HttpServiceTypeService,
     private dialog: MatDialog
   ) { }
 

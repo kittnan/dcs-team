@@ -5,7 +5,8 @@ import { ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { lastValueFrom } from 'rxjs';
-import { HttpUsersService } from 'src/app/http/http-api';
+import { HttpUsersService } from 'src/app/http/http-users.service';
+import { HttpMastersService } from 'src/app/http/http-masters.service';
 // import { HttpService } from 'src/app/service/http.service';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
@@ -37,7 +38,8 @@ export class MasterMachineComponent {
   province: any = ''
 
   constructor(
-    private api: HttpUsersService,
+    private $user: HttpUsersService,
+    private $master: HttpMastersService,
     private http: HttpClient,
     private dialog: MatDialog
   ) { }
@@ -49,7 +51,7 @@ export class MasterMachineComponent {
 
 
   async getData() {
-    let data: any = await lastValueFrom(this.api.Master_getall())
+    let data: any = await lastValueFrom(this.$master.Master_getall())
     if (data.length != 0) {
       this.data = data
       this.dataSourceX = data
@@ -70,7 +72,7 @@ export class MasterMachineComponent {
     setTimeout(async () => {
       // console.log(this.var_Province);
       let data = this.dataSourceX.filter((d: any) => d['Province'] == this.var_Province)
-      let user = await lastValueFrom(this.api.Master_User_getall())
+      let user = await lastValueFrom(this.$user.Master_User_getall())
       data = data.map((d: any, i: any) => {
         let koo = d['PIC'].map((e: any) => {
           let data = user.filter((s: any) => s._id == e)
@@ -163,10 +165,10 @@ export class MasterMachineComponent {
         if (iterator.id) {
           //update
           delete iterator.PIC
-          let add = lastValueFrom(this.api.Master_update(iterator.id, iterator))
+          let add = lastValueFrom(this.$master.Master_update(iterator.id, iterator))
         } else {
           //add
-          let add = lastValueFrom(this.api.Master_add(iterator))
+          let add = lastValueFrom(this.$master.Master_add(iterator))
         }
       }
       Swal.fire({
@@ -201,7 +203,7 @@ export class MasterMachineComponent {
         data = data.filter((d: any) => d._id != e._id)
         this.dataSource = new MatTableDataSource(data)
         this.dataSource.paginator = this.paginator;
-        let del = await lastValueFrom(this.api.Master_DelByCondition({ _id: e._id }))
+        let del = await lastValueFrom(this.$master.Master_DelByCondition({ _id: e._id }))
         //code end
         setTimeout(() => {
           Swal.fire({
@@ -244,7 +246,7 @@ export class MasterMachineComponent {
                   var timestamp = now.valueOf();
                   worksheet._name = timestamp
 
-                  let user = await lastValueFrom(this.api.Master_User_getall())
+                  let user = await lastValueFrom(this.$user.Master_User_getall())
                   if (user.length) {
                     this.data = this.data.map((d: any, i: any) => {
                       let koo = d['PIC'].map((e: any) => {
@@ -359,7 +361,7 @@ export class MasterMachineComponent {
           showConfirmButton: false,
           timer: 1500,
         }).then(async () => {
-          let data: any = await lastValueFrom(this.api.Master_getall())
+          let data: any = await lastValueFrom(this.$master.Master_getall())
           console.log("🚀 ~ closeDialog.afterClosed ~ data:", data)
           if (data.length != 0) {
             this.dataSourceX = data.filter((d: any) => d['Province'] == this.var_Province)

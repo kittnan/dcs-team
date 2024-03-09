@@ -1,7 +1,8 @@
 import { Component, OnInit, Inject, ElementRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { lastValueFrom } from 'rxjs';
-import { HttpUsersService } from 'src/app/http/http-api';
+import { HttpMastersService } from 'src/app/http/http-masters.service';
+import { HttpUsersService } from 'src/app/http/http-users.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -26,7 +27,8 @@ export class MasterMachineEditorComponent implements OnInit {
   constructor(
     private dialog: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private api: HttpUsersService,
+    private user: HttpUsersService,
+    private $master : HttpMastersService
   ) { }
 
   ngOnInit(): void {
@@ -51,7 +53,7 @@ export class MasterMachineEditorComponent implements OnInit {
   }
 
   async getMachine() {
-    let data = await lastValueFrom(this.api.Master_getall())
+    let data = await lastValueFrom(this.$master.Master_getall())
     let province = [...new Set(data.map((item: any) => item.Province))]; // [ 'A', 'B']
     this.province = province.map((d: any) => {
       return {
@@ -85,7 +87,7 @@ export class MasterMachineEditorComponent implements OnInit {
   }
 
   async getPiC() {
-    this.PIC = await lastValueFrom(this.api.Master_User_getall())
+    this.PIC = await lastValueFrom(this.user.Master_User_getall())
   }
 
   debug_before() {
@@ -114,7 +116,7 @@ export class MasterMachineEditorComponent implements OnInit {
         //code start
         delete this.rawData.No
         delete this.rawData.updatedAt
-        let update = await lastValueFrom(this.api.Master_update(this.rawData._id,this.rawData))
+        let update = await lastValueFrom(this.$master.Master_update(this.rawData._id,this.rawData))
         //code end
         if (update) {
           this.dialog.close('ok')
@@ -133,7 +135,7 @@ export class MasterMachineEditorComponent implements OnInit {
     }).then(async r => {
       if (r.isConfirmed) {
         //code start
-        let add = await lastValueFrom(this.api.Master_add(this.rawData))
+        let add = await lastValueFrom(this.$master.Master_add(this.rawData))
         //code end
         if (add) {
           this.dialog.close('ok')

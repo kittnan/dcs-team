@@ -17,71 +17,13 @@ export class HttpUsersService {
 
 
 
-  //#region Master Machine
-  Master_getall(): Observable<any> {
-    return this.http.get(this.Url + "/machine/")
-  }
-
-  Master_add(data: any): Observable<any> {
-    return this.http.post(this.Url + "/machine/", data)
-  }
-
-  Master_update(id: any, data: any): Observable<any> {
-    return this.http.put(this.Url + "/machine/insert/" + id, data)
-  }
-
-  Master_DelByCondition(data: any): Observable<any> {
-    return this.http.post(this.Url + "/machine/delByCondition/", data)
-  }
-  //#endregion
 
 
 
 
 
-  //#region Master User
-  Master_User_getall(): Observable<any> {
-    return this.http.get(this.Url + "/user/")
-  }
 
-  Master_User_add(data: any): Observable<any> {
-    return this.http.post(this.Url + "/user/", data)
-  }
 
-  Master_User_update(id: any, data: any): Observable<any> {
-    return this.http.put(this.Url + "/user/insert/" + id, data)
-  }
-
-  Master_User_GetByCondition(data: any): Observable<any> {
-    return this.http.post(this.Url + "/user/getByCondition/", data)
-  }
-
-  Master_User_DelByCondition(data: any): Observable<any> {
-    return this.http.post(this.Url + "/user/delByCondition/", data)
-  }
-  //#endregion
-
-//#region Master User
-serviceTypeOption_getall(): Observable<any> {
-  return this.http.get(this.Url + "/serviceTypeOption/")
-}
-
-serviceTypeOption_add(data: any): Observable<any> {
-  return this.http.post(this.Url + "/serviceTypeOption/", data)
-}
-
-serviceTypeOption_update(id: any, data: any): Observable<any> {
-  return this.http.put(this.Url + "/serviceTypeOption/insert/" + id, data)
-}
-
-serviceTypeOption_GetByCondition(data: any): Observable<any> {
-  return this.http.post(this.Url + "/serviceTypeOption/getByCondition/", data)
-}
-
-serviceTypeOption_DelByCondition(data: any): Observable<any> {
-  return this.http.post(this.Url + "/serviceTypeOption/delByCondition/", data)
-}
-//#endregion
 
 
 
