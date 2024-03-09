@@ -27,13 +27,19 @@ export class MasterManageEditorComponent implements OnInit {
       this.rawData = {...this.data}
       this.permission = {
         admin: this.rawData.permission.filter((d: any) => d == 'admin').length != 0 ? true : false,
-        engineer: this.rawData.permission.filter((d: any) => d == 'engineer').length != 0 ? true : false
+        engineer: this.rawData.permission.filter((d: any) => d == 'engineer').length != 0 ? true : false,
+        special: this.rawData.permission.filter((d: any) => d == 'special').length != 0 ? true : false,
+        store: this.rawData.permission.filter((d: any) => d == 'store').length != 0 ? true : false,
+        fullAdmin: this.rawData.permission.filter((d: any) => d == 'fullAdmin').length != 0 ? true : false
       }
       this.debug_before()
     }else{
       this.permission = {
         admin: false,
-        engineer: true
+        engineer: false,
+        special: false,
+        store: false,
+        fullAdmin: false,
       }
     }
 
