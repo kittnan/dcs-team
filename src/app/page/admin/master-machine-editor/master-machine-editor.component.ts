@@ -116,6 +116,7 @@ export class MasterMachineEditorComponent implements OnInit {
         //code start
         delete this.rawData.No
         delete this.rawData.updatedAt
+        delete this.rawData.name
         let update = await lastValueFrom(this.$master.Master_update(this.rawData._id,this.rawData))
         //code end
         if (update) {
