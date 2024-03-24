@@ -14,6 +14,7 @@ import { Cell, Row, Workbook, Worksheet } from 'ExcelJs';
 import { MatDialog } from '@angular/material/dialog';
 import { MasterMachineEditorComponent } from '../master-machine-editor/master-machine-editor.component';
 import * as moment from 'moment';
+import { MatSort } from '@angular/material/sort';
 var fs = require('file-saver');
 
 @Component({
@@ -23,9 +24,10 @@ var fs = require('file-saver');
 })
 export class MasterMachineComponent {
 
-  displayedColumns: string[] = ['No','District', 'Customer', 'Machine', 'S/N', 'PIC', 'TARGETS', 'Action'];
+  displayedColumns: string[] = ['No', 'Province', 'District', 'Customer', 'Machine', 'S/N', 'PIC', 'Action'];
   dataSource: any = new MatTableDataSource
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
+  @ViewChild(MatSort) sort:any = MatSort;
 
   county: any
   dataExcel: any = []
@@ -55,41 +57,72 @@ export class MasterMachineComponent {
     if (data.length != 0) {
       this.data = data
       this.dataSourceX = data
-      this.Province = [...new Set(data.map((item: any) => item.Province))]; // [ 'A', 'B']
-      this.Province = this.Province.sort()
-      this.province = this.Province.map((d: any) => {
-        return {
-          list: `${d}`,
-        }
-      })
-      this.var_Province = this.Province[0]
-      this.selectData()
-    }
-  }
+      // this.Province = [...new Set(data.map((item: any) => item.Province))]; // [ 'A', 'B']
+      // this.Province = this.Province.sort()
+      // this.province = this.Province.map((d: any) => {
+      //   return {
+      //     list: `${d}`,
+      //   }
+      // })
+      // console.log(this.province);
 
-
-  async selectData() {
-    setTimeout(async () => {
-      // console.log(this.var_Province);
-      let data = this.dataSourceX.filter((d: any) => d['Province'] == this.var_Province)
+      // this.var_Province = this.Province[0]
+      // this.selectData()
       let user = await lastValueFrom(this.$user.Master_User_getall())
-      data = data.map((d: any, i: any) => {
-        let koo = d['PIC'].map((e: any) => {
-          let data = user.filter((s: any) => s._id == e)
-          return data.length != 0 ? data[0].name : ''
+      this.data = this.sorts(this.data, "Province", 0)
+      this.data = this.data.map((d: any, i: any) => {
+        let koo = d['PIC']?.map((e: any) => {
+          let a = user.filter((s: any) => s._id == e)
+          return a.length != 0 ? a[0].name : ''
         })
         return {
           ...d,
-          "No": i + 1,
+          No: i + 1,
           "name": koo
         }
       })
-
-      this.dataSource = new MatTableDataSource(data)
+      this.dataSource = new MatTableDataSource(this.data)
       this.dataSource.paginator = this.paginator;
-    }, 100);
-
+      this.dataSource.sort = this.sort;
+    }
   }
+
+  sorts(array: any, key: any, mode: any) {
+    array = array.sort(function (a: any, b: any) {
+      if (mode == 1) {
+        return b[key].localeCompare(a[key])
+      } else {
+        return a[key].localeCompare(b[key])
+      }
+
+    })
+    return array
+  }
+
+  // async selectData() {
+  //   setTimeout(async () => {
+  //     // console.log(this.var_Province);
+  //     let data = this.dataSourceX.filter((d: any) => d['Province'] == this.var_Province)
+  //     let user = await lastValueFrom(this.$user.Master_User_getall())
+  //     data = data.map((d: any, i: any) => {
+  //       let koo = d['PIC'].map((e: any) => {
+  //         let data = user.filter((s: any) => s._id == e)
+  //         return data.length != 0 ? data[0].name : ''
+  //       })
+  //       return {
+  //         ...d,
+  //         "No": i + 1,
+  //         "name": koo
+  //       }
+  //     })
+  //     console.log(data);
+
+
+  //     this.dataSource = new MatTableDataSource(data)
+  //     this.dataSource.paginator = this.paginator;
+  //   }, 100);
+
+  // }
 
 
   applyFilter(event: Event) {
@@ -161,6 +194,7 @@ export class MasterMachineComponent {
         }
       })
 
+
       for (const iterator of value) {
         if (iterator.id) {
           //update
@@ -171,6 +205,7 @@ export class MasterMachineComponent {
           let add = lastValueFrom(this.$master.Master_add(iterator))
         }
       }
+
       Swal.fire({
         position: 'center',
         icon: 'success',
@@ -180,7 +215,7 @@ export class MasterMachineComponent {
       }).then(() => {
         this.getData()
       })
-    }else{
+    } else {
       Swal.fire('"ไฟล์ ( master_machine.xlsx ) หมดอายุ"', '', 'error')
     }
 
@@ -212,7 +247,7 @@ export class MasterMachineComponent {
             title: 'Success',
             showConfirmButton: false,
             timer: 1500,
-          }).then(()=>{
+          }).then(() => {
             this.getData()
           })
         }, 200);
@@ -247,9 +282,11 @@ export class MasterMachineComponent {
                   worksheet._name = timestamp
 
                   let user = await lastValueFrom(this.$user.Master_User_getall())
+                  console.log(this.data);
+
                   if (user.length) {
                     this.data = this.data.map((d: any, i: any) => {
-                      let koo = d['PIC'].map((e: any) => {
+                      let koo = d['PIC']?.map((e: any) => {
                         let data = user.filter((s: any) => s._id == e)
                         return data.length != 0 ? data[0].name : ''
                       })
@@ -269,8 +306,6 @@ export class MasterMachineComponent {
                     'S/N',
                     'CODE',
                     'PIC',
-                    'Last PM',
-                    'Targets',
                     '_id'
                   ]
 
@@ -347,7 +382,6 @@ export class MasterMachineComponent {
 
 
   edit(item: any) {
-    delete item.name
     let closeDialog = this.dialog.open(MasterMachineEditorComponent, {
       width: '300px',
       data: item
@@ -361,13 +395,7 @@ export class MasterMachineComponent {
           showConfirmButton: false,
           timer: 1500,
         }).then(async () => {
-          let data: any = await lastValueFrom(this.$master.Master_getall())
-          console.log("🚀 ~ closeDialog.afterClosed ~ data:", data)
-          if (data.length != 0) {
-            this.dataSourceX = data.filter((d: any) => d['Province'] == this.var_Province)
-            this.selectData()
-          }
-
+          this.getData()
         })
 
       }

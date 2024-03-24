@@ -13,7 +13,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { MasterMachineEditorComponent } from './master-machine-editor/master-machine-editor.component';
 import { MasterServiceTypeOptionComponent } from './master-service-type-option/master-service-type-option.component';
 import { MasterServiceTypeOptionEditorComponent } from './master-service-type-option-editor/master-service-type-option-editor.component';
-
+import {CdkTableModule} from '@angular/cdk/table';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,8 @@ import { MasterServiceTypeOptionEditorComponent } from './master-service-type-op
     FlexLayoutModule,
     ReactiveFormsModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    CdkTableModule
   ]
 })
 export class AdminModule { }
