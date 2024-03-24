@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
 
-  API:"https://api_web.sodacanhomelab.uk",
+  API:"https://api.apmedexplus.com",
   FILE_UPLOAD:"https://api_file.apmedexplus.com/upload/new",
   FILE_DELETE:"https://api_file.apmedexplus.com/delete",
   // API:"http://localhost:8888"

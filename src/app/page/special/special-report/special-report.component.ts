@@ -5,15 +5,16 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
-import { HttpReportService } from 'src/app/http/http-report.service';
+import { HttpReportSpecialService } from 'src/app/http/http-report-special.service';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
 
 @Component({
-  selector: 'app-engineer-report',
-  templateUrl: './engineer-report.component.html',
-  styleUrls: ['./engineer-report.component.scss']
+  selector: 'app-special-report',
+  templateUrl: './special-report.component.html',
+  styleUrls: ['./special-report.component.scss']
 })
-export class EngineerReportComponent implements OnInit {
+export class SpecialReportComponent implements OnInit {
+
   displayedColumns: string[] = ['reportNo', 'province', 'customer', 'machine', 'sn', 'status', 'action'];
   dataSource!: MatTableDataSource<any>;
 
@@ -24,7 +25,7 @@ export class EngineerReportComponent implements OnInit {
   reports: any
   constructor(
     private router: Router,
-    private $report: HttpReportService,
+    private $report: HttpReportSpecialService,
     private $local: LocalStorageService
   ) {
     let user: any = this.$local.getProfile()
@@ -66,7 +67,7 @@ export class EngineerReportComponent implements OnInit {
   async onClickNewReport() {
     try {
       const newReport = await lastValueFrom(this.$report.createNewReport({ userActive: this.userLogin }))
-      this.router.navigate(['engineer/report-new'], {
+      this.router.navigate(['special/report-new'], {
         queryParams: {
           _id: newReport[0]._id
         }
@@ -79,14 +80,14 @@ export class EngineerReportComponent implements OnInit {
   // todo onClickReport
   onClickReport(row: any) {
     if (row && row.status == 'draft') {
-      this.router.navigate(['engineer/report-new'], {
+      this.router.navigate(['special/report-new'], {
         queryParams: {
           _id: row._id
         }
       })
     }
     if (row && row.status == 'finish') {
-      this.router.navigate(['engineer/report-view'], {
+      this.router.navigate(['special/report-view'], {
         queryParams: {
           _id: row._id
         }

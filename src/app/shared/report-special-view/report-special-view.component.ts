@@ -2,15 +2,16 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
+import { HttpReportSpecialService } from 'src/app/http/http-report-special.service';
 import { HttpReportService } from 'src/app/http/http-report.service';
 import { GenerateInvoicePdfService } from 'src/app/service/generate-invoice-pdf.service';
-
 @Component({
-  selector: 'app-report-engineer-view',
-  templateUrl: './report-engineer-view.component.html',
-  styleUrls: ['./report-engineer-view.component.scss']
+  selector: 'app-report-special-view',
+  templateUrl: './report-special-view.component.html',
+  styleUrls: ['./report-special-view.component.scss']
 })
-export class ReportEngineerViewComponent implements OnInit {
+export class ReportSpecialViewComponent implements OnInit {
+
   form: any = null
   dataPerPage: number = 7
   page: number = 1
@@ -20,7 +21,7 @@ export class ReportEngineerViewComponent implements OnInit {
     private $pdf: GenerateInvoicePdfService,
     private router: Router,
     private route: ActivatedRoute,
-    private $report: HttpReportService
+    private $report: HttpReportSpecialService
   ) { }
 
   ngOnInit(): void {
@@ -70,7 +71,7 @@ export class ReportEngineerViewComponent implements OnInit {
 
   onPrint() {
     try {
-      let url = `engineer/report-print?_id=${this.form._id}`
+      let url = `special/report-print?_id=${this.form._id}`
       window.open(url,'_blank')
     } catch (error) {
     }
@@ -82,4 +83,5 @@ export class ReportEngineerViewComponent implements OnInit {
     }
     return this.form.data.slice(page, number);
   }
+
 }

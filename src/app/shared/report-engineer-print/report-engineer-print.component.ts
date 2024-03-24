@@ -6,11 +6,12 @@ import { HttpReportService } from 'src/app/http/http-report.service';
 import { GenerateInvoicePdfService } from 'src/app/service/generate-invoice-pdf.service';
 
 @Component({
-  selector: 'app-report-engineer-view',
-  templateUrl: './report-engineer-view.component.html',
-  styleUrls: ['./report-engineer-view.component.scss']
+  selector: 'app-report-engineer-print',
+  templateUrl: './report-engineer-print.component.html',
+  styleUrls: ['./report-engineer-print.component.scss']
 })
-export class ReportEngineerViewComponent implements OnInit {
+export class ReportEngineerPrintComponent implements OnInit {
+
   form: any = null
   dataPerPage: number = 7
   page: number = 1
@@ -45,7 +46,7 @@ export class ReportEngineerViewComponent implements OnInit {
               { length: this.page },
               (_, index) => index + 1
             );
-
+              this.onPrint()
           }
         }
       })
@@ -53,6 +54,15 @@ export class ReportEngineerViewComponent implements OnInit {
     }
   }
 
+  ngAfterViewChecked(): void {
+    //Called after every check of the component's view. Applies to components only.
+    //Add 'implements AfterViewChecked' to the class.
+    // this.onPrint()
+  }
+
+  ngAfterViewInit(): void {
+
+  }
 
   blobToBase64(blob: Blob): Promise<string> {
     const reader = new FileReader();
@@ -70,8 +80,7 @@ export class ReportEngineerViewComponent implements OnInit {
 
   onPrint() {
     try {
-      let url = `engineer/report-print?_id=${this.form._id}`
-      window.open(url,'_blank')
+      this.$pdf.generatePDF(`engineer-report-${this.form.no}`, 'p')
     } catch (error) {
     }
   }
@@ -82,4 +91,5 @@ export class ReportEngineerViewComponent implements OnInit {
     }
     return this.form.data.slice(page, number);
   }
+
 }

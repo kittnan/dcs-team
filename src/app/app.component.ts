@@ -31,21 +31,21 @@ export class AppComponent {
       access: ['admin'],
       items: [
         {
-          title: 'master_machine',
+          title: 'Machine',
           icon: 'assets/img/icon_sidebar/master_manage.png',
           path: 'admin/master_machine',
           items: [],
           access: ['']
         },
         {
-          title: 'master_manage',
+          title: 'User',
           icon: 'assets/img/icon_sidebar/user_manage_icon.png',
           path: 'admin/master_manage',
           items: [],
           access: ['']
         },
         {
-          title: 'ServiceType',
+          title: 'Service',
           icon: 'assets/img/icon_sidebar/service.png',
           path: 'admin/master_service_type_option',
           items: [],
@@ -60,9 +60,24 @@ export class AppComponent {
       access: ['admin', 'engineer'],
       items: [
         {
-          title: 'engineer',
+          title: 'report',
           icon: 'assets/img/icon_sidebar/report.png',
           path: 'engineer/report',
+          items: [],
+          access: ['']
+        },
+      ]
+    },
+    {
+      title: 'Special',
+      icon: 'assets/img/icon_sidebar/engineer.png',
+      path: '',
+      access: ['admin', 'special'],
+      items: [
+        {
+          title: 'report',
+          icon: 'assets/img/icon_sidebar/report.png',
+          path: 'special/report',
           items: [],
           access: ['']
         },

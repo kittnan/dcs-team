@@ -8,6 +8,10 @@ import { MaterialModule } from '../material/material.module';
 import { SignaturePadComponent } from './signature-pad/signature-pad.component';
 import { BottomSheetEngComponent } from './bottom-sheet-eng/bottom-sheet-eng.component';
 import { ReportEngineerViewComponent } from './report-engineer-view/report-engineer-view.component';
+import { ReportEngineerPrintComponent } from './report-engineer-print/report-engineer-print.component';
+import { AutoCompleteComponent } from './auto-complete/auto-complete.component';
+import { ReportSpecialViewComponent } from './report-special-view/report-special-view.component';
+import { ReportSpecialPrintComponent } from './report-special-print/report-special-print.component';
 
 let items = [
   SubTitleComponent,
@@ -20,7 +24,11 @@ let items = [
     ...items,
     SignaturePadComponent,
     BottomSheetEngComponent,
-    ReportEngineerViewComponent
+    ReportEngineerViewComponent,
+    ReportEngineerPrintComponent,
+    AutoCompleteComponent,
+    ReportSpecialViewComponent,
+    ReportSpecialPrintComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +41,11 @@ let items = [
     ...items,
     SignaturePadComponent,
     BottomSheetEngComponent,
-    ReportEngineerViewComponent
+    ReportEngineerViewComponent,
+    ReportEngineerPrintComponent,
+    AutoCompleteComponent,
+    ReportSpecialViewComponent,
+    ReportSpecialPrintComponent
   ]
 })
 export class SharedModule { }

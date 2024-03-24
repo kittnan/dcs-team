@@ -2,15 +2,17 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
+import { HttpReportSpecialService } from 'src/app/http/http-report-special.service';
 import { HttpReportService } from 'src/app/http/http-report.service';
 import { GenerateInvoicePdfService } from 'src/app/service/generate-invoice-pdf.service';
-
 @Component({
-  selector: 'app-report-engineer-view',
-  templateUrl: './report-engineer-view.component.html',
-  styleUrls: ['./report-engineer-view.component.scss']
+  selector: 'app-report-special-print',
+  templateUrl: './report-special-print.component.html',
+  styleUrls: ['./report-special-print.component.scss']
 })
-export class ReportEngineerViewComponent implements OnInit {
+export class ReportSpecialPrintComponent implements OnInit {
+
+
   form: any = null
   dataPerPage: number = 7
   page: number = 1
@@ -20,7 +22,7 @@ export class ReportEngineerViewComponent implements OnInit {
     private $pdf: GenerateInvoicePdfService,
     private router: Router,
     private route: ActivatedRoute,
-    private $report: HttpReportService
+    private $report: HttpReportSpecialService
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +47,7 @@ export class ReportEngineerViewComponent implements OnInit {
               { length: this.page },
               (_, index) => index + 1
             );
-
+              this.onPrint()
           }
         }
       })
@@ -53,6 +55,15 @@ export class ReportEngineerViewComponent implements OnInit {
     }
   }
 
+  ngAfterViewChecked(): void {
+    //Called after every check of the component's view. Applies to components only.
+    //Add 'implements AfterViewChecked' to the class.
+    // this.onPrint()
+  }
+
+  ngAfterViewInit(): void {
+
+  }
 
   blobToBase64(blob: Blob): Promise<string> {
     const reader = new FileReader();
@@ -70,8 +81,7 @@ export class ReportEngineerViewComponent implements OnInit {
 
   onPrint() {
     try {
-      let url = `engineer/report-print?_id=${this.form._id}`
-      window.open(url,'_blank')
+      this.$pdf.generatePDF(`engineer-report-${this.form.no}`, 'p')
     } catch (error) {
     }
   }
@@ -82,4 +92,5 @@ export class ReportEngineerViewComponent implements OnInit {
     }
     return this.form.data.slice(page, number);
   }
+
 }

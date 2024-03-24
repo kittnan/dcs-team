@@ -70,7 +70,7 @@ export class GenerateInvoicePdfService {
                 'FAST'
               );
               if (index + 1 === div.length) {
-                await doc.save(`${name}.pdf`);
+                let foo = await doc.save(`${name}.pdf`);
                 this.$loader.stop()
               }
             }
@@ -82,7 +82,7 @@ export class GenerateInvoicePdfService {
       }, 100);
     } catch (error) {
       console.log("🚀 ~ error:", error)
-
+      this.$loader.stop()
     }
 
   }

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { EngineerReportComponent } from './engineer-report/engineer-report.component';
 import { EngineerReportNewComponent } from './engineer-report-new/engineer-report-new.component';
 import { EngineerReportViewComponent } from './engineer-report-view/engineer-report-view.component';
+import { EngineerReportPrintComponent } from './engineer-report-print/engineer-report-print.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path:'report-view',
     component:EngineerReportViewComponent
+  },
+  {
+    path:'report-print',
+    component:EngineerReportPrintComponent
   },
 ];
 

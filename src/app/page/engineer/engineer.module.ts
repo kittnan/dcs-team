@@ -11,6 +11,7 @@ import { MaterialModule } from 'src/app/material/material.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { EngineerReportNewComponent } from './engineer-report-new/engineer-report-new.component';
 import { EngineerReportViewComponent } from './engineer-report-view/engineer-report-view.component';
+import { EngineerReportPrintComponent } from './engineer-report-print/engineer-report-print.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { EngineerReportViewComponent } from './engineer-report-view/engineer-rep
     EngineerComponent,
     EngineerReportComponent,
     EngineerReportNewComponent,
-    EngineerReportViewComponent
+    EngineerReportViewComponent,
+    EngineerReportPrintComponent
   ],
   imports: [
     CommonModule,

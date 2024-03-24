@@ -6,19 +6,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { lastValueFrom } from 'rxjs';
 import { HttpMastersService } from 'src/app/http/http-masters.service';
+import { HttpReportSpecialService } from 'src/app/http/http-report-special.service';
 import { HttpReportService } from 'src/app/http/http-report.service';
 import { HttpServiceTypeService } from 'src/app/http/http-serviceType.service';
 import { GenerateInvoicePdfService } from 'src/app/service/generate-invoice-pdf.service';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
 import { SignaturePadComponent } from 'src/app/shared/signature-pad/signature-pad.component';
 import Swal, { SweetAlertResult } from 'sweetalert2';
-
 @Component({
-  selector: 'app-engineer-report-new',
-  templateUrl: './engineer-report-new.component.html',
-  styleUrls: ['./engineer-report-new.component.scss']
+  selector: 'app-special-report-new',
+  templateUrl: './special-report-new.component.html',
+  styleUrls: ['./special-report-new.component.scss']
 })
-export class EngineerReportNewComponent implements OnInit {
+export class SpecialReportNewComponent implements OnInit {
+
   pageArr: any[] = [];
   page: number = 1
   dataPerPage: number = 7
@@ -74,7 +75,7 @@ export class EngineerReportNewComponent implements OnInit {
     private $local: LocalStorageService,
     private router: Router,
     private route: ActivatedRoute,
-    private $report: HttpReportService,
+    private $report: HttpReportSpecialService,
     private $serviceType: HttpServiceTypeService,
     public dialog: MatDialog,
   ) {
@@ -286,7 +287,7 @@ export class EngineerReportNewComponent implements OnInit {
         showConfirmButton: false,
         timer: 1500
       }).then(() => {
-        this.router.navigate(['engineer'])
+        this.router.navigate(['special'])
       })
     } catch (error) {
       console.log("🚀 ~ error:", error)
@@ -383,7 +384,7 @@ export class EngineerReportNewComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500
           }).then(() => {
-            this.router.navigate(['engineer'])
+            this.router.navigate(['special'])
           })
         }
       })
@@ -399,4 +400,5 @@ export class EngineerReportNewComponent implements OnInit {
   public objectComparisonFunction_machine = function (option: any, value: any): boolean {
     return option.Machine === value.Machine;
   }
+
 }
