@@ -6,6 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../material/material.module';
 import { SignaturePadComponent } from './signature-pad/signature-pad.component';
+import { BottomSheetEngComponent } from './bottom-sheet-eng/bottom-sheet-eng.component';
+import { ReportEngineerViewComponent } from './report-engineer-view/report-engineer-view.component';
 
 let items = [
   SubTitleComponent,
@@ -16,7 +18,9 @@ let items = [
 @NgModule({
   declarations: [
     ...items,
-    SignaturePadComponent
+    SignaturePadComponent,
+    BottomSheetEngComponent,
+    ReportEngineerViewComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +31,9 @@ let items = [
   ],
   exports:[
     ...items,
-    SignaturePadComponent
+    SignaturePadComponent,
+    BottomSheetEngComponent,
+    ReportEngineerViewComponent
   ]
 })
 export class SharedModule { }

@@ -81,6 +81,13 @@ export class EngineerReportComponent implements OnInit {
         }
       })
     }
+    if (row && row.status == 'finish') {
+      this.router.navigate(['engineer/report-view'], {
+        queryParams: {
+          _id: row._id
+        }
+      })
+    }
   }
 
 }

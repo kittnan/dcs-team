@@ -10,13 +10,15 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material/material.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { EngineerReportNewComponent } from './engineer-report-new/engineer-report-new.component';
+import { EngineerReportViewComponent } from './engineer-report-view/engineer-report-view.component';
 
 
 @NgModule({
   declarations: [
     EngineerComponent,
     EngineerReportComponent,
-    EngineerReportNewComponent
+    EngineerReportNewComponent,
+    EngineerReportViewComponent
   ],
   imports: [
     CommonModule,

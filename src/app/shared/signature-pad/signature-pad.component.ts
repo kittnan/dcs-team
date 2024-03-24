@@ -1,4 +1,5 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import SignaturePad from 'signature_pad';
 @Component({
   selector: 'app-signature-pad',
@@ -8,15 +9,28 @@ import SignaturePad from 'signature_pad';
 export class SignaturePadComponent implements OnInit {
   signatureNeeded!: boolean;
   signaturePad!: SignaturePad;
-  @ViewChild('canvas') canvasEl!: ElementRef;
+  @ViewChild('sign') canvasEl!: ElementRef;
   signatureImg!: string;
   @Output() signChange: EventEmitter<any> = new EventEmitter()
-  constructor() { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialog: MatDialog,
+    private dialogRef: MatDialogRef<any>
+  ) {
+
+  }
 
   ngOnInit(): void {
   }
   ngAfterViewInit() {
     this.signaturePad = new SignaturePad(this.canvasEl.nativeElement);
+  }
+
+  resizeCanvas(canvas: any) {
+    var ratio = Math.max(window.devicePixelRatio || 1, 1);
+    canvas.width = canvas.offsetWidth * ratio;
+    canvas.height = canvas.offsetHeight * ratio;
+    canvas.getContext("2d").scale(ratio, ratio);
   }
 
   startDrawing(event: Event) {
@@ -29,6 +43,7 @@ export class SignaturePadComponent implements OnInit {
 
   clearPad() {
     this.signaturePad.clear();
+    this.dialogRef.close(null)
   }
 
   savePad() {
@@ -39,5 +54,9 @@ export class SignaturePadComponent implements OnInit {
     if (!this.signatureNeeded) {
       this.signatureNeeded = false;
     }
+
+    this.dialogRef.close(base64Data)
   }
+
+
 }

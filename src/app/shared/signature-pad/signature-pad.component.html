@@ -1,10 +1,12 @@
 <!-- <h4>Please Add your signature here</h4> -->
-<canvas #canvas (touchstart)="startDrawing($event)" (touchmove)="moved($event)" height="200" width="500"></canvas>
-<p class="error-message" *ngIf="signatureNeeded">Signature is required</p>
 
-<div class="buttons flex justify-between">
-  <button (click)="clearPad()">ยกเลิก</button>
-  <button (click)="savePad()">ยืนยัน</button>
+<div id="signature-pad" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+  <canvas #sign (touchstart)="startDrawing($event)" (touchmove)="moved($event)" width="300" height="250"  ></canvas>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around center" >
+    <button (click)="clearPad()">ยกเลิก</button>
+    <button (click)="savePad()">ยืนยัน</button>
+  </div>
 </div>
 
 <!-- <div *ngIf="signatureNeeded === false">
