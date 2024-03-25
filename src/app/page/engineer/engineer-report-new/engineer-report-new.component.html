@@ -1,7 +1,8 @@
 <div *ngIf="form" fxLayout="row wrap" fxLayoutAlign="center center">
   <app-title fxFlex="100" [title]="'Engineer Report'"></app-title>
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10">
-    <app-auto-complete  *ngIf="customerOptionStr.length>0" fxFlex="100" fxFlex.gt-md="30" [myControl]="customerCtrl" [options]="customerOptionStr" (optionsChange)="onSelectCustomer($event)"></app-auto-complete>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between stretch" >
+    <app-auto-complete  class="btn-set"  *ngIf="customerOptionStr.length>0" fxFlex="100" fxFlex.gt-md="32" [myControl]="customerCtrl" [options]="customerOptionStr" (optionsChange)="onSelectCustomer($event)">
+    </app-auto-complete>
     <!-- <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
       <mat-label>โรงพยาบาล/ลูกค้า</mat-label>
       <mat-select [(ngModel)]="form.customer" (selectionChange)="onSelectCustomer()"
@@ -11,7 +12,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field> -->
-    <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
+    <mat-form-field fxFlex="100" fxFlex.gt-md="32" appearance="outline" floatLabel="always" class="btn-set">
       <mat-label>เครื่อง</mat-label>
       <mat-select [(ngModel)]="form.machine" [compareWith]="objectComparisonFunction_machine" >
         <mat-option *ngFor="let item of machineOption" [value]="item">
@@ -19,7 +20,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
+    <mat-form-field fxFlex="100" fxFlex.gt-md="32" appearance="outline" floatLabel="always" class="btn-set">
       <mat-label>งานบริการ</mat-label>
       <mat-select [(ngModel)]="form.serviceType" [compareWith]="objectComparisonFunction_id">
         <mat-option *ngFor="let item of serviceTypeOption" [value]="item">
@@ -29,13 +30,17 @@
     </mat-form-field>
   </div>
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" class="mb-4">
-    <button mat-raised-button class="pr-4" (click)="onAddPage()">
+    <!-- <button mat-raised-button class="pr-4" (click)="onAddPage()">
       <div fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="5">
         <span>
           เพิ่มหน้า
         </span>
         <mat-icon class="mat-18">add</mat-icon>
       </div>
+    </button> -->
+    <button mat-button class="btn-add" (click)="onAddPage()" style="color: black">
+      <img src="assets/img/master-machine/add-file.png" class="btn-img-add" />
+      เพิ่มหน้า
     </button>
   </div>
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" *ngFor="let p of pageArr; let p_i = index"
@@ -235,7 +240,8 @@
                 </span>
               </div>
               <div fxFlex="100" fxFlex.gt-md="80" fxLayout="row wrap" fxLayoutAlign="start stretch">
-                {{userLogin.telephone}}
+                <!-- {{userLogin.telephone}} -->
+                {{ userLogin.telephone | slice:0:3 }}-{{ userLogin.telephone | slice:3:6 }}-{{ userLogin.telephone | slice:6 }}
               </div>
             </div>
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mb-2">
@@ -299,8 +305,15 @@
 
   </div>
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="20">
-
-    <button mat-raised-button (click)="onFinish()">
+    <button mat-button class="btn-add" (click)="onFinish()" style="color: black">
+      <img src="assets/img/report/select.png" class="btn-img-add" />
+      Finish
+    </button>
+    <button mat-button class="btn-save" (click)="onSave()" style="color: black">
+      <img src="assets/img/report/save.png" class="btn-img-add" />
+      Save
+    </button>
+    <!-- <button mat-raised-button (click)="onFinish()">
       <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
         <mat-icon class="mat-18">
           done_all
@@ -320,7 +333,7 @@
           บันทึก
         </span>
       </div>
-    </button>
+    </button> -->
   </div>
 
 </div>

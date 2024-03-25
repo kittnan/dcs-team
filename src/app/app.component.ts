@@ -70,7 +70,7 @@ export class AppComponent {
     },
     {
       title: 'Special',
-      icon: 'assets/img/icon_sidebar/engineer.png',
+      icon: 'assets/img/icon_sidebar/special1.png',
       path: '',
       access: ['admin', 'special'],
       items: [
