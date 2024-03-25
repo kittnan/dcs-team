@@ -12,6 +12,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { EngineerReportNewComponent } from './engineer-report-new/engineer-report-new.component';
 import { EngineerReportViewComponent } from './engineer-report-view/engineer-report-view.component';
 import { EngineerReportPrintComponent } from './engineer-report-print/engineer-report-print.component';
+import { EngineerReportMultiPrintComponent } from './engineer-report-multi-print/engineer-report-multi-print.component';
+import { EngineerReportMultiPrintViewComponent } from './engineer-report-multi-print-view/engineer-report-multi-print-view.component';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { EngineerReportPrintComponent } from './engineer-report-print/engineer-r
     EngineerReportComponent,
     EngineerReportNewComponent,
     EngineerReportViewComponent,
-    EngineerReportPrintComponent
+    EngineerReportPrintComponent,
+    EngineerReportMultiPrintComponent,
+    EngineerReportMultiPrintViewComponent
   ],
   imports: [
     CommonModule,

@@ -4,6 +4,8 @@ import { EngineerReportComponent } from './engineer-report/engineer-report.compo
 import { EngineerReportNewComponent } from './engineer-report-new/engineer-report-new.component';
 import { EngineerReportViewComponent } from './engineer-report-view/engineer-report-view.component';
 import { EngineerReportPrintComponent } from './engineer-report-print/engineer-report-print.component';
+import { EngineerReportMultiPrintComponent } from './engineer-report-multi-print/engineer-report-multi-print.component';
+import { EngineerReportMultiPrintViewComponent } from './engineer-report-multi-print-view/engineer-report-multi-print-view.component';
 
 const routes: Routes = [
   {
@@ -26,6 +28,14 @@ const routes: Routes = [
   {
     path:'report-print',
     component:EngineerReportPrintComponent
+  },
+  {
+    path:'report-multi-print',
+    component:EngineerReportMultiPrintComponent
+  },
+  {
+    path:'report-multi-print-view',
+    component:EngineerReportMultiPrintViewComponent
   },
 ];
 

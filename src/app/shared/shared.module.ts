@@ -12,6 +12,8 @@ import { ReportEngineerPrintComponent } from './report-engineer-print/report-eng
 import { AutoCompleteComponent } from './auto-complete/auto-complete.component';
 import { ReportSpecialViewComponent } from './report-special-view/report-special-view.component';
 import { ReportSpecialPrintComponent } from './report-special-print/report-special-print.component';
+import { ReportMultiPrintComponent } from './report-multi-print/report-multi-print.component';
+import { ReportMultiPrintViewComponent } from './report-multi-print-view/report-multi-print-view.component';
 
 let items = [
   SubTitleComponent,
@@ -28,7 +30,9 @@ let items = [
     ReportEngineerPrintComponent,
     AutoCompleteComponent,
     ReportSpecialViewComponent,
-    ReportSpecialPrintComponent
+    ReportSpecialPrintComponent,
+    ReportMultiPrintComponent,
+    ReportMultiPrintViewComponent
   ],
   imports: [
     CommonModule,
@@ -45,7 +49,9 @@ let items = [
     ReportEngineerPrintComponent,
     AutoCompleteComponent,
     ReportSpecialViewComponent,
-    ReportSpecialPrintComponent
+    ReportSpecialPrintComponent,
+    ReportMultiPrintComponent,
+    ReportMultiPrintViewComponent
   ]
 })
 export class SharedModule { }

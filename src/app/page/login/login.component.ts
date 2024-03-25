@@ -80,8 +80,13 @@ export class LoginComponent {
             } else {
               alert('Not access')
               this.$local.clear()
-              this.router.navigate(['/']).then(()=>location.reload())
+              this.router.navigate(['/']).then(() => location.reload())
             }
 
+  }
+
+  logout() {
+    this.$local.clear()
+    this.router.navigate(['/login']).then(() => location.reload())
   }
 }

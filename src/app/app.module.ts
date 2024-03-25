@@ -20,10 +20,10 @@ import { JwtInterceptor } from './auth/jwt.interceptor';
 import { MasterMachineComponent } from './page/admin/master-machine/master-machine.component';
 import { MasterManageComponent } from './page/admin/master-manage/master-manage.component';
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
-  bgsColor: "red",
-  bgsPosition: POSITION.bottomCenter,
-  bgsSize: 40,
-  bgsType: SPINNER.rectangleBounce, // background spinner type
+  bgsColor: "#278fff",
+  bgsPosition: "bottom-right",
+  bgsSize: 60,
+  bgsType: "wandering-cubes", // background spinner type
   fgsType: SPINNER.chasingDots, // foreground spinner type
   pbDirection: PB_DIRECTION.leftToRight, // progress bar direction
   pbThickness: 5, // progress bar thickness
@@ -68,9 +68,9 @@ export const MY_FORMATS = {
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     {
-      provide:HTTP_INTERCEPTORS,
-      useClass:JwtInterceptor,
-      multi:true
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
     }
   ],
   bootstrap: [AppComponent]
