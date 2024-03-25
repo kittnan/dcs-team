@@ -14,8 +14,8 @@ import { LocalStorageService } from 'src/app/service/local-storage.service';
   styleUrls: ['./engineer-report.component.scss']
 })
 export class EngineerReportComponent implements OnInit {
-  displayedColumns: string[] = ['reportNo', 'province', 'customer', 'machine', 'sn', 'status', 'action'];
-  dataSource!: MatTableDataSource<any>;
+  displayedColumns: string[] = ['reportNo', 'province', 'customer', 'machine', 'sn', 'status'];
+  dataSource: MatTableDataSource<any> = new MatTableDataSource()
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

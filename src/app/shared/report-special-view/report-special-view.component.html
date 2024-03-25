@@ -2,13 +2,17 @@
   <app-title fxFlex="100" [title]="'Special Report'"></app-title>
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" class="mb-4">
-    <button mat-raised-button class="pr-4" (click)="onPrint()">
+    <!-- <button mat-raised-button class="pr-4" (click)="onPrint()">
       <div fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="5">
         <span>
           PRINT PDF
         </span>
         <mat-icon class="mat-18">done</mat-icon>
       </div>
+    </button> -->
+    <button mat-button class="btn-add" (click)="onPrint()" style="color: black">
+      <img src="assets/img/report/printer.png" class="btn-img-add" />
+      PRINT PDF
     </button>
   </div>
   <div class="overflow-auto">
@@ -187,7 +191,8 @@
                   </label>
                 </div>
                 <div fxFlex="70" fxLayout="row wrap" fxLayoutAlign="start stretch">
-                  {{form.userActive.telephone}}
+                  <!-- {{form.userActive.telephone}} -->
+                  {{ form.userActive.telephone | slice:0:3 }}-{{ form.userActive.telephone | slice:3:6 }}-{{ form.userActive.telephone | slice:6 }}
                 </div>
               </div>
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">

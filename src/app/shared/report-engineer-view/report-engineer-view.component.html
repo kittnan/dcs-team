@@ -2,13 +2,17 @@
   <app-title fxFlex="100" [title]="'Engineer Report'"></app-title>
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" class="mb-4">
-    <button mat-raised-button class="pr-4" (click)="onPrint()">
+    <!-- <button mat-raised-button class="pr-4" (click)="onPrint()">
       <div fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="5">
         <span>
           PRINT PDF
         </span>
         <mat-icon class="mat-18">done</mat-icon>
       </div>
+    </button> -->
+    <button mat-button class="btn-add" (click)="onPrint()" style="color: black">
+      <img src="assets/img/report/printer.png" class="btn-img-add" />
+      PRINT PDF
     </button>
   </div>
   <div class="overflow-auto">
@@ -109,7 +113,6 @@
                   <img [attr.src]="item.files[0]['view']  | async " class="mb-2 rounded-md cursor-pointer mx-auto"
                     style="max-height: 175px;">
                 </ng-container>
-
               </div>
             </div>
             <div fxFlex="65" fxLayout="row wrap" fxLayoutAlign="start stretch" style="height: 210px;">
@@ -159,7 +162,7 @@
               </span>
             </div>
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-2 mt-4">
-              <textarea [readOnly]="true" [(ngModel)]="form.description" fxFlex="98" rows="3" class="mb-3 p-2"
+              <textarea [readOnly]="true" [(ngModel)]="form.description" fxFlex="98" rows="3" class="mb-3 p-2 rounded-md"
                 style="border: 1px solid;"></textarea>
             </div>
           </div>
@@ -187,7 +190,8 @@
                   </label>
                 </div>
                 <div fxFlex="70" fxLayout="row wrap" fxLayoutAlign="start stretch">
-                  {{form.userActive.telephone}}
+                  <!-- {{form.userActive.telephone}} -->
+                  {{ form.userActive.telephone | slice:0:3 }}-{{ form.userActive.telephone | slice:3:6 }}-{{ form.userActive.telephone | slice:6 }}
                 </div>
               </div>
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">

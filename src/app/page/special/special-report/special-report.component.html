@@ -1,64 +1,69 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center">
   <app-title fxFlex="90" [title]="'Report Manage'"></app-title>
-  <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="center stretch">
+  <div fxFlex="100" fxFlex.gt-xs="80" fxLayout="row wrap" fxLayoutAlign="center stretch">
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
-      <mat-form-field appearance="outline" floatLabel="always">
+      <mat-form-field appearance="outline" floatLabel="always" class="btn-set">
         <mat-label>ค้นหา</mat-label>
         <input matInput (keyup)="applyFilter($event)" #input>
       </mat-form-field>
       <div fxFlex="auto"></div>
-      <button mat-raised-button (click)="onClickNewReport()">
+      <!-- <button mat-raised-button (click)="onClickNewReport()">
         <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
           <span>New</span>
           <mat-icon class="mat-18">add</mat-icon>
         </div>
+      </button> -->
+
+      <button mat-button class="btn-add" (click)="onClickNewReport()" style="color: black">
+        <img src="assets/img/master-machine/add-file.png" class="btn-img-add" />
+        เพิ่มข้อมูล
       </button>
+
     </div>
 
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between start" class="overflow-auto">
-      <table fxFlex="100" mat-table [dataSource]="dataSource" matSort>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between start"
+      class="overflow-auto mat-elevation-z8 mt-1">
+      <table fxFlex="100" mat-table [dataSource]="dataSource" matSort style="text-wrap: nowrap;">
         <ng-container matColumnDef="reportNo">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> reportNo </th>
-          <td mat-cell *matCellDef="let row">
+          <td mat-cell class="gap" *matCellDef="let row">
             <span class="cursor-pointer text-blue-500" (click)="onClickReport(row)">{{row.reportNo}}</span>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="province">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> province </th>
-          <td mat-cell *matCellDef="let row"> {{row.province}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Province </th>
+          <td mat-cell class="gap" *matCellDef="let row"> {{row.province}} </td>
         </ng-container>
 
         <ng-container matColumnDef="customer">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> customer </th>
-          <td mat-cell *matCellDef="let row"> {{row.customer}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer </th>
+          <td mat-cell class="gap" *matCellDef="let row"> {{row.customer}} </td>
         </ng-container>
 
         <ng-container matColumnDef="machine">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> machine </th>
-          <td mat-cell *matCellDef="let row"> {{row.machine}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Machine </th>
+          <td mat-cell class="gap" *matCellDef="let row"> {{row.machine}} </td>
         </ng-container>
 
         <ng-container matColumnDef="sn">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> sn </th>
-          <td mat-cell *matCellDef="let row"> {{row.sn}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> S/N </th>
+          <td mat-cell class="gap" *matCellDef="let row"> {{row.sn}} </td>
         </ng-container>
 
         <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> status </th>
-          <td mat-cell *matCellDef="let row"> {{row.status}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+          <td mat-cell class="gap" *matCellDef="let row" [ngClass]="{setColorGreen: row.status == 'finish'}"> {{row.status}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> action </th>
-          <td mat-cell *matCellDef="let row"> {{row.action}} </td>
-        </ng-container>
+
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
         <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" [attr.colspan]="displayedColumns.length">No data matching the filter "{{input.value}}"</td>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">No data matching the filter "{{input.value}}"
+          </td>
         </tr>
       </table>
 
@@ -66,7 +71,7 @@
     </div>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center">
       <mat-paginator fxFlex="100" [pageSizeOptions]="[5, 10, 25, 100,dataSource.filteredData.length]"
-      aria-label="Select page of users"></mat-paginator>
+        aria-label="Select page of users" class="shaDown"></mat-paginator>
     </div>
 
   </div>
