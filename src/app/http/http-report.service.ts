@@ -18,6 +18,9 @@ export class HttpReportService {
   get(params: HttpParams): Observable<any> {
     return this.http.get(`${this.API}/${this.SUB}`, { params: params })
   }
+  multi(params: HttpParams): Observable<any> {
+    return this.http.get(`${this.API}/${this.SUB}/multi`, { params: params })
+  }
   createNewReport(data: any): Observable<any> {
     return this.http.post(`${this.API}/${this.SUB}/createNewReport`, data)
   }

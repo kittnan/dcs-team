@@ -17,6 +17,7 @@ export class GenerateInvoicePdfService {
       this.$loader.start();
       setTimeout(async () => {
         const div: any = document.querySelectorAll('#print');
+        console.log("🚀 ~ div:", div)
         const options = {
           background: 'white',
           scale: 1.5,

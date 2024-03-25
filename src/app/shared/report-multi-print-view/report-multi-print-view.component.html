@@ -2,21 +2,18 @@
   <app-title fxFlex="100" [title]="'Engineer Report'"></app-title>
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" class="mb-4">
-    <button mat-raised-button class="pr-4" (click)="onPrint()">
-      <div fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="5">
-        <span>
-          PRINT PDF
-        </span>
-        <mat-icon class="mat-18">done</mat-icon>
-      </div>
+    <button mat-button class="btn-add" style="color: black" (click)="onPrint()">
+      <img src="assets/img/report/printer.png" class="btn-img-add" />
+      PRINT PDF
     </button>
   </div>
-  <div class="overflow-auto" *ngFor="let form of forms; let i=index">
-    <div fxLayout="row wrap" fxLayoutAlign="start start" *ngFor="let p of pageArr; let p_i = index" id="print"
-      class="mb-9">
+<ng-container  *ngFor="let form of forms; let i=index">
+  <div class="overflow-auto mb-4 mt-4">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" style="width: 1200px"
+      *ngFor="let p of form.pageArr; let p_i = index" id="print" class="mb-9">
       <div id="head" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center stretch">
         <div fxFlex="100" fxLayout="row wrap" class="bl bt br" fxLayoutAlign="start center">
-          <div fxFlex="100" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start center" class="">
+          <div fxFlex="40" fxLayout="row wrap" fxLayoutAlign="start center" class="">
             <label class="ps-4 pe-4">
               โรงพยาบาล/ลูกค้า
             </label>
@@ -24,28 +21,27 @@
               {{form.customer?.Customer}}
             </span>
           </div>
-          <div fxFlex="100" fxFlex.gt-md="20"  fxLayout="row wrap" fxLayoutAlign="start center" class="">
+          <div fxFlex="20" fxLayout="row wrap" fxLayoutAlign="start center" class="">
             <label class="ps-4 pe-4">
               อำเภอ
             </label>
             <span class="font-normal">{{form.customer?.District}}</span>
           </div>
-          <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" class="">
+          <div fxFlex="20" fxLayout="row wrap" fxLayoutAlign="start center" class="">
             <label class="ps-4 pe-4 ">
               จังหวัด
             </label>
             <span class="font-normal">{{form.customer?.Province}}</span>
           </div>
-          <div fxFlex="100" fxFlex.gt-md="auto" fxLayout="row wrap" fxLayoutAlign="start center" class=""
-          [ngClass.gt-md]="' flex-start-custom'">
-          <span class="ps-4 pe-4 font-semibold">
-            เลขที่
-          </span>
-          <span class="font-normal pe-1">{{form?.no}}</span>
+          <div fxFlex="20" fxLayout="row wrap" fxLayoutAlign="end center" class="">
+            <label class="ps-4  pe-4">
+              เลขที่
+            </label>
+            <span class="font-normal pe-4">{{form?.no}}</span>
+          </div>
         </div>
-        </div>
-        <div fxFlex="100" fxLayout="row wrap" class="bl br bb" fxLayoutAlign="start center">
-          <div fxFlex="100" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start center" class=""
+        <div fxFlex="100" fxLayout="row wrap" class="bl br bb pb-2" fxLayoutAlign="start center">
+          <div fxFlex="40"  fxLayout="row wrap" fxLayoutAlign="start center" class=""
             [ngClass.gt-md]="''">
             <label class="ps-4 pe-4">
               เครื่อง
@@ -54,19 +50,19 @@
               {{form.customer?.Machine}}
             </span>
           </div>
-          <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
+          <div fxFlex="20"  fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
             <label class="ps-4 pe-4">
               รุ่น
             </label>
             <span class="font-normal">
-              {{form.customer?.Model}}
+              {{form.customer.Model}}
             </span>
           </div>
-          <div fxFlex="100" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
+          <div fxFlex="40" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
             <label class="ps-4 pe-4">
               S/N
             </label>
-            <span *ngIf="form.customer" class="font-normal">
+            <span class="font-normal">
               {{form.customer['S/N']}}
             </span>
           </div>
@@ -82,6 +78,7 @@
 
         </div>
       </div>
+
 
       <div id="body" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
@@ -101,7 +98,7 @@
           </div>
         </div>
 
-        <div *ngIf="form?.data?.length>0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div *ngIf="form?.data?.length>0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" >
           <ng-container *ngFor="let item of getData(p_i,form); let i = index">
             <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start stretch" style="height: 210px;">
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="bl bb br p-3">
@@ -120,7 +117,7 @@
             </div>
           </ng-container>
         </div>
-        <ng-container *ngIf="pageArr.length == p_i+1 ">
+        <ng-container *ngIf="form.pageArr.length == p_i+1 ">
           <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="bl bb br">
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-2 mt-4 pb-2">
               <span class="font-semibold">
@@ -131,25 +128,25 @@
               <span class="me-3 font-semibold">
                 1.
               </span>
-              <input [readOnly]="true" [(ngModel)]="form.part1" fxFlex="auto" type="text" style="border-bottom: 1px solid;">
+              <input [readOnly]="true" [(ngModel)]="form.part1" fxFlex="auto" type="text" class="pb-1" style="border-bottom: 1px solid;">
             </div>
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-4 mb-3">
               <span class="me-3 font-semibold">
                 2.
               </span>
-              <input [readOnly]="true" [(ngModel)]="form.part2" fxFlex="auto" type="text" style="border-bottom: 1px solid;">
+              <input [readOnly]="true" [(ngModel)]="form.part2" fxFlex="auto" type="text" class="pb-1" style="border-bottom: 1px solid;">
             </div>
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-4 mb-3">
               <span class="me-3 font-semibold">
                 3.
               </span>
-              <input [readOnly]="true" [(ngModel)]="form.part3" fxFlex="auto" type="text" style="border-bottom: 1px solid;">
+              <input [readOnly]="true" [(ngModel)]="form.part3" fxFlex="auto" type="text" class="pb-1" style="border-bottom: 1px solid;">
             </div>
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-4 mb-3">
               <span class="me-3 font-semibold">
                 4.
               </span>
-              <input [readOnly]="true" [(ngModel)]="form.part4" fxFlex="auto" type="text" style="border-bottom: 1px solid;">
+              <input [readOnly]="true" [(ngModel)]="form.part4" fxFlex="auto" type="text" class="pb-1" style="border-bottom: 1px solid;">
             </div>
           </div>
           <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="bl bb br">
@@ -159,7 +156,7 @@
               </span>
             </div>
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-2 mt-4">
-              <textarea [readOnly]="true" [(ngModel)]="form.description" fxFlex="98" rows="3" class="mb-3 p-2"
+              <textarea [readOnly]="true" [(ngModel)]="form.description" fxFlex="98" rows="3" class="mb-3 p-2 rounded-md"
                 style="border: 1px solid;"></textarea>
             </div>
           </div>
@@ -171,7 +168,7 @@
                 </label>
               </div>
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
-                <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                <div fxFlex="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
                   <label>
                     ผู้ปฏิบัติงาน
                   </label>
@@ -181,18 +178,18 @@
                 </div>
               </div>
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
-                <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                <div fxFlex="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
                   <label>
                     เบอร์โทรศัพท์
                   </label>
                 </div>
                 <div fxFlex="70" fxLayout="row wrap" fxLayoutAlign="start stretch">
-                  {{form.userActive.telephone}}
+                  {{ form.userActive.telephone | slice:0:3 }}-{{ form.userActive.telephone | slice:3:6 }}-{{ form.userActive.telephone | slice:6 }}
                 </div>
               </div>
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
 
-                <div fxFlex="100" fxFlex.gt-md="30"  fxLayout="row wrap" fxLayoutAlign="start stretch">
+                <div fxFlex="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
                   <label>
                     วันที่
                   </label>
@@ -205,7 +202,7 @@
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
 
 
-                <div fxFlex="100" fxFlex.gt-md="30"  fxLayout="row wrap" fxLayoutAlign="start stretch">
+                <div fxFlex="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
                   <label>
                     เวลาเริ่มงาน
                   </label>
@@ -219,7 +216,7 @@
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
 
 
-                <div fxFlex="100" fxFlex.gt-md="30"  fxLayout="row wrap" fxLayoutAlign="start stretch">
+                <div fxFlex="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
                   <label>
                     เวลาเสร็จงาน
                   </label>
@@ -250,5 +247,9 @@
 
     </div>
   </div>
+</ng-container>
+
+
+
 
 </div>

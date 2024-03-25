@@ -3,7 +3,7 @@
   <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="center stretch">
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
 
-      <mat-form-field appearance="outline" floatLabel="always" class="form-custom">
+      <mat-form-field appearance="outline" floatLabel="always" class="btn-set">
         <mat-label>Type</mat-label>
         <mat-select [(ngModel)]="selected" name="food">
           <mat-option *ngFor="let value of typeOption" [value]="value">

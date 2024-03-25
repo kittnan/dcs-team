@@ -28,17 +28,46 @@ export class ReportMultiPrintViewComponent implements OnInit {
     let arr: any = []
     this.route.queryParams.subscribe(async (params: any) => {
       let _ids: any = params['_id']
-      for (let i = 0; i < _ids.length; i++) {
-        const _id = _ids[i];
-        const params: HttpParams = new HttpParams().set('_id', _id)
-        let res = await lastValueFrom(this.$report.get(params))
-        arr.push(res[0])
-        console.log("🚀 ~ arr:", arr)
-        if (i + 1 == _ids.length) {
-          this.forms = arr
+      let param: HttpParams = new HttpParams().set('_id', JSON.stringify(_ids))
+      const res = await lastValueFrom(this.$report.multi(param))
+      for (let i = 0; i < res.length; i++) {
+        const element = res[i];
+        for (let ii = 0; ii < element.data.length; ii++) {
+          const data = element.data[ii];
+          if (data.files.length > 0) {
+            let file = await lastValueFrom(this.$report.getFile(data.files[0].path))
+            data.files[0].view = this.blobToBase64(file)
+          }
         }
       }
+      this.forms = res
+      this.forms= this.forms.map((form: any) => {
+        return {
+          ...form,
+          page: this.calculatorPageBreak(form.data.length),
+          pageArr: Array.from(
+            { length: this.page },
+            (_, index) => index + 1
+          )
+        }
+
+
+      })
+      console.log("🚀 ~ this.forms:", this.forms)
     })
+  }
+  calculatorPageBreak(len: number) {
+    return Math.ceil(len / this.dataPerPage);
+  }
+  blobToBase64(blob: Blob): Promise<string> {
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    return new Promise((resolve) => {
+      reader.onloadend = () => {
+        const base64data = reader.result as string;
+        resolve(base64data);
+      };
+    });
   }
 
   getData(page: number, form: any) {
@@ -50,7 +79,10 @@ export class ReportMultiPrintViewComponent implements OnInit {
   }
 
   onPrint() {
-
+    try {
+      this.$pdf.generatePDF(`engineer-report`, 'p')
+    } catch (error) {
+    }
   }
 
 }
