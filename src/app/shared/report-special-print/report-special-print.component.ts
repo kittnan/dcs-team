@@ -14,7 +14,7 @@ export class ReportSpecialPrintComponent implements OnInit {
 
 
   form: any = null
-  dataPerPage: number = 7
+  dataPerPage: number = 6
   page: number = 1
   pageArr: any[] = [];
 

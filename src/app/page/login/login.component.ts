@@ -31,8 +31,6 @@ export class LoginComponent {
 
   ngOnInit(): void {
     try {
-      console.log(this.$local.getProfile());
-
       if (this.$local.getProfile()) {
         this.userLogin = this.$local.getProfile()
         if (this.$local.getAuth()) {

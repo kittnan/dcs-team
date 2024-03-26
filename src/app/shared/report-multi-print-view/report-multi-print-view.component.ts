@@ -53,7 +53,6 @@ export class ReportMultiPrintViewComponent implements OnInit {
 
 
       })
-      console.log("🚀 ~ this.forms:", this.forms)
     })
   }
   calculatorPageBreak(len: number) {

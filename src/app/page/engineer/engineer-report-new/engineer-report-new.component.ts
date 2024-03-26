@@ -21,8 +21,8 @@ import Swal, { SweetAlertResult } from 'sweetalert2';
 export class EngineerReportNewComponent implements OnInit {
   pageArr: any[] = [];
   page: number = 1
-  dataPerPage: number = 7
-  dataStarter: number = 9
+  dataPerPage: number = 6
+  dataStarter: number = 10
 
   dataTemplate = {
     files: [],
@@ -89,7 +89,6 @@ export class EngineerReportNewComponent implements OnInit {
       if (params && params['_id']) {
         let _id = params['_id']
         const resReport = await lastValueFrom(this.$report.get(new HttpParams().set('_id', _id)))
-        console.log("🚀 ~ resReport:", resReport)
         if (resReport && resReport.length > 0) {
           this.form = resReport[0]
           if (this.form.startDate) {
@@ -98,7 +97,6 @@ export class EngineerReportNewComponent implements OnInit {
           }
           if (this.form.finishDate) {
             this.end = moment(this.form.finishDate)
-            console.log("🚀 ~ this.end:", this.end)
             this.endTime = moment(this.form.finishDate).format('HH:mm')
           }
           const machine = await lastValueFrom(this.$master.Master_getall())
@@ -124,7 +122,7 @@ export class EngineerReportNewComponent implements OnInit {
 
           } else {
             this.form.data = []
-            for (let index = 0; index <= this.dataStarter; index++) {
+            for (let index = 0; index < this.dataStarter; index++) {
               const newData: any = { ...this.dataTemplate }
               newData.no = index + 1
               this.form.data.push(newData)
@@ -188,9 +186,9 @@ export class EngineerReportNewComponent implements OnInit {
   }
 
   // todo onSelectCustomer
-  onSelectCustomer(event:any) {
+  onSelectCustomer(event: any) {
     this.form.machine = null
-    const customer = this.customerOption.find((cus:any)=>cus['Customer']==event)
+    const customer = this.customerOption.find((cus: any) => cus['Customer'] == event)
     this.form.customer = customer
     this.machineOption = this.customerOption.filter((item: any) => item['Customer'] == event)
   }
@@ -224,27 +222,53 @@ export class EngineerReportNewComponent implements OnInit {
 
   // todo onAddPage
   onAddPage() {
-    let insertArray = [];
-    let lastNo = this.form.data.slice(-1)
-    lastNo = lastNo[0].no
-    for (let index = 0; index < this.dataPerPage; index++) {
-      let newData: any = { ...this.dataTemplate }
-      newData.no = lastNo + 1 + index
-      insertArray.push(newData)
-    }
-    this.form.data.push(...insertArray)
+    Swal.fire({
+      title: 'Add page ?',
+      icon: 'question',
+      showCancelButton: true
+    }).then((v: SweetAlertResult) => {
+      if (v.isConfirmed) {
+        let insertArray = [];
+        let lastNo = this.form.data.slice(-1)
+        lastNo = lastNo[0].no
+        for (let index = 0; index < this.dataPerPage; index++) {
+          let newData: any = { ...this.dataTemplate }
+          newData.no = lastNo + 1 + index
+          insertArray.push(newData)
+        }
+        this.form.data.push(...insertArray)
+        this.page = this.calculatorPageBreak(this.form.data.length);
+        this.pageArr = Array.from(
+          { length: this.page },
+          (_, index) => index + 1
+        );
+      }
+    })
 
-    // this.form.data.splice(this.form.data.length - 6, 0, ...insertArray);
-    // this.form.data = this.form.data.map((item: any, index: number) => {
-    //   item.no = index + 1
-    //   return item
-    // })
-    // console.log("🚀 ~ this.form.data:", this.form.data)
-    this.page = this.calculatorPageBreak(this.form.data.length);
-    this.pageArr = Array.from(
-      { length: this.page },
-      (_, index) => index + 1
-    );
+  }
+  // todo onDelPage
+  onDelPage() {
+    Swal.fire({
+      title: 'Delete page ?',
+      icon: 'question',
+      showCancelButton: true
+    }).then(async (v: SweetAlertResult) => {
+      if (v.isConfirmed) {
+        // const deleteItems = this.form.data.slice()
+        const indexToRemove = this.form.data.length - this.dataPerPage; // Calculate the index of the third element from the end
+        const deleteItems = this.form.data.splice(indexToRemove, this.dataPerPage);
+        const res = await lastValueFrom(this.$report.save(this.form))
+        for (let i = 0; i < deleteItems.length; i++) {
+          const item = deleteItems[i];
+          if(item.files.length>0){
+            await lastValueFrom(this.$report.delete({
+              path_file: item.files[0].delete_path
+            }))
+          }
+        }
+      }
+    })
+
   }
 
   // todo onSave
@@ -292,16 +316,6 @@ export class EngineerReportNewComponent implements OnInit {
       console.log("🚀 ~ error:", error)
     }
   }
-
-  // // todo click img
-  // onClickImage(no:any){
-  //   this._bottomSheet.open(BottomSheetEngComponent).afterDismissed().subscribe((data:any)=>{
-  //     console.log(data);
-  //     if(data && data=='edit'){
-  //       this.fileUpload.nativeElement.click();
-  //     }
-  //   })
-  // }
 
   // todo onUpload
   async onUpload($event: any, index: number) {

@@ -26,14 +26,14 @@ export class JwtInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let access_token: any = this.$local.getToken()
     if (access_token) {
-      if (!request.url.includes('auth/refresh') && !request.url.includes('auth/login') ) {
+      if (!request.url.includes('auth/refresh') && !request.url.includes('auth/login')) {
         request = request.clone({
           setHeaders: {
             Authorization: 'Bearer ' + access_token
           }
         })
       }
-      if(request.url.includes('api_file')){
+      if (request.url.includes('api_file')) {
         request = request.clone({
           setHeaders: {
             authentication: 'a54a136512ef8a7d46cc5f88092997bcf8cfa01f4cc3aabe51fefd9a4ac9e316'
@@ -62,10 +62,15 @@ export class JwtInterceptor implements HttpInterceptor {
               })
             )
           }
-        } if (error.status === 403) {
-          this.$local.clear()
-          this.router.navigate(['']).then(() => location.reload())
         }
+        if (error.status === 401) {
+          this.$local.clear()
+          this.router.navigate(['login']).then(() => location.reload())
+        }
+        // if (error.status === 403) {
+        //   this.$local.clear()
+        //   this.router.navigate(['']).then(() => location.reload())
+        // }
         return throwError(error);
       })
     )

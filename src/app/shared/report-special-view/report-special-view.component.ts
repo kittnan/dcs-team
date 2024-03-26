@@ -13,7 +13,7 @@ import { GenerateInvoicePdfService } from 'src/app/service/generate-invoice-pdf.
 export class ReportSpecialViewComponent implements OnInit {
 
   form: any = null
-  dataPerPage: number = 7
+  dataPerPage: number = 6
   page: number = 1
   pageArr: any[] = [];
 

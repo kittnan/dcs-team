@@ -70,7 +70,6 @@ export class MasterManageComponent {
         // 'permission_list' : d['telephone'].split,
       }
     })
-    console.log(data);
 
 
     this.dataSource = new MatTableDataSource(data)
@@ -127,7 +126,6 @@ export class MasterManageComponent {
     // this.fullData = []
     var timestamp = Number(wsname); // timestamp ที่ต้องการถอดค่ากลับ
     var momentObject = moment.unix(timestamp / 1000);
-    console.log(momentObject.diff(moment(), 'hour'));
 
     if (moment().diff(momentObject, 'hour') < 5) {
       // /* save data */
@@ -190,7 +188,6 @@ export class MasterManageComponent {
 
         let data = this.dataSourceX.filter((d: any) => d._id != e._id)
         // data = data.filter((d: any) => d._id != e._id)
-        console.log(data);
 
         this.dataSource = new MatTableDataSource(data)
         this.dataSource.paginator = this.paginator;

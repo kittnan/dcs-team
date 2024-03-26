@@ -10,12 +10,6 @@
       </div>
 
       <div fxFlex="auto"></div>
-      <!-- <button mat-raised-button (click)="onClickNewReport()">
-        <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
-          <span>New</span>
-          <mat-icon class="mat-18">add</mat-icon>
-        </div>
-      </button> -->
       <div>
         <button mat-button class="btn-add" (click)="onClickNewReport()" style="color: black">
           <img src="assets/img/master-machine/add-file.png" class="btn-img-add" />
@@ -24,10 +18,10 @@
       </div>
     </div>
 
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between start" class="mat-elevation-z8 overflow-auto mt-1 " >
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between start" class="box-glass overflow-auto mt-1 " >
       <table  fxFlex="100" mat-table [dataSource]="dataSource" matSort style="text-wrap: nowrap;">
         <ng-container matColumnDef="reportNo">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> ReportNo </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Report ReportNoNo </th>
           <td mat-cell class="gap" *matCellDef="let row">
             <span class="cursor-pointer text-blue-500" (click)="onClickReport(row)">{{row.reportNo}}</span>
           </td>
@@ -55,7 +49,7 @@
 
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-          <td mat-cell class="gap" *matCellDef="let row" [ngClass]="{setColorGreen: row.status == 'finish'}"> {{row.status}} </td>
+          <td mat-cell class="gap" *matCellDef="let row" class="capitalize font-semibold" [ngClass]="{setColorGreen: row.status == 'finish'}" style="letter-spacing: 2px;"> {{row.status}} </td>
         </ng-container>
 
 
@@ -69,7 +63,7 @@
 
 
     </div>
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center" class="box-glass">
       <mat-paginator fxFlex="100" [pageSizeOptions]="[5, 10, 25, 100,dataSource.filteredData.length]"
       aria-label="Select page of users" class="shaDown"></mat-paginator>
     </div>

@@ -95,6 +95,12 @@
   border: 1px solid;
   background-color: #A7FC89;
 }
+.btn-del {
+  color: black;
+  border-radius: 8px;
+  border: 1px solid;
+  background-color: #fc9a89;
+}
 
 .btn-img-add {
   width: 20px;
@@ -103,7 +109,13 @@
   top: -1px;
   left: -1px;
 }
-
+.btn-img-del {
+  width: 20px;
+  display: inline;
+  position: relative;
+  top: -1px;
+  left: -1px;
+}
 .setColorGreen {
   color: #00d500;
 }

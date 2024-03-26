@@ -90,7 +90,6 @@ export class ReportMultiPrintComponent implements OnInit {
   }
 
   onPrint() {
-    console.log(this.selection.selected);
     this.router.navigate(['engineer/report-multi-print-view'], {
       queryParams: {
         _id: this.selection.selected.map((value: any) => value._id)

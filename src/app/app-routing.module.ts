@@ -8,6 +8,9 @@ import { ProfileComponent } from './page/profile/profile.component';
 import { SpecialModule } from './page/special/special.module';
 import { StoreModule } from './page/store/store.module';
 import { TemplateInputComponent } from './page/template-input/template-input.component';
+import { AdminGuard } from './guard/admin.guard';
+import { EngineerGuard } from './guard/engineer.guard';
+import { SpecialGuard } from './guard/special.guard';
 
 
 const routes: Routes = [
@@ -19,17 +22,17 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => AdminModule,
-    canActivate: []
+    canActivate: [AdminGuard]
   },
   {
     path: 'engineer',
     loadChildren: () => EngineerModule,
-    canActivate: []
+    canActivate: [EngineerGuard]
   },
   {
     path: 'special',
     loadChildren: () => SpecialModule,
-    canActivate: []
+    canActivate: [SpecialGuard]
   },
   {
     path: 'store',

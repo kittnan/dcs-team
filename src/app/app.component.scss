@@ -63,3 +63,20 @@ h1.example-app-name {
   padding: 2px;
   border-radius: 6px;
 }
+
+footer {
+  background-color: initial;
+  height: 15px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  right: 20px;
+  z-index: 999;
+  text-align: right;
+}
+
+footer p {
+  font-size: 10px;
+  margin-right: 10px;
+  color: #3b3b3b;
+}

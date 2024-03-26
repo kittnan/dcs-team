@@ -57,17 +57,6 @@ export class MasterMachineComponent {
     if (data.length != 0) {
       this.data = data
       this.dataSourceX = data
-      // this.Province = [...new Set(data.map((item: any) => item.Province))]; // [ 'A', 'B']
-      // this.Province = this.Province.sort()
-      // this.province = this.Province.map((d: any) => {
-      //   return {
-      //     list: `${d}`,
-      //   }
-      // })
-      // console.log(this.province);
-
-      // this.var_Province = this.Province[0]
-      // this.selectData()
       let user = await lastValueFrom(this.$user.Master_User_getall())
       this.data = this.sorts(this.data, "Province", 0)
       this.data = this.data.map((d: any, i: any) => {
@@ -99,30 +88,7 @@ export class MasterMachineComponent {
     return array
   }
 
-  // async selectData() {
-  //   setTimeout(async () => {
-  //     // console.log(this.var_Province);
-  //     let data = this.dataSourceX.filter((d: any) => d['Province'] == this.var_Province)
-  //     let user = await lastValueFrom(this.$user.Master_User_getall())
-  //     data = data.map((d: any, i: any) => {
-  //       let koo = d['PIC'].map((e: any) => {
-  //         let data = user.filter((s: any) => s._id == e)
-  //         return data.length != 0 ? data[0].name : ''
-  //       })
-  //       return {
-  //         ...d,
-  //         "No": i + 1,
-  //         "name": koo
-  //       }
-  //     })
-  //     console.log(data);
 
-
-  //     this.dataSource = new MatTableDataSource(data)
-  //     this.dataSource.paginator = this.paginator;
-  //   }, 100);
-
-  // }
 
 
   applyFilter(event: Event) {
@@ -265,7 +231,6 @@ export class MasterMachineComponent {
         // this.http.get('http://localhost:4200/mastereletrical/report product electrical space.xlsx', { responseType: "arraybuffer" })
         .subscribe(
           data => {
-            // console.log(data);
             const workbook = new Workbook();
             const arrayBuffer = new Response(data).arrayBuffer();
             let firstRow = 2
@@ -282,7 +247,6 @@ export class MasterMachineComponent {
                   worksheet._name = timestamp
 
                   let user = await lastValueFrom(this.$user.Master_User_getall())
-                  console.log(this.data);
 
                   if (user.length) {
                     this.data = this.data.map((d: any, i: any) => {
@@ -430,7 +394,6 @@ export class MasterMachineComponent {
   }
 
   clear() {
-    console.log('4444444444444444');
     let doo = document.getElementById("clear") as HTMLInputElement
     doo.value = ""
     this.var_Province = ''

@@ -41,7 +41,6 @@ export class TemplateInputComponent implements OnInit {
   }
   async onGet() {
     const access: any = await lastValueFrom(this.http.get(`${environment.API}/users`))
-    console.log("🚀 ~ access:", access)
   }
 
 
