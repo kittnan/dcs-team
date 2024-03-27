@@ -341,6 +341,10 @@
 
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="20">
+    <button mat-button class="btn-del" (click)="onCancel()" style="color: black">
+      <img src="assets/img/report/trash-bin.png" class="btn-img-add" />
+      Cancel
+    </button>
     <button mat-button class="btn-add" (click)="onFinish()" style="color: black">
       <img src="assets/img/report/select.png" class="btn-img-add" />
       Finish

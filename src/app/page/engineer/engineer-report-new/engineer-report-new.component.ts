@@ -101,7 +101,8 @@ export class EngineerReportNewComponent implements OnInit {
           }
           const machine = await lastValueFrom(this.$master.Master_getall())
           this.customerOption = machine
-          this.customerOptionStr = this.customerOption.map((m: any) => m['Customer'])
+          const customers = this.customerOption.map((m: any) => m['Customer'])
+          this.customerOptionStr =  [...new Set(customers)]
 
 
 
@@ -403,6 +404,30 @@ export class EngineerReportNewComponent implements OnInit {
       })
     } catch (error) {
       console.log("🚀 ~ error:", error)
+
+    }
+  }
+
+  onCancel(){
+    try {
+      Swal.fire({
+        title:'Cancel ?',
+        icon:'warning',
+        showCancelButton:true
+      }).then(async (v:SweetAlertResult)=>{
+        if(v.isConfirmed){
+          const res = await lastValueFrom(this.$report.save({...this.form,status:'cancel'}))
+          Swal.fire({
+            title: "Success",
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            this.router.navigate(['engineer'])
+          })
+        }
+      })
+    } catch (error) {
 
     }
   }

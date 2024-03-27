@@ -127,6 +127,9 @@ export class AppComponent {
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
+  onClickProfile(){
+    this.router.navigate(['/profile']).then(() => location.reload())
+  }
   onLogout() {
     this.$local.clear()
     this.router.navigate(['/login']).then(() => location.reload())

@@ -5,11 +5,8 @@
     <img class="mx-auto h-10 w-auto" src="assets/img/logo/logo-removebg-preview.png" alt="Your Company">
     <div class="flex-auto"></div>
 
-    <button (click)="onLogout()">
+    <button class="pe-2" (click)="onClickProfile()">
       <div class="flex justify-around items-center gap-1">
-        <!-- <mat-icon class="mat-18">
-          contact_mail
-        </mat-icon> -->
         <img src="assets/img/login/user.png"
           style="width: 25px;margin-right: 5px;margin-bottom: 4px;border-radius: 70%;">
         <span class="text-sm">
@@ -18,6 +15,18 @@
         <span class="text-sm">
           ({{displayAccess()}})
         </span>
+      </div>
+    </button>
+    <button (click)="onLogout()">
+      <div class="flex justify-around items-center gap-1">
+        <img src="assets/img/login/log-out.png"
+          style="width: 25px;margin-right: 5px;margin-bottom: 4px;border-radius: 70%;">
+        <!-- <span class="text-sm">
+          Admin
+        </span>
+        <span class="text-sm">
+          ({{displayAccess()}})
+        </span> -->
       </div>
     </button>
 
