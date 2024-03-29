@@ -86,6 +86,15 @@
           </td>
         </ng-container>
 
+        <ng-container matColumnDef="Model">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-size: medium; font-weight: bold">
+            Model
+          </th>
+          <td mat-cell style="padding-right: 16px;" *matCellDef="let element">
+            {{ element["Model"] }}
+          </td>
+        </ng-container>
+
         <ng-container matColumnDef="S/N">
           <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-size: medium; font-weight: bold">
             S/N

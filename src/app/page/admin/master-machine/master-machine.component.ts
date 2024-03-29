@@ -24,7 +24,7 @@ var fs = require('file-saver');
 })
 export class MasterMachineComponent {
 
-  displayedColumns: string[] = ['No', 'Province', 'District', 'Customer', 'Machine', 'S/N', 'PIC', 'Action'];
+  displayedColumns: string[] = ['No', 'Province', 'District', 'Customer', 'Machine', 'Model', 'S/N', 'PIC', 'Action'];
   dataSource: any = new MatTableDataSource
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
   @ViewChild(MatSort) sort:any = MatSort;
@@ -267,6 +267,7 @@ export class MasterMachineComponent {
                     'District',
                     'Customer',
                     'Machine',
+                    'Model',
                     'S/N',
                     'CODE',
                     'PIC',
