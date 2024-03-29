@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SpecialReportComponent } from './special-report/special-report.component';
-import { SpecialReportNewComponent } from './special-report-new/special-report-new.component';
-import { SpecialReportViewComponent } from './special-report-view/special-report-view.component';
-import { SpecialReportPrintComponent } from './special-report-print/special-report-print.component';
+import { SpecialReportComponent } from './report/special-report/special-report.component';
+import { SpecialReportNewComponent } from './report/special-report-new/special-report-new.component';
+import { SpecialReportViewComponent } from './report/special-report-view/special-report-view.component';
+import { SpecialReportPrintComponent } from './report/special-report-print/special-report-print.component';
+import { SpecialPmReportComponent } from './pm-report/special-pm-report/special-pm-report.component';
+import { SpecialPmReportNewComponent } from './pm-report/special-pm-report-new/special-pm-report-new.component';
+import { SpecialPmReportViewComponent } from './pm-report/special-pm-report-view/special-pm-report-view.component';
+import { SpecialPmReportPrintComponent } from './pm-report/special-pm-report-print/special-pm-report-print.component';
 
 const routes: Routes = [
   {
@@ -26,6 +30,23 @@ const routes: Routes = [
   {
     path:'report-print',
     component:SpecialReportPrintComponent
+  },
+
+  {
+    path:'pm-report',
+    component:SpecialPmReportComponent
+  },
+  {
+    path:'pm-report-new',
+    component:SpecialPmReportNewComponent
+  },
+  {
+    path:'pm-report-view',
+    component:SpecialPmReportViewComponent
+  },
+  {
+    path:'pm-report-print',
+    component:SpecialPmReportPrintComponent
   },
 ];
 
