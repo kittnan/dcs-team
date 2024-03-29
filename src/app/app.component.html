@@ -38,7 +38,7 @@
       <mat-nav-list>
         <ng-container *ngFor="let nav of fillerNav; let i=index">
           <div *ngIf="checkAccess(nav)" class="block p-4" style="max-width: 17rem;">
-            <div class="flex justify-start items-center gap-2 bg-side-menu">
+            <div class="flex justify-start items-center bg-side-menu">
               <img [src]="nav.icon" style="width: 30px;margin-right: 5px;margin-bottom: 4px;border-radius: 70%;">
               <span class="uppercase font-black">
                 {{nav.title}}

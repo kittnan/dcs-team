@@ -15,9 +15,9 @@ export class SpecialGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    if (this.$local.getAuth() === 'admin'||this.$local.getAuth() === 'special') {
+    if (this.$local.getAuth() === 'fullAdmin' || this.$local.getAuth() === 'admin' || this.$local.getAuth() === 'special') {
       return true;
-    }else{
+    } else {
       return false
     }
   }

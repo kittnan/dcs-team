@@ -81,7 +81,7 @@ export class ReportSpecialPrintComponent implements OnInit {
 
   onPrint() {
     try {
-      this.$pdf.generatePDF(`engineer-report-${this.form.no}`, 'p')
+      this.$pdf.generatePDF(`specialist-report-${this.form.no}`, 'p')
     } catch (error) {
     }
   }

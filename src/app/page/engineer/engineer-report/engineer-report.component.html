@@ -1,11 +1,19 @@
-<div fxLayout="row wrap" fxLayoutAlign="center center" >
-  <app-title fxFlex="90" [title]="'Report Manage'"></app-title>
-  <div fxFlex="100" fxFlex.gt-xs="80" fxLayout="row wrap" fxLayoutAlign="center stretch " >
+<div fxLayout="row wrap" fxLayoutAlign="center center">
+  <app-title fxFlex="90" [title]="'Engineer Report Manage'"></app-title>
+  <div fxFlex="100" fxFlex.gt-xs="95" fxLayout="row wrap" fxLayoutAlign="center stretch ">
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center "  >
-      <div fxLayout="row wrap" fxLayoutAlign="center center">
-        <mat-form-field appearance="outline" floatLabel="always" class="btn-set"  >
-          <mat-label >ค้นหา</mat-label>
-          <input matInput (keyup)="applyFilter($event)" #input >
+      <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10" >
+        <mat-form-field appearance="outline" floatLabel="always" class="btn-set">
+          <mat-label>ค้นหา</mat-label>
+          <input matInput (keyup)="applyFilter($event)" #input>
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always" class="btn-set">
+          <mat-label>สถานะ</mat-label>
+          <mat-select [(ngModel)]="filterData.status" (ngModelChange)="onChangeFilterStatus()" >
+            <mat-option *ngFor="let item of statusOption" [value]="item.value">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
 
@@ -18,13 +26,18 @@
       </div>
     </div>
 
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between start" class="box-glass overflow-auto mt-1 " >
-      <table  fxFlex="100" mat-table [dataSource]="dataSource" matSort style="text-wrap: nowrap;">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between start" class="box-glass overflow-auto mt-1 ">
+      <table fxFlex="100" mat-table [dataSource]="dataSource" matSort style="text-wrap: nowrap;">
         <ng-container matColumnDef="reportNo">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Report ReportNoNo </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Report No </th>
           <td mat-cell class="gap" *matCellDef="let row">
             <span class="cursor-pointer text-blue-500" (click)="onClickReport(row)">{{row.reportNo}}</span>
           </td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Created </th>
+          <td mat-cell class="gap" *matCellDef="let row"> {{row.createdAt}} </td>
         </ng-container>
 
         <ng-container matColumnDef="province">
@@ -42,14 +55,22 @@
           <td mat-cell class="gap" *matCellDef="let row"> {{row.machine}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="sn">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> S/N </th>
-          <td mat-cell class="gap" *matCellDef="let row"> {{row.sn}} </td>
+        <ng-container matColumnDef="serviceType">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Service Type </th>
+          <td mat-cell class="gap" *matCellDef="let row"> {{row.serviceType}} </td>
         </ng-container>
 
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-          <td mat-cell class="gap" *matCellDef="let row" class="capitalize font-semibold" [ngClass]="{setColorGreen: row.status == 'finish'}" style="letter-spacing: 2px;"> {{row.status}} </td>
+          <td mat-cell class="gap" *matCellDef="let row" class="capitalize font-semibold"
+            [ngClass]="{setColorGreen: row.status == 'finish'}" style="letter-spacing: 2px;">
+            <span *ngIf="row.status!=='finish'">
+              {{row.status}}
+            </span>
+            <span *ngIf="row.status=='finish'">
+              Finished
+            </span>
+          </td>
         </ng-container>
 
 
@@ -57,7 +78,8 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
         <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" [attr.colspan]="displayedColumns.length" >No data matching the filter "{{input.value}}"</td>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">No data matching the filter "{{input.value}}"
+          </td>
         </tr>
       </table>
 
@@ -65,7 +87,7 @@
     </div>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center" class="box-glass">
       <mat-paginator fxFlex="100" [pageSizeOptions]="[5, 10, 25, 100,dataSource.filteredData.length]"
-      aria-label="Select page of users" class="shaDown"></mat-paginator>
+        aria-label="Select page of users" class="shaDown"></mat-paginator>
     </div>
 
   </div>

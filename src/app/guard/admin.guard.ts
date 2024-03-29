@@ -15,7 +15,7 @@ export class AdminGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    if (this.$local.getAuth() === 'admin') {
+    if ( this.$local.getAuth() === 'fullAdmin' || this.$local.getAuth() === 'admin' ) {
       return true;
     }else{
       return false

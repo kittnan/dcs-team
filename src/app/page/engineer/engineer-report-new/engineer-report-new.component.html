@@ -116,20 +116,20 @@
             เครื่อง
           </span>
           <span class="font-normal">
-            {{form.customer?.Machine}}
+            {{form.machine?.Machine}}
           </span>
         </div>
         <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
           <span class="ps-4 pe-4 font-semibold">
             รุ่น
           </span>
-          <span class="font-normal">{{form.customer?.Model}}</span>
+          <span class="font-normal">{{form.machine?.Model}}</span>
         </div>
         <div fxFlex="100" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
           <span class="ps-4 pe-4 font-semibold">
             S/N
           </span>
-          <span *ngIf="form.customer" class="font-normal">{{form.customer['S/N']}}</span>
+          <span *ngIf="form.machine" class="font-normal">{{form.machine['S/N']}}</span>
         </div>
       </div>
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="'bl br'">
@@ -347,7 +347,7 @@
     </button>
     <button mat-button class="btn-add" (click)="onFinish()" style="color: black">
       <img src="assets/img/report/select.png" class="btn-img-add" />
-      Finish
+      Finished
     </button>
     <button mat-button class="btn-save" (click)="onSave()" style="color: black">
       <img src="assets/img/report/save.png" class="btn-img-add" />

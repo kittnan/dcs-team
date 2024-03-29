@@ -1,10 +1,18 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center">
-  <app-title fxFlex="90" [title]="'Report Manage'"></app-title>
-  <div fxFlex="100" fxFlex.gt-xs="80" fxLayout="row wrap" fxLayoutAlign="center stretch">
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+  <app-title fxFlex="90" [title]="'Specialist Report Manage'"></app-title>
+  <div fxFlex="100" fxFlex.gt-xs="95" fxLayout="row wrap" fxLayoutAlign="center stretch">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10">
       <mat-form-field appearance="outline" floatLabel="always" class="btn-set">
         <mat-label>ค้นหา</mat-label>
         <input matInput (keyup)="applyFilter($event)" #input>
+      </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always" class="btn-set">
+        <mat-label>สถานะ</mat-label>
+        <mat-select [(ngModel)]="filterData.status" (ngModelChange)="onChangeFilterStatus()" >
+          <mat-option *ngFor="let item of statusOption" [value]="item.value">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
       <div fxFlex="auto"></div>
 
@@ -25,6 +33,11 @@
           </td>
         </ng-container>
 
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Created </th>
+          <td mat-cell class="gap" *matCellDef="let row"> {{row.createdAt}} </td>
+        </ng-container>
+
         <ng-container matColumnDef="province">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Province </th>
           <td mat-cell class="gap" *matCellDef="let row"> {{row.province}} </td>
@@ -40,14 +53,21 @@
           <td mat-cell class="gap" *matCellDef="let row"> {{row.machine}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="sn">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> S/N </th>
-          <td mat-cell class="gap" *matCellDef="let row"> {{row.sn}} </td>
+        <ng-container matColumnDef="serviceType">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Service Type </th>
+          <td mat-cell class="gap" *matCellDef="let row"> {{row.serviceType}} </td>
         </ng-container>
 
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-          <td mat-cell class="gap" *matCellDef="let row"  class="capitalize font-semibold" [ngClass]="{setColorGreen: row.status == 'finish'}" style="letter-spacing: 2px;"> {{row.status}} </td>
+          <td mat-cell class="gap" *matCellDef="let row" class="capitalize font-semibold" [ngClass]="{setColorGreen: row.status == 'finish'}" style="letter-spacing: 2px;">
+          <span *ngIf="row.status!=='finish'">
+            {{row.status}}
+          </span>
+          <span *ngIf="row.status=='finish'">
+            Finished
+          </span>
+          </td>
         </ng-container>
 
 

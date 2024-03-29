@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { lastValueFrom } from 'rxjs';
 import { HttpReportService } from 'src/app/http/http-report.service';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
@@ -14,7 +15,7 @@ import { LocalStorageService } from 'src/app/service/local-storage.service';
   styleUrls: ['./engineer-report.component.scss']
 })
 export class EngineerReportComponent implements OnInit {
-  displayedColumns: string[] = ['reportNo', 'province', 'customer', 'machine', 'sn', 'status'];
+  displayedColumns: string[] = ['reportNo', 'createdAt', 'province', 'customer', 'machine', 'serviceType', 'status'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource()
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -22,6 +23,28 @@ export class EngineerReportComponent implements OnInit {
   userLogin: any
 
   reports: any
+
+  statusOption: any[] = [
+    {
+      name: 'Draft',
+      value: 'draft'
+    },
+    {
+      name: 'Cancel',
+      value: 'cancel'
+    },
+    {
+      name: 'Finished',
+      value: 'finish'
+    },
+    {
+      name: 'All',
+      value: 'all'
+    }
+  ]
+  filterData: any = {
+    status: 'draft'
+  }
   constructor(
     private router: Router,
     private $report: HttpReportService,
@@ -33,27 +56,33 @@ export class EngineerReportComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      let params:HttpParams = new HttpParams()
-      this.reports = await lastValueFrom(this.$report.get(params))
-      this.dataSource = new MatTableDataSource(this.reports.map((item: any) => {
-        return {
-          reportNo: item.no,
-          province: item.customer?.Province,
-          customer: item.customer?.Customer,
-          machine: item.customer?.Machine,
-          sn: item.customer ? item.customer['S/N'] : null,
-          status: item.status,
-          action: '',
-          _id: item._id
-        }
-      }))
-      setTimeout(() => {
-        this.dataSource.sort = this.sort
-        this.dataSource.paginator = this.paginator
-      }, 300);
+      let params: HttpParams = new HttpParams()
+      params = params.set('status', this.filterData.status)
+      this.onGetData(params)
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
+  }
+
+  async onGetData(params: HttpParams) {
+    this.reports = await lastValueFrom(this.$report.get(params))
+    this.dataSource = new MatTableDataSource(this.reports.map((item: any) => {
+      return {
+        reportNo: item.no,
+        createdAt: moment(item.createdAt).format('DD-MMM-YY, HH:mm'),
+        province: item.customer?.Province,
+        customer: item.customer?.Customer,
+        machine: item.customer?.Machine,
+        serviceType: item.serviceType?.name,
+        status: item.status,
+        action: '',
+        _id: item._id
+      }
+    }))
+    setTimeout(() => {
+      this.dataSource.sort = this.sort
+      this.dataSource.paginator = this.paginator
+    }, 300);
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -74,6 +103,15 @@ export class EngineerReportComponent implements OnInit {
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
+  }
+
+  // todo on change filter status
+  onChangeFilterStatus() {
+    let params: HttpParams = new HttpParams()
+    if (this.filterData.status != 'all') {
+      params = params.set('status', this.filterData.status == 'finished' ? 'finish' : this.filterData.status)
+    }
+    this.onGetData(params)
   }
 
   // todo onClickReport

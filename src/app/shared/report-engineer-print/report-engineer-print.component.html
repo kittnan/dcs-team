@@ -89,23 +89,23 @@
               เครื่อง
             </label>
             <span *ngIf="form.customer" class="font-normal">
-              {{form.customer?.Machine}}
+              {{form.machine?.Machine}}
             </span>
           </div>
           <div fxFlex="20"  fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
             <label class="ps-4 pe-4">
               รุ่น
             </label>
-            <span *ngIf="form.customer" class="font-normal">
-              {{form.customer.Model}}
+            <span *ngIf="form.machine" class="font-normal">
+              {{form.machine.Model}}
             </span>
           </div>
           <div fxFlex="40" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
             <label class="ps-4 pe-4">
               S/N
             </label>
-            <span *ngIf="form.customer" class="font-normal">
-              {{form.customer['S/N']}}
+            <span *ngIf="form.machine" class="font-normal">
+              {{form.machine['S/N']}}
             </span>
           </div>
 

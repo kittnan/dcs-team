@@ -28,7 +28,7 @@ export class AppComponent {
       title: 'Master',
       icon: 'assets/img/icon_sidebar/master.png',
       path: '',
-      access: ['admin'],
+      access: ['admin','fullAdmin'],
       items: [
         {
           title: 'Machine',
@@ -57,7 +57,7 @@ export class AppComponent {
       title: 'Engineer',
       icon: 'assets/img/icon_sidebar/engineer.png',
       path: '',
-      access: ['admin', 'engineer'],
+      access: ['admin','fullAdmin','engineer'],
       items: [
         {
           title: 'report',
@@ -66,18 +66,32 @@ export class AppComponent {
           items: [],
           access: ['']
         },
+        {
+          title: 'PM Report',
+          icon: 'assets/img/icon_sidebar/report.png',
+          path: 'engineer/pm-report',
+          items: [],
+          access: ['']
+        },
       ]
     },
     {
-      title: 'Special',
+      title: 'Specialist',
       icon: 'assets/img/icon_sidebar/special1.png',
       path: '',
-      access: ['admin', 'special'],
+      access: ['admin','fullAdmin', 'special'],
       items: [
         {
           title: 'report',
           icon: 'assets/img/icon_sidebar/report.png',
           path: 'special/report',
+          items: [],
+          access: ['']
+        },
+        {
+          title: 'PM Report',
+          icon: 'assets/img/icon_sidebar/report.png',
+          path: 'engineer/pm-report',
           items: [],
           access: ['']
         },

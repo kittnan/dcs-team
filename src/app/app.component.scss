@@ -64,6 +64,13 @@ h1.example-app-name {
   border-radius: 6px;
 }
 
+@media screen and (max-width: 600px) {
+  footer{
+    display: none;
+  }
+}
+
+
 footer {
   background-color: initial;
   height: 15px;
