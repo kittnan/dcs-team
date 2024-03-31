@@ -4,6 +4,7 @@ import { CustomerMasterComponent } from './customer-master/customer-master.compo
 import { MasterMachineComponent } from './master-machine/master-machine.component';
 import { MasterManageComponent } from './master-manage/master-manage.component';
 import { MasterServiceTypeOptionComponent } from './master-service-type-option/master-service-type-option.component';
+import { MasterPmCheckListComponent } from './master-pm-check-list/master-pm-check-list.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path:'master_service_type_option',
     component:MasterServiceTypeOptionComponent
+  },
+  {
+    path:'master_pm',
+    component:MasterPmCheckListComponent
   },
 
 ];

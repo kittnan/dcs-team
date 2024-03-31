@@ -37,4 +37,11 @@ export class HttpReportService {
     return this.http.post(`${this.FILE_DELETE}`, data)
   }
 
+  update(id: any, data: any): Observable<any> {
+    return this.http.put(this.API + "/report/insert/" + id, data)
+  }
+  GetByCondition(data: any): Observable<any> {
+    return this.http.post(this.API + "/report/getByCondition/", data)
+  }
+
 }

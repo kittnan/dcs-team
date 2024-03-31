@@ -14,6 +14,8 @@ import { MasterMachineEditorComponent } from './master-machine-editor/master-mac
 import { MasterServiceTypeOptionComponent } from './master-service-type-option/master-service-type-option.component';
 import { MasterServiceTypeOptionEditorComponent } from './master-service-type-option-editor/master-service-type-option-editor.component';
 import {CdkTableModule} from '@angular/cdk/table';
+import { MasterPmCheckListComponent } from './master-pm-check-list/master-pm-check-list.component';
+import { MasterPmCheckListEditorComponent } from './master-pm-check-list-editor/master-pm-check-list-editor.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import {CdkTableModule} from '@angular/cdk/table';
     MasterMachineEditorComponent,
     MasterServiceTypeOptionComponent,
     MasterServiceTypeOptionEditorComponent,
+    MasterPmCheckListComponent,
+    MasterPmCheckListEditorComponent,
   ],
   imports: [
     CommonModule,

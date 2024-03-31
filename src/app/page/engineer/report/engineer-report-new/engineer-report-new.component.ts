@@ -102,7 +102,7 @@ export class EngineerReportNewComponent implements OnInit {
           const machine = await lastValueFrom(this.$master.Master_getall())
           this.customerOption = machine
           const customers = this.customerOption.map((m: any) => m['Customer'])
-          this.customerOptionStr =  [...new Set(customers)]
+          this.customerOptionStr = [...new Set(customers)]
 
 
 
@@ -261,7 +261,7 @@ export class EngineerReportNewComponent implements OnInit {
         const res = await lastValueFrom(this.$report.save(this.form))
         for (let i = 0; i < deleteItems.length; i++) {
           const item = deleteItems[i];
-          if(item.files.length>0){
+          if (item.files.length > 0) {
             await lastValueFrom(this.$report.delete({
               path_file: item.files[0].delete_path
             }))
@@ -408,15 +408,18 @@ export class EngineerReportNewComponent implements OnInit {
     }
   }
 
-  onCancel(){
+  onCancel() {
     try {
       Swal.fire({
-        title:'Cancel ?',
-        icon:'warning',
-        showCancelButton:true
-      }).then(async (v:SweetAlertResult)=>{
-        if(v.isConfirmed){
-          const res = await lastValueFrom(this.$report.save({...this.form,status:'cancel'}))
+        title: 'Cancel ?',
+        icon: 'warning',
+        showCancelButton: true
+      }).then(async (v: SweetAlertResult) => {
+        if (v.isConfirmed) {
+          this.form.status = 'cancel'
+          console.log(this.form);
+          // const res = await lastValueFrom(this.$report.save(this.form))
+          const res = await lastValueFrom(this.$report.update(this.form._id, { status: 'cancel' }))
           Swal.fire({
             title: "Success",
             icon: 'success',

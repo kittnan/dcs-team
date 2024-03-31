@@ -17,7 +17,7 @@ export class ReportSpecialPrintComponent implements OnInit {
   dataPerPage: number = 6
   page: number = 1
   pageArr: any[] = [];
-
+  id: any
   constructor(
     private $pdf: GenerateInvoicePdfService,
     private router: Router,
@@ -30,6 +30,7 @@ export class ReportSpecialPrintComponent implements OnInit {
       this.route.queryParams.subscribe(async (params: any) => {
         if (params && params['_id']) {
           let _id = params['_id']
+          this.id = params['_id']
           const resReport = await lastValueFrom(this.$report.get(new HttpParams().set('_id', _id)))
           if (resReport && resReport.length > 0) {
             this.form = resReport[0]
@@ -79,10 +80,35 @@ export class ReportSpecialPrintComponent implements OnInit {
     return Math.ceil(len / this.dataPerPage);
   }
 
-  onPrint() {
-    try {
-      this.$pdf.generatePDF(`specialist-report-${this.form.no}`, 'p')
-    } catch (error) {
+  async onPrint() {
+    let check = await lastValueFrom(this.$report.GetByCondition({ _id: this.id }))
+    console.log(check);
+
+    if (check.length != 0 && check[0].path_file) {
+      let url = check[0].path_file
+      const apiUrl = url
+      const authToken = 'a54a136512ef8a7d46cc5f88092997bcf8cfa01f4cc3aabe51fefd9a4ac9e316';
+      fetch(apiUrl, {
+        headers: {
+          'authentication': authToken
+        }
+      })
+        .then(response => response.blob())
+        .then(blob => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = apiUrl.split("/")[apiUrl.split("/").length - 1];
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+        })
+        .catch(error => console.error('Error fetching report:', error));
+    } else {
+      try {
+        this.$pdf.generatePDF(this.id, `special-report-${this.form.no}`, 'p')
+      } catch (error) {
+      }
     }
   }
   getData(page: number) {

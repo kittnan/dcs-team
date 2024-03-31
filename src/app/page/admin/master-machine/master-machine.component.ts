@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MasterMachineEditorComponent } from '../master-machine-editor/master-machine-editor.component';
 import * as moment from 'moment';
 import { MatSort } from '@angular/material/sort';
+import { HttpReportSpecialService } from 'src/app/http/http-report-special.service';
 var fs = require('file-saver');
 
 @Component({
@@ -38,12 +39,12 @@ export class MasterMachineComponent {
   var_Province: any
   data: any
   province: any = ''
-
+  filterValue :any
   constructor(
     private $user: HttpUsersService,
     private $master: HttpMastersService,
     private http: HttpClient,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) { }
 
 
@@ -73,6 +74,7 @@ export class MasterMachineComponent {
       this.dataSource = new MatTableDataSource(this.data)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.dataSource.filter = this.filterValue?.trim().toLowerCase();
     }
   }
 
@@ -92,8 +94,8 @@ export class MasterMachineComponent {
 
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = this.filterValue.trim().toLowerCase();
   }
 
 
@@ -361,6 +363,7 @@ export class MasterMachineComponent {
           timer: 1500,
         }).then(async () => {
           this.getData()
+
         })
 
       }
@@ -399,5 +402,11 @@ export class MasterMachineComponent {
     doo.value = ""
     this.var_Province = ''
   }
+
+
+
+
+
+
 }
 

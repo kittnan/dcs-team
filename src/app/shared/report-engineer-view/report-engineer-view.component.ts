@@ -47,6 +47,8 @@ export class ReportEngineerViewComponent implements OnInit {
             );
 
           }
+          console.log( this.page);
+
         }
       })
     } catch (error) {

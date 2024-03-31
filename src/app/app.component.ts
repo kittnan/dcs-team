@@ -51,6 +51,13 @@ export class AppComponent {
           items: [],
           access: ['']
         },
+        {
+          title: 'PM',
+          icon: 'assets/img/icon_sidebar/PM.png',
+          path: 'admin/master_pm',
+          items: [],
+          access: ['']
+        },
       ]
     },
     {
