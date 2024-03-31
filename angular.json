@@ -33,7 +33,10 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "lodash"
+              "lodash",
+              "jspdf-autotable",
+              "raf",
+              "core-js"
             ]
 
           },
