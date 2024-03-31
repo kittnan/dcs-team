@@ -2,27 +2,27 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
-import { HttpReportSpecialService } from 'src/app/http/http-report-special.service';
-import { HttpReportService } from 'src/app/http/http-report.service';
+import { HttpReportPmSpecialService } from 'src/app/http/http-report-pm-special.service';
 import { GenerateInvoicePdfService } from 'src/app/service/generate-invoice-pdf.service';
+
 @Component({
-  selector: 'app-report-special-print',
-  templateUrl: './report-special-print.component.html',
-  styleUrls: ['./report-special-print.component.scss']
+  selector: 'app-pm-report-special-view',
+  templateUrl: './pm-report-special-view.component.html',
+  styleUrls: ['./pm-report-special-view.component.scss']
 })
-export class ReportSpecialPrintComponent implements OnInit {
+export class PmReportSpecialViewComponent implements OnInit {
 
 
   form: any = null
   dataPerPage: number = 6
   page: number = 1
   pageArr: any[] = [];
-  id: any
+
   constructor(
     private $pdf: GenerateInvoicePdfService,
     private router: Router,
     private route: ActivatedRoute,
-    private $report: HttpReportSpecialService
+    private $report: HttpReportPmSpecialService
   ) { }
 
   ngOnInit(): void {
@@ -30,7 +30,6 @@ export class ReportSpecialPrintComponent implements OnInit {
       this.route.queryParams.subscribe(async (params: any) => {
         if (params && params['_id']) {
           let _id = params['_id']
-          this.id = params['_id']
           const resReport = await lastValueFrom(this.$report.get(new HttpParams().set('_id', _id)))
           if (resReport && resReport.length > 0) {
             this.form = resReport[0]
@@ -48,7 +47,7 @@ export class ReportSpecialPrintComponent implements OnInit {
               { length: this.page },
               (_, index) => index + 1
             );
-              this.onPrint()
+
           }
         }
       })
@@ -56,15 +55,6 @@ export class ReportSpecialPrintComponent implements OnInit {
     }
   }
 
-  ngAfterViewChecked(): void {
-    //Called after every check of the component's view. Applies to components only.
-    //Add 'implements AfterViewChecked' to the class.
-    // this.onPrint()
-  }
-
-  ngAfterViewInit(): void {
-
-  }
 
   blobToBase64(blob: Blob): Promise<string> {
     const reader = new FileReader();
@@ -80,35 +70,11 @@ export class ReportSpecialPrintComponent implements OnInit {
     return Math.ceil(len / this.dataPerPage);
   }
 
-  async onPrint() {
-    let check = await lastValueFrom(this.$report.GetByCondition({ _id: this.id }))
-    console.log(check);
-
-    if (check.length != 0 && check[0].path_file) {
-      let url = check[0].path_file
-      const apiUrl = url
-      const authToken = 'a54a136512ef8a7d46cc5f88092997bcf8cfa01f4cc3aabe51fefd9a4ac9e316';
-      fetch(apiUrl, {
-        headers: {
-          'authentication': authToken
-        }
-      })
-        .then(response => response.blob())
-        .then(blob => {
-          const url = window.URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = apiUrl.split("/")[apiUrl.split("/").length - 1];
-          document.body.appendChild(a);
-          a.click();
-          window.URL.revokeObjectURL(url);
-        })
-        .catch(error => console.error('Error fetching report:', error));
-    } else {
-      try {
-        this.$pdf.generatePDF(this.id, `special-report-${this.form.no}`, 'p')
-      } catch (error) {
-      }
+  onPrint() {
+    try {
+      let url = `special/pm-report-print?_id=${this.form._id}`
+      window.open(url,'_blank')
+    } catch (error) {
     }
   }
   getData(page: number) {
@@ -118,5 +84,4 @@ export class ReportSpecialPrintComponent implements OnInit {
     }
     return this.form.data.slice(page, number);
   }
-
 }

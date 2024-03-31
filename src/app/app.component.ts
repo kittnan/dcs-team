@@ -73,10 +73,17 @@ export class AppComponent {
           items: [],
           access: ['']
         },
+        {
+          title: 'PM Report',
+          icon: 'assets/img/icon_sidebar/report.png',
+          path: 'engineer/pm-report',
+          items: [],
+          access: ['']
+        },
         // {
-        //   title: 'PM Report',
+        //   title: 'Library Search',
         //   icon: 'assets/img/icon_sidebar/report.png',
-        //   path: 'engineer/pm-report',
+        //   path: 'engineer/library-search',
         //   items: [],
         //   access: ['']
         // },
@@ -95,13 +102,13 @@ export class AppComponent {
           items: [],
           access: ['']
         },
-        // {
-        //   title: 'PM Report',
-        //   icon: 'assets/img/icon_sidebar/report.png',
-        //   path: 'engineer/pm-report',
-        //   items: [],
-        //   access: ['']
-        // },
+        {
+          title: 'PM Report',
+          icon: 'assets/img/icon_sidebar/report.png',
+          path: 'special/pm-report',
+          items: [],
+          access: ['']
+        },
       ]
     },
   ]

@@ -1,16 +1,17 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
-import { HttpReportService } from 'src/app/http/http-report.service';
+import { HttpReportPmSpecialService } from 'src/app/http/http-report-pm-special.service';
 import { GenerateInvoicePdfService } from 'src/app/service/generate-invoice-pdf.service';
 
 @Component({
-  selector: 'app-report-engineer-print',
-  templateUrl: './report-engineer-print.component.html',
-  styleUrls: ['./report-engineer-print.component.scss']
+  selector: 'app-pm-report-special-print',
+  templateUrl: './pm-report-special-print.component.html',
+  styleUrls: ['./pm-report-special-print.component.scss']
 })
-export class ReportEngineerPrintComponent implements OnInit {
+export class PmReportSpecialPrintComponent implements OnInit {
+
 
   form: any = null
   dataPerPage: number = 6
@@ -21,8 +22,7 @@ export class ReportEngineerPrintComponent implements OnInit {
     private $pdf: GenerateInvoicePdfService,
     private router: Router,
     private route: ActivatedRoute,
-    private $report: HttpReportService,
-    private http: HttpClient
+    private $report: HttpReportPmSpecialService
   ) { }
 
   ngOnInit(): void {
@@ -48,8 +48,7 @@ export class ReportEngineerPrintComponent implements OnInit {
               { length: this.page },
               (_, index) => index + 1
             );
-            //TODO tester
-            this.onPrint()
+              this.onPrint()
           }
         }
       })
@@ -105,15 +104,12 @@ export class ReportEngineerPrintComponent implements OnInit {
         .catch(error => console.error('Error fetching report:', error));
     } else {
       try {
-        this.$pdf.generatePDF(this.id, `engineer-report-${this.form.no}`, 'p')
+        this.$pdf.generatePDF(this.id, `special-pm-report-${this.form.no}`, 'p')
       } catch (error) {
+      console.log("🚀 ~ error:", error)
       }
     }
-
-
   }
-
-
   getData(page: number) {
     let number = this.dataPerPage
     if (page !== 0) {

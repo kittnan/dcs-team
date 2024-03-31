@@ -1,1 +1,379 @@
-<p>engineer-pm-report-new works!</p>
+<div *ngIf="form" fxLayout="row wrap" fxLayoutAlign="center center">
+  <app-title fxFlex="100" [title]="'Preventive Maintenance Report'"></app-title>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between stretch">
+    <app-auto-complete class="btn-set" *ngIf="customerOptionStr.length>0" fxFlex="100" fxFlex.gt-md="32"
+      [myControl]="customerCtrl" [options]="customerOptionStr" (optionsChange)="onSelectCustomer($event)">
+    </app-auto-complete>
+
+    <mat-form-field fxFlex="100" fxFlex.gt-md="32" appearance="outline" floatLabel="always" class="btn-set">
+      <mat-label>เครื่อง</mat-label>
+      <mat-select [(ngModel)]="form.machine" [compareWith]="objectComparisonFunction_machine">
+        <mat-option *ngFor="let item of machineOption" [value]="item">
+          {{item.Machine}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex="100" fxFlex.gt-md="32" appearance="outline" floatLabel="always" class="btn-set">
+      <mat-label>งานบริการ</mat-label>
+      <mat-select [(ngModel)]="form.serviceType" [compareWith]="objectComparisonFunction_id">
+        <mat-option *ngFor="let item of serviceTypeOption" [value]="item">
+          {{item.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <!-- <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="10" class="mb-4">
+
+    <button mat-button class="btn-add" (click)="onAddPage()" style="color: black;">
+      <img src="assets/img/master-machine/add-file.png" class="btn-img-add" />
+      เพิ่มหน้า
+    </button>
+
+    <button  mat-button class="btn-del" (click)="onDelPage()" style="color: black">
+      <img src="assets/img/master-machine/trash-bin.png" class="btn-img-del" />
+      ลบหน้า
+    </button>
+  </div> -->
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" *ngFor="let p of pageArr; let p_i = index"
+    id="print" class="mb-9">
+    <div *ngIf="p_i===0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="mb-6">
+      <div fxFlex="60" fxLayout="row wrap" fxLayoutAlign="center start">
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start start">
+          <img src="./assets/img/logo/logo-removebg-preview.png" alt="" style="width: 200px;height: 80px;">
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="70" fxLayout="row wrap" fxLayoutAlign="start start">
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+            <span style="font-size: 18px; font-weight: 600;">
+              หจก. เมด เอ็กซ์ พลัส
+            </span>
+          </div>
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+            <span style="font-size: 14px;font-weight: 600;">
+              MED EX PLUS LIMITED PARTNERSHIP
+            </span>
+          </div>
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+            <span class="pe-2" style="font-size: 23px;font-weight: 600;">
+              Service
+            </span>
+            <span class="font-normal" style="font-size: 14px;">
+              83 หมู่ 4 ตำบลป่าไผ่ อ.สันทราย จ.เชียงใหม่ 50210
+            </span>
+          </div>
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+            <span class="font-normal" style="font-size: 14px;">
+              83 Moo 4, Pa-phai, Sansai, Chiang mai 50210
+            </span>
+          </div>
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+            <span class="font-normal" style="font-size: 14px;">
+              Tel. : 08-3154-7593, 09-5682-5262 Email: Ivddiagnotic@gmail.com
+            </span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div *ngIf="p_i===0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="mb-4">
+      <span style="font-weight: 600;">Preventive Maintenance</span>
+    </div>
+    <div id="head" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center stretch">
+      <div fxFlex="100" class="row " [ngClass.gt-md]="'bt bl br'" fxLayout="row wrap" fxLayoutAlign="start center">
+        <div fxFlex="100" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start center" class=""
+          [ngClass.gt-md]="''">
+          <span class="ps-4 pe-4 font-semibold">
+            โรงพยาบาล/ลูกค้า
+          </span>
+          <span class="font-normal">
+            {{form.customer?.Customer}}
+          </span>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
+          <span class="ps-4 pe-4 font-semibold">
+            อำเภอ
+          </span>
+          <span class="font-normal">{{form.customer?.District}}</span>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
+          <span class="ps-4 pe-4 font-semibold">
+            จังหวัด
+          </span>
+          <span class="font-normal">{{form.customer?.Province}}</span>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="auto" fxLayout="row wrap" fxLayoutAlign="start center" class=""
+          [ngClass.gt-md]="' flex-start-custom'">
+          <span class="ps-4 pe-4 font-semibold">
+            เลขที่
+          </span>
+          <span class="font-normal pe-1">{{form?.no}}</span>
+        </div>
+      </div>
+      <div fxFlex="100" class="row" [ngClass.gt-md]="'bl br bb'" fxLayout="row wrap" fxLayoutAlign="start center">
+        <div fxFlex="100" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start center" class=""
+          [ngClass.gt-md]="''">
+          <span class="ps-4 pe-4 font-semibold">
+            เครื่อง
+          </span>
+          <span class="font-normal">
+            {{form.machine?.Machine}}
+          </span>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
+          <span class="ps-4 pe-4 font-semibold">
+            รุ่น
+          </span>
+          <span class="font-normal">{{form.machine?.Model}}</span>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
+          <span class="ps-4 pe-4 font-semibold">
+            S/N
+          </span>
+          <span *ngIf="form.machine" class="font-normal">{{form.machine['S/N']}}</span>
+        </div>
+      </div>
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="'bl br'">
+        <span class="ps-4 pe-4  font-semibold">
+          งานบริการ
+        </span>
+        <span class="font-normal">{{form.serviceType?.name}}</span>
+      </div>
+    </div>
+
+
+
+    <div id="body" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="bl bb bt br">
+            <span class="p-2 font-semibold">
+              รูปภาพประกอบ
+            </span>
+          </div>
+        </div>
+        <div fxFlex="65" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="bb bt br">
+            <span class="p-2 font-semibold">
+              ปัญหาและการแก้ไข
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="form?.data?.length>0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <ng-container *ngFor="let item of getData(p_i); let i = index">
+          <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start stretch" style="height: 250px;">
+            <div [matBadge]="item.no" matBadgeColor="warn" matBadgePosition="before" matBadgeOverlap="true" fxFlex="100"
+              fxLayout="row wrap" fxLayoutAlign="center center" class="bl bb br p-3">
+
+              <ng-container *ngIf="item?.files.length>0">
+                <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
+                  <div>
+                    <img [attr.src]="item.files[0]['view']  | async " class="mb-2 rounded-md cursor-pointer mx-auto"
+                      style="max-height: 175px;">
+                  </div>
+                </div>
+                <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
+                  <button mat-mini-fab color="primary" (click)="fileUpload.click()" class="cursor-pointer">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-mini-fab color="warn" (click)="onDeleteFile(item.files[0],item.no)"
+                    class="cursor-pointer">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+                <input hidden type="file" #fileUpload (change)="onUpload($event,item.no)">
+              </ng-container>
+
+              <ng-container *ngIf="!item?.files[0]">
+                <button mat-mini-fab color="primary" (click)="fileUpload.click()" class="cursor-pointer">
+                  <mat-icon>add_photo_alternate</mat-icon>
+                </button>
+                <input hidden type="file" #fileUpload (change)="onUpload($event,item.no)">
+              </ng-container>
+
+            </div>
+          </div>
+          <div fxFlex="65" fxLayout="row wrap" fxLayoutAlign="start stretch" style="height: 250px;">
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" class="bb br p-3">
+              <textarea fxFlex="98" rows="5" [(ngModel)]="item.text" class="p-2 rounded-md"
+                style="border: 1px solid; height: 100%;"></textarea>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <ng-container *ngIf="pageArr.length == p_i+1 ">
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="bl bb br">
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-2 mt-4">
+            <span>
+              อะไหล่ที่ทำการเปลื่ยน
+            </span>
+          </div>
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-4 mb-3">
+            <span class="me-3">
+              1.
+            </span>
+            <input [(ngModel)]="form.part1" fxFlex="auto" type="text" class="bg-inherit"
+              style="border-bottom: 1px solid;">
+          </div>
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-4 mb-3">
+            <span class="me-3">
+              2.
+            </span>
+            <input [(ngModel)]="form.part2" fxFlex="auto" type="text" class="bg-inherit"
+              style="border-bottom: 1px solid;">
+          </div>
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-4 mb-3">
+            <span class="me-3">
+              3.
+            </span>
+            <input [(ngModel)]="form.part3" fxFlex="auto" type="text" class="bg-inherit"
+              style="border-bottom: 1px solid;">
+          </div>
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-4 mb-3">
+            <span class="me-3">
+              4.
+            </span>
+            <input [(ngModel)]="form.part4" fxFlex="auto" type="text" class="bg-inherit"
+              style="border-bottom: 1px solid;">
+          </div>
+        </div>
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="bl bb br">
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-2 mt-4 ">
+            <span>
+              ข้อเสนอแนะ/หมายเหตุ
+            </span>
+          </div>
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-2 mt-4">
+            <textarea [(ngModel)]="form.description" fxFlex="98" rows="3" class="mb-3 p-2 rounded-md"
+              style="border: 1px solid;"></textarea>
+          </div>
+        </div>
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="bl bb br">
+          <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-3 br">
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-3 mb-2">
+              <span class="font-bold">
+                สำหรับฝ่าย service
+              </span>
+            </div>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mb-2">
+              <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                <span class="font-semibold">
+                  ผู้ปฏิบัติงาน
+                </span>
+              </div>
+              <div fxFlex="100" fxFlex.gt-md="80" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                {{userLogin.name}}
+              </div>
+            </div>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mb-2">
+              <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                <span class="font-semibold">
+                  เบอร์โทรศัพท์
+                </span>
+              </div>
+              <div fxFlex="100" fxFlex.gt-md="80" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                <!-- {{userLogin.telephone}} -->
+                {{ userLogin.telephone | slice:0:3 }}-{{ userLogin.telephone | slice:3:6 }}-{{ userLogin.telephone |
+                slice:6 }}
+              </div>
+            </div>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mb-2">
+              <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center">
+                <span class="font-semibold">
+                  วันที่
+                </span>
+              </div>
+              <div fxFlex="100" fxFlex.gt-md="80" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                <mat-form-field appearance="outline" floatLabel="always" class="datepicker">
+                  <mat-label></mat-label>
+                  <input [(ngModel)]="date" matInput [matDatepicker]="picker">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mb-2">
+              <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center">
+                <span class="font-semibold">
+                  เวลาเริ่มงาน
+                </span>
+              </div>
+              <div fxFlex="100" fxFlex.gt-md="80" fxLayout="row wrap" fxLayoutAlign="start center">
+                <input [(ngModel)]="time" type="time" name="" id="">
+              </div>
+            </div>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mb-2">
+              <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center">
+                <span class="font-semibold">
+                  เวลาเสร็จงาน
+                </span>
+              </div>
+              <div fxFlex="100" fxFlex.gt-md="80" fxLayout="row wrap" fxLayoutAlign="start center">
+                <span class="me-1">
+                  {{end |date:'dd-MMM-YYYY'}}
+                </span>
+                <input [(ngModel)]="endTime" type="time" name="" id="">
+              </div>
+            </div>
+          </div>
+          <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start start" class="">
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="mt-3">
+              <span class="ps-3 font-bold me-2">
+                สำหรับลูกค้า
+              </span>
+              <button mat-mini-fab *ngIf="!form.sign" mat-raised-button (click)="onClickSignature()">
+                <mat-icon>draw</mat-icon>
+              </button>
+            </div>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="p-2">
+              <img *ngIf="form.sign" [src]="form.sign" class="w-full h-full  cursor-pointer"
+                style="max-width: 300px; max-height: 175px;" (click)="onClickSignature()">
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+
+    </div>
+
+  </div>
+
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="20">
+    <button mat-button class="btn-del" (click)="onCancel()" style="color: black">
+      <img src="assets/img/report/trash-bin.png" class="btn-img-add" />
+      Cancel
+    </button>
+    <button mat-button class="btn-add" (click)="onFinish()" style="color: black">
+      <img src="assets/img/report/select.png" class="btn-img-add" />
+      Finished
+    </button>
+    <button mat-button class="btn-save" (click)="onSave()" style="color: black">
+      <img src="assets/img/report/save.png" class="btn-img-add" />
+      Save
+    </button>
+    <!-- <button mat-raised-button (click)="onFinish()">
+      <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+        <mat-icon class="mat-18">
+          done_all
+        </mat-icon>
+        <span>
+          เสร็จสิ้น
+        </span>
+      </div>
+    </button>
+
+    <button mat-raised-button (click)="onSave()">
+      <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+        <mat-icon class="mat-18">
+          save
+        </mat-icon>
+        <span>
+          บันทึก
+        </span>
+      </div>
+    </button> -->
+  </div>
+
+</div>

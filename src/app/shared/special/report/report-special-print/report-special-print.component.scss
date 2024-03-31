@@ -1,12 +1,12 @@
-::ng-deep .btn-set .mat-form-field-flex>.mat-form-field-infix {
+::ng-deep .mat-form-field-flex>.mat-form-field-infix {
   padding: 5px 0px !important;
 }
 
-::ng-deep .btn-set .mat-form-field-label {
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-label {
   margin-top: -12px;
 }
 
-::ng-deep .btn-set label.ng-star-inserted {
+::ng-deep label.ng-star-inserted {
   transform: translateY(-0.59375em) scale(.75) !important;
 }
 
@@ -16,7 +16,7 @@
   top: 10px !important;
 }
 
-::ng-deep .btn-set .mat-form-field-label {
+::ng-deep .mat-form-field-label {
   color: black;
   font-weight: 600 !important;
 }
@@ -48,12 +48,12 @@
 
 
 // todo hide .mat-form-field-appearance-outline .mat-form-field-wrapper
-::ng-deep .btn-set .mat-form-field-appearance-outline .mat-form-field-wrapper {
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
   margin: 0;
 }
 
 // todo hide .mat-form-field-wrapper
-::ng-deep .btn-set .mat-form-field-wrapper {
+::ng-deep .mat-form-field-wrapper {
   padding-bottom: 0;
 }
 
@@ -63,8 +63,8 @@
   display: flex !important;
   place-content: center flex-end !important;
   align-items: center !important;
-  flex: 1 1 20% !important;
-  max-width: 20% !important;
+  flex: 1 1 30% !important;
+  max-width: 30% !important;
   justify-content: flex-end !important;
 }
 
@@ -83,11 +83,15 @@
     width: 10px;
     float: right;
     position: absolute !important;
-    top: 18px !important;
+    top: 10px;
     right: 25px;
   }
 }
 
+
+label{
+  font-weight: bold;
+}
 
 .btn-add {
   color: black;
@@ -95,12 +99,7 @@
   border: 1px solid;
   background-color: #A7FC89;
 }
-.btn-del {
-  color: black;
-  border-radius: 8px;
-  border: 1px solid;
-  background-color: #fc9a89;
-}
+
 
 .btn-img-add {
   width: 20px;
@@ -109,13 +108,7 @@
   top: -1px;
   left: -1px;
 }
-.btn-img-del {
-  width: 20px;
-  display: inline;
-  position: relative;
-  top: -1px;
-  left: -1px;
-}
+
 .setColorGreen {
   color: #00d500;
 }
@@ -126,5 +119,3 @@
   border: 1px solid;
   background-color: #97AEFF;
 }
-
-

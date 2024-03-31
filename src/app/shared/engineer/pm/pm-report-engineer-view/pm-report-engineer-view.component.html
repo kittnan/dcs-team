@@ -1,5 +1,5 @@
 <div *ngIf="form" fxLayout="row wrap" fxLayoutAlign="center center">
-  <app-title fxFlex="100" [title]="'Special Report'"></app-title>
+  <app-title fxFlex="100" [title]="'Preventive Maintenance Report'"></app-title>
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" class="mb-4">
 
@@ -11,6 +11,7 @@
   <div class="overflow-auto">
     <div fxLayout="row wrap" fxLayoutAlign="start start" *ngFor="let p of pageArr; let p_i = index" id="print"
       class="mb-9">
+
       <div *ngIf="p_i===0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="mb-6">
         <div fxFlex="60" fxLayout="row wrap" fxLayoutAlign="center start">
           <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start start">
@@ -50,13 +51,14 @@
         </div>
       </div>
       <div *ngIf="p_i===0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="mb-4">
-        <span style="font-weight: 600;">Specialist Report</span>
+        <span style="font-weight: 600;">Preventive Maintenance</span>
       </div>
+
       <div id="head" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center stretch">
         <div fxFlex="100" fxLayout="row wrap" class="bl bt br" fxLayoutAlign="start center">
           <div fxFlex="100" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start center" class="">
             <label class="ps-4 pe-4">
-              Customer
+              โรงพยาบาล/ลูกค้า
             </label>
             <span class="font-normal">
               {{form.customer?.Customer}}
@@ -64,20 +66,20 @@
           </div>
           <div fxFlex="100" fxFlex.gt-md="20"  fxLayout="row wrap" fxLayoutAlign="start center" class="">
             <label class="ps-4 pe-4">
-              District
+              อำเภอ
             </label>
             <span class="font-normal">{{form.customer?.District}}</span>
           </div>
           <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" class="">
             <label class="ps-4 pe-4 ">
-              Province
+              จังหวัด
             </label>
             <span class="font-normal">{{form.customer?.Province}}</span>
           </div>
           <div fxFlex="100" fxFlex.gt-md="auto" fxLayout="row wrap" fxLayoutAlign="start center" class=""
           [ngClass.gt-md]="' flex-start-custom'">
           <span class="ps-4 pe-4 font-semibold">
-            No.
+            เลขที่
           </span>
           <span class="font-normal pe-1">{{form?.no}}</span>
         </div>
@@ -86,7 +88,7 @@
           <div fxFlex="100" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start center" class=""
             [ngClass.gt-md]="''">
             <label class="ps-4 pe-4">
-              Machine
+              เครื่อง
             </label>
             <span class="font-normal">
               {{form.machine?.Machine}}
@@ -94,7 +96,7 @@
           </div>
           <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
             <label class="ps-4 pe-4">
-              Type
+              รุ่น
             </label>
             <span class="font-normal">
               {{form.machine?.Model}}
@@ -113,7 +115,7 @@
         <div fxFlex="100" fxLayout="row wrap" class="bl br" fxLayoutAlign="start center">
           <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class=" pb-2">
             <label class="ps-4 pe-4">
-              Service
+              งานบริการ
             </label>
             <span class="font-normal">{{form.serviceType?.name}}</span>
           </div>
@@ -126,14 +128,14 @@
           <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center">
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="bl bb bt br">
               <label class="pb-3">
-                Images
+                รูปภาพประกอบ
               </label>
             </div>
           </div>
           <div fxFlex="65" fxLayout="row wrap" fxLayoutAlign="start center">
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="bb bt br">
               <label class="pb-3 ">
-                Issue & Solution
+                ปัญหาและการแก้ไข
               </label>
             </div>
           </div>
@@ -147,7 +149,6 @@
                   <img [attr.src]="item.files[0]['view']  | async " class="mb-2 rounded-md cursor-pointer mx-auto"
                     style="max-height: 175px;">
                 </ng-container>
-
               </div>
             </div>
             <div fxFlex="65" fxLayout="row wrap" fxLayoutAlign="start stretch" style="height: 210px;">
@@ -159,7 +160,7 @@
           </ng-container>
         </div>
         <ng-container *ngIf="pageArr.length == p_i+1 ">
-          <!-- <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="bl bb br">
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="bl bb br">
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-2 mt-4 pb-2">
               <span class="font-semibold">
                 อะไหล่ที่ทำการเปลื่ยน
@@ -189,15 +190,15 @@
               </span>
               <input [readOnly]="true" [(ngModel)]="form.part4" fxFlex="auto" type="text" style="border-bottom: 1px solid;">
             </div>
-          </div> -->
+          </div>
           <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="bl bb br">
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-2 mt-4">
               <span class="font-semibold">
-                Suggestions/Description
+                ข้อเสนอแนะ/หมายเหตุ
               </span>
             </div>
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-2 mt-4">
-              <textarea [readOnly]="true" [(ngModel)]="form.description" fxFlex="98" rows="3" class="mb-3 p-2"
+              <textarea [readOnly]="true" [(ngModel)]="form.description" fxFlex="98" rows="3" class="mb-3 p-2 rounded-md"
                 style="border: 1px solid;"></textarea>
             </div>
           </div>
@@ -205,13 +206,13 @@
             <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-3 br">
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="mt-3 mb-2">
                 <label class="text-lg">
-                  Specialist Service
+                  สำหรับฝ่าย service
                 </label>
               </div>
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
                 <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
                   <label>
-                    PIC
+                    ผู้ปฏิบัติงาน
                   </label>
                 </div>
                 <div fxFlex="70" fxLayout="row wrap" fxLayoutAlign="start stretch">
@@ -221,10 +222,11 @@
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
                 <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
                   <label>
-                    Tel
+                    เบอร์โทรศัพท์
                   </label>
                 </div>
                 <div fxFlex="70" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                  <!-- {{form.userActive.telephone}} -->
                   {{ form.userActive.telephone | slice:0:3 }}-{{ form.userActive.telephone | slice:3:6 }}-{{ form.userActive.telephone | slice:6 }}
                 </div>
               </div>
@@ -232,7 +234,7 @@
 
                 <div fxFlex="100" fxFlex.gt-md="30"  fxLayout="row wrap" fxLayoutAlign="start stretch">
                   <label>
-                    Start Date
+                    วันที่
                   </label>
                 </div>
                 <div fxFlex="70" fxLayout="row wrap" fxLayoutAlign="start stretch">
@@ -245,7 +247,7 @@
 
                 <div fxFlex="100" fxFlex.gt-md="30"  fxLayout="row wrap" fxLayoutAlign="start stretch">
                   <label>
-                    Start Time
+                    เวลาเริ่มงาน
                   </label>
                 </div>
                 <div fxFlex="70" fxLayout="row wrap" fxLayoutAlign="start stretch">
@@ -259,7 +261,7 @@
 
                 <div fxFlex="100" fxFlex.gt-md="30"  fxLayout="row wrap" fxLayoutAlign="start stretch">
                   <label>
-                    Finished Time
+                    เวลาเสร็จงาน
                   </label>
                 </div>
                 <div fxFlex="70" fxLayout="row wrap" fxLayoutAlign="start stretch">
@@ -272,7 +274,7 @@
             <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-3">
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-3">
                 <label>
-                  Customer sign
+                  สำหรับลูกค้า
                 </label>
               </div>
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="p-2">

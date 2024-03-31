@@ -1,0 +1,292 @@
+<div *ngIf="form" fxLayout="row wrap" fxLayoutAlign="center center">
+  <app-title fxFlex="100" [title]="'Specialist Report'"></app-title>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" class="mb-4">
+
+    <button mat-button class="btn-add" (click)="onPrint()" style="color: black">
+      <img src="assets/img/report/printer.png" class="btn-img-add" />
+      PRINT PDF
+    </button>
+  </div>
+  <div class="overflow-auto">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" *ngFor="let p of pageArr; let p_i = index" id="print"
+      class="mb-9">
+      <div *ngIf="p_i===0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="mb-6">
+        <div fxFlex="60" fxLayout="row wrap" fxLayoutAlign="center start">
+          <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start start">
+            <img src="./assets/img/logo/logo-removebg-preview.png" alt="" style="width: 200px;height: 80px;">
+          </div>
+          <div fxFlex="100" fxFlex.gt-md="70" fxLayout="row wrap" fxLayoutAlign="start start">
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+              <span style="font-size: 18px; font-weight: 600;">
+                หจก. เมด เอ็กซ์ พลัส
+              </span>
+            </div>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+              <span style="font-size: 14px;font-weight: 600;">
+                MED EX PLUS LIMITED PARTNERSHIP
+              </span>
+            </div>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+              <span class="pe-2" style="font-size: 23px;font-weight: 600;">
+                Service
+              </span>
+              <span class="font-normal" style="font-size: 14px;">
+                83 หมู่ 4 ตำบลป่าไผ่ อ.สันทราย จ.เชียงใหม่ 50210
+              </span>
+            </div>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+              <span class="font-normal" style="font-size: 14px;">
+                83 Moo 4, Pa-phai, Sansai, Chiang mai 50210
+              </span>
+            </div>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+              <span class="font-normal" style="font-size: 14px;">
+                Tel. : 08-3154-7593, 09-5682-5262 Email: Ivddiagnotic@gmail.com
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div *ngIf="p_i===0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="mb-4">
+        <span style="font-weight: 600;">Specialist Report</span>
+      </div>
+      <div id="head" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center stretch">
+        <div fxFlex="100" fxLayout="row wrap" class="bl bt br" fxLayoutAlign="start center">
+          <div fxFlex="100" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start center" class="">
+            <label class="ps-4 pe-4">
+              Customer
+            </label>
+            <span class="font-normal">
+              {{form.customer?.Customer}}
+            </span>
+          </div>
+          <div fxFlex="100" fxFlex.gt-md="20"  fxLayout="row wrap" fxLayoutAlign="start center" class="">
+            <label class="ps-4 pe-4">
+              District
+            </label>
+            <span class="font-normal">{{form.customer?.District}}</span>
+          </div>
+          <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" class="">
+            <label class="ps-4 pe-4 ">
+              Province
+            </label>
+            <span class="font-normal">{{form.customer?.Province}}</span>
+          </div>
+          <div fxFlex="100" fxFlex.gt-md="auto" fxLayout="row wrap" fxLayoutAlign="start center" class=""
+          [ngClass.gt-md]="' flex-start-custom'">
+          <span class="ps-4 pe-4 font-semibold">
+            No.
+          </span>
+          <span class="font-normal pe-1">{{form?.no}}</span>
+        </div>
+        </div>
+        <div fxFlex="100" fxLayout="row wrap" class="bl br bb" fxLayoutAlign="start center">
+          <div fxFlex="100" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start center" class=""
+            [ngClass.gt-md]="''">
+            <label class="ps-4 pe-4">
+              Machine
+            </label>
+            <span class="font-normal">
+              {{form.machine?.Machine}}
+            </span>
+          </div>
+          <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
+            <label class="ps-4 pe-4">
+              Type
+            </label>
+            <span class="font-normal">
+              {{form.machine?.Model}}
+            </span>
+          </div>
+          <div fxFlex="100" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
+            <label class="ps-4 pe-4">
+              S/N
+            </label>
+            <span *ngIf="form.machine" class="font-normal">
+              {{form.machine['S/N']}}
+            </span>
+          </div>
+
+        </div>
+        <div fxFlex="100" fxLayout="row wrap" class="bl br" fxLayoutAlign="start center">
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class=" pb-2">
+            <label class="ps-4 pe-4">
+              Service
+            </label>
+            <span class="font-normal">{{form.serviceType?.name}}</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="body" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+          <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center">
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="bl bb bt br">
+              <label class="pb-3">
+                Images
+              </label>
+            </div>
+          </div>
+          <div fxFlex="65" fxLayout="row wrap" fxLayoutAlign="start center">
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="bb bt br">
+              <label class="pb-3 ">
+                Issue & Solution
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="form?.data?.length>0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <ng-container *ngFor="let item of getData(p_i); let i = index">
+            <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start stretch" style="height: 210px;">
+              <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="bl bb br p-3">
+                <ng-container *ngIf="item?.files[0]">
+                  <img [attr.src]="item.files[0]['view']  | async " class="mb-2 rounded-md cursor-pointer mx-auto"
+                    style="max-height: 175px;">
+                </ng-container>
+
+              </div>
+            </div>
+            <div fxFlex="65" fxLayout="row wrap" fxLayoutAlign="start stretch" style="height: 210px;">
+              <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" class="bb br p-3">
+                <textarea [readOnly]="true" fxFlex="98" rows="5" [(ngModel)]="item.text" class="rounded-md p-2"
+                  style="border: 1px solid; height: 100%; "></textarea>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <ng-container *ngIf="pageArr.length == p_i+1 ">
+          <!-- <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="bl bb br">
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-2 mt-4 pb-2">
+              <span class="font-semibold">
+                อะไหล่ที่ทำการเปลื่ยน
+              </span>
+            </div>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-4 mb-3">
+              <span class="me-3 font-semibold">
+                1.
+              </span>
+              <input [readOnly]="true" [(ngModel)]="form.part1" fxFlex="auto" type="text" style="border-bottom: 1px solid;">
+            </div>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-4 mb-3">
+              <span class="me-3 font-semibold">
+                2.
+              </span>
+              <input [readOnly]="true" [(ngModel)]="form.part2" fxFlex="auto" type="text" style="border-bottom: 1px solid;">
+            </div>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-4 mb-3">
+              <span class="me-3 font-semibold">
+                3.
+              </span>
+              <input [readOnly]="true" [(ngModel)]="form.part3" fxFlex="auto" type="text" style="border-bottom: 1px solid;">
+            </div>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-4 mb-3">
+              <span class="me-3 font-semibold">
+                4.
+              </span>
+              <input [readOnly]="true" [(ngModel)]="form.part4" fxFlex="auto" type="text" style="border-bottom: 1px solid;">
+            </div>
+          </div> -->
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="bl bb br">
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-2 mt-4">
+              <span class="font-semibold">
+                Suggestions/Description
+              </span>
+            </div>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-2 mt-4">
+              <textarea [readOnly]="true" [(ngModel)]="form.description" fxFlex="98" rows="3" class="mb-3 p-2"
+                style="border: 1px solid;"></textarea>
+            </div>
+          </div>
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="bl bb br">
+            <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-3 br">
+              <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="mt-3 mb-2">
+                <label class="text-lg">
+                  Specialist Service
+                </label>
+              </div>
+              <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                  <label>
+                    PIC
+                  </label>
+                </div>
+                <div fxFlex="70" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                  {{form.userActive.name}}
+                </div>
+              </div>
+              <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                  <label>
+                    Tel
+                  </label>
+                </div>
+                <div fxFlex="70" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                  {{ form.userActive.telephone | slice:0:3 }}-{{ form.userActive.telephone | slice:3:6 }}-{{ form.userActive.telephone | slice:6 }}
+                </div>
+              </div>
+              <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+
+                <div fxFlex="100" fxFlex.gt-md="30"  fxLayout="row wrap" fxLayoutAlign="start stretch">
+                  <label>
+                    Start Date
+                  </label>
+                </div>
+                <div fxFlex="70" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                  {{form.createdAt | date:'dd-MMM-YYYY'}}
+                </div>
+
+              </div>
+              <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+
+
+                <div fxFlex="100" fxFlex.gt-md="30"  fxLayout="row wrap" fxLayoutAlign="start stretch">
+                  <label>
+                    Start Time
+                  </label>
+                </div>
+                <div fxFlex="70" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                  {{form.startDate | date :'HH:mm'}}
+                </div>
+
+
+              </div>
+              <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+
+
+                <div fxFlex="100" fxFlex.gt-md="30"  fxLayout="row wrap" fxLayoutAlign="start stretch">
+                  <label>
+                    Finished Time
+                  </label>
+                </div>
+                <div fxFlex="70" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                  {{form.finishDate | date :'dd-MMM-YYYY, HH:mm'}}
+                </div>
+
+
+              </div>
+            </div>
+            <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-3">
+              <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-3">
+                <label>
+                  Customer sign
+                </label>
+              </div>
+              <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="p-2">
+                <img *ngIf="form.sign" [src]="form.sign" class="w-full h-full cursor-pointer"
+                  style="max-width: 300px; max-height: 200px;">
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+
+      </div>
+
+    </div>
+  </div>
+
+</div>

@@ -12,12 +12,11 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { EngineerReportNewComponent } from './report/engineer-report-new/engineer-report-new.component';
 import { EngineerReportViewComponent } from './report/engineer-report-view/engineer-report-view.component';
 import { EngineerReportPrintComponent } from './report/engineer-report-print/engineer-report-print.component';
-import { EngineerReportMultiPrintComponent } from './report/engineer-report-multi-print/engineer-report-multi-print.component';
-import { EngineerReportMultiPrintViewComponent } from './report/engineer-report-multi-print-view/engineer-report-multi-print-view.component';
 import { EngineerPmReportComponent } from './pm-report/engineer-pm-report/engineer-pm-report.component';
 import { EngineerPmReportNewComponent } from './pm-report/engineer-pm-report-new/engineer-pm-report-new.component';
 import { EngineerPmReportViewComponent } from './pm-report/engineer-pm-report-view/engineer-pm-report-view.component';
 import { EngineerPmReportPrintComponent } from './pm-report/engineer-pm-report-print/engineer-pm-report-print.component';
+import { EngineerLibrarySearchComponent } from './engineer-library-search/engineer-library-search.component';
 
 
 @NgModule({
@@ -27,12 +26,11 @@ import { EngineerPmReportPrintComponent } from './pm-report/engineer-pm-report-p
     EngineerReportNewComponent,
     EngineerReportViewComponent,
     EngineerReportPrintComponent,
-    EngineerReportMultiPrintComponent,
-    EngineerReportMultiPrintViewComponent,
     EngineerPmReportComponent,
     EngineerPmReportNewComponent,
     EngineerPmReportViewComponent,
-    EngineerPmReportPrintComponent
+    EngineerPmReportPrintComponent,
+    EngineerLibrarySearchComponent
   ],
   imports: [
     CommonModule,

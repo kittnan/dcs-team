@@ -1,5 +1,5 @@
 <div *ngIf="form" fxLayout="row wrap" fxLayoutAlign="center center">
-  <app-title fxFlex="100" [title]="'Special Report'"></app-title>
+  <app-title fxFlex="100" [title]="'Specialist Report'"></app-title>
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between stretch" >
     <app-auto-complete  *ngIf="customerOptionStr.length>0" fxFlex="100" fxFlex.gt-md="32" [title]="'Customer'" [myControl]="customerCtrl" [options]="customerOptionStr" (optionsChange)="onSelectCustomer($event)" class="btn-set"></app-auto-complete>
 
