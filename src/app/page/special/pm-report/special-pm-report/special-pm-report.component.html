@@ -1,19 +1,21 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center">
-  <app-title fxFlex="90" [title]="'Specialist Report Manage'"></app-title>
+  <app-title fxFlex="100" [title]="'Specialist Report Manage'"></app-title>
   <div fxFlex="100" fxFlex.gt-xs="85" fxLayout="row wrap" fxLayoutAlign="center stretch">
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10">
-      <mat-form-field appearance="outline" floatLabel="always" class="btn-set">
-        <mat-label>ค้นหา</mat-label>
-        <input matInput (keyup)="applyFilter($event)" #input>
-      </mat-form-field>
-      <mat-form-field appearance="outline" floatLabel="always" class="btn-set">
-        <mat-label>สถานะ</mat-label>
-        <mat-select [(ngModel)]="filterData.status" (ngModelChange)="onChangeFilterStatus()" >
-          <mat-option *ngFor="let item of statusOption" [value]="item.value">
-            {{item.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="0" fxLayoutGap.gt-xs="10">
+        <mat-form-field appearance="outline" floatLabel="always" class="btn-set">
+          <mat-label>ค้นหา</mat-label>
+          <input matInput (keyup)="applyFilter($event)" #input>
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always" class="btn-set">
+          <mat-label>สถานะ</mat-label>
+          <mat-select [(ngModel)]="filterData.status" (ngModelChange)="onChangeFilterStatus()">
+            <mat-option *ngFor="let item of statusOption" [value]="item.value">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
       <div fxFlex="auto"></div>
 
       <button mat-button class="btn-add" (click)="onClickNewReport()" style="color: black">
@@ -23,8 +25,7 @@
 
     </div>
 
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between start"
-      class="overflow-auto box-glass mt-1">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between start" class="overflow-auto box-glass mt-1">
       <table fxFlex="100" mat-table [dataSource]="dataSource" matSort style="text-wrap: nowrap;">
         <ng-container matColumnDef="reportNo">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Report No </th>
@@ -60,13 +61,14 @@
 
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-          <td mat-cell class="gap" *matCellDef="let row" class="capitalize font-semibold" [ngClass]="{setColorGreen: row.status == 'finish'}" style="letter-spacing: 2px;">
-          <span *ngIf="row.status!=='finish'">
-            {{row.status}}
-          </span>
-          <span *ngIf="row.status=='finish'">
-            Finished
-          </span>
+          <td mat-cell class="gap" *matCellDef="let row" class="capitalize font-semibold"
+            [ngClass]="{setColorGreen: row.status == 'finish'}" style="letter-spacing: 2px;">
+            <span *ngIf="row.status!=='finish'">
+              {{row.status}}
+            </span>
+            <span *ngIf="row.status=='finish'">
+              Finished
+            </span>
           </td>
         </ng-container>
 
@@ -84,7 +86,7 @@
 
     </div>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center" class="box-glass">
-      <mat-paginator  fxFlex="100" [pageSizeOptions]="[5, 10, 25, 100,dataSource.filteredData.length]"
+      <mat-paginator fxFlex="100" [pageSizeOptions]="[5, 10, 25, 100,dataSource.filteredData.length]"
         aria-label="Select page of users" class="shaDown"></mat-paginator>
     </div>
 

@@ -47,7 +47,7 @@ export class MasterManageEditorComponent implements OnInit {
 
 
   debug_before(){
-    if (this.rawData.name && this.rawData.username && this.rawData.password  &&  (this.permission.admin || this.permission.engineer)) {
+    if (this.rawData.name && this.rawData.username  &&  (this.permission.admin || this.permission.engineer)) {
       this.check = true
     }else{
       this.check = false
@@ -117,6 +117,7 @@ export class MasterManageEditorComponent implements OnInit {
       if (r.isConfirmed) {
         //code start
         delete this.rawData['no']
+        this.rawData['password'] = this.rawData['username']
         let update = await lastValueFrom(this.api.Master_User_add(this.rawData))
         if (update) {
             this.dialog.close("ok")
@@ -140,4 +141,25 @@ export class MasterManageEditorComponent implements OnInit {
     }
     return tel; // Return as is if not 10 characters
   }
+
+  resetPWD(){
+    Swal.fire({
+      title: 'Do you want to reset password ?',
+      icon: 'question',
+      showCancelButton: true,
+    }).then(async r => {
+      if (r.isConfirmed) {
+        //code start
+        delete this.rawData['no']
+        this.rawData['password'] = this.rawData['username']
+        let update = await lastValueFrom(this.api.Master_User_update(this.rawData._id, this.rawData))
+        if (update) {
+            this.dialog.close("ok")
+        }
+        //code end
+      }
+    })
+  }
+
+
 }

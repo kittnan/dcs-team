@@ -20,7 +20,7 @@ interface SideItem {
 export class AppComponent {
   title = 'DCS';
   theme = false;
-
+  profile :any
   mobileQuery!: MediaQueryList;
 
   fillerNav: SideItem[] = [
@@ -28,7 +28,7 @@ export class AppComponent {
       title: 'Master',
       icon: 'assets/img/icon_sidebar/master.png',
       path: '',
-      access: ['admin','fullAdmin'],
+      access: ['admin', 'fullAdmin'],
       items: [
         {
           title: 'Machine',
@@ -64,7 +64,7 @@ export class AppComponent {
       title: 'Engineer',
       icon: 'assets/img/icon_sidebar/engineer.png',
       path: '',
-      access: ['admin','fullAdmin','engineer'],
+      access: ['admin', 'fullAdmin', 'engineer'],
       items: [
         {
           title: 'report',
@@ -93,7 +93,7 @@ export class AppComponent {
       title: 'Specialist',
       icon: 'assets/img/icon_sidebar/special1.png',
       path: '',
-      access: ['admin','fullAdmin', 'special'],
+      access: ['admin', 'fullAdmin', 'special'],
       items: [
         {
           title: 'report',
@@ -132,9 +132,22 @@ export class AppComponent {
     if (this.$local.getAuth() == 'admin') {
 
     }
+    this.profile = this.$local.getProfile()
+
+
+
   }
 
+  hide_for_profile() {
+
+    return this.router.url == '/profile' ?
+      false :
+      true
+  }
+
+
   checkLogin() {
+    this.profile = this.$local.getProfile()
     return this.$local.getAuth()
   }
 
@@ -155,7 +168,7 @@ export class AppComponent {
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
-  onClickProfile(){
+  onClickProfile() {
     this.router.navigate(['/profile']).then(() => location.reload())
   }
   onLogout() {
@@ -169,7 +182,7 @@ export class AppComponent {
     return false
   }
   // todo displayAccess
-  displayAccess(){
-   return this.$local.getAuth()
+  displayAccess() {
+    return this.$local.getAuth()
   }
 }

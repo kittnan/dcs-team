@@ -1,4 +1,40 @@
-::ng-deep .setFormat .mat-form-field-wrapper{
+::ng-deep .setFormat .mat-form-field-wrapper {
   padding: 0px;
   margin: 8px;
+}
+
+
+
+.setImg {
+  padding: 4px;
+  background-color: antiquewhite;
+  border-radius: 50%;
+  width: 250px;
+
+}
+
+
+.setEdit_1 {
+  width: 20px;
+  position: absolute;
+}
+
+
+.footer {
+  padding: 50px; /* เพิ่มระยะขอบสำหรับ footer */
+}
+
+.footer a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 10px; /* เพิ่มระยะห่างระหว่างลิงก์ */
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+
+::ng-deep .borderRed .mat-form-field-outline {
+  border-color: red;
 }

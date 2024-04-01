@@ -14,14 +14,14 @@
             <mat-label>Full name</mat-label>
             <input matInput style="text-align: center;" [(ngModel)]="rawData['name']" (keyup)="debug_before()">
           </mat-form-field>
-          <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
+          <mat-form-field appearance="outline" floatLabel="always" class="setFormat" >
             <mat-label>Username</mat-label>
-            <input matInput style="text-align: center;" [(ngModel)]="rawData['username']" (keyup)="debug_before()">
+            <input matInput style="text-align: center;" [(ngModel)]="rawData['username']" (keyup)="debug_before()" [readonly]="this.data">
           </mat-form-field>
-          <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
+          <!-- <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
             <mat-label>Password</mat-label>
             <input matInput style="text-align: center;" type="password" [(ngModel)]="rawData['password']" (keyup)="debug_before()">
-          </mat-form-field>
+          </mat-form-field> -->
           <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
             <mat-label>Tel.</mat-label>
             <input matInput style="text-align: center;" [(ngModel)]="rawData['telephone']" maxlength="10" (keyup)="debug_before()" [value]="formattedTelephone">
@@ -64,6 +64,17 @@
           </div>
         </div>
       </div>
+
+      <div fxLayout="row wrap" fxLayoutAlign="center none" class="mt-5">
+        <div fxFlex="100" >
+          <div fxLayout="row wrap" fxLayoutAlign="center none" fxLayoutGap="5">
+            <div>
+              <button mat-raised-button color="warn" (click)="resetPWD()" [disabled]="!check" *ngIf="this.data">RESET PASSWORD</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
 
 
 

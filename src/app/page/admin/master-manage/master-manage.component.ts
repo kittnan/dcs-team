@@ -253,6 +253,8 @@ export class MasterManageComponent {
   }
 
 
+
+
   export() {
     if (this.data.length > 0) {
       this.http.get('assets/excel/user.xlsx', { responseType: "arraybuffer" })
@@ -353,5 +355,8 @@ export class MasterManageComponent {
   }
 
   //---------------------------------------------------------------//
+
+
+
 
 }

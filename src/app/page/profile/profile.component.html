@@ -1,20 +1,91 @@
-<div fxLayout="row wrap" fxLayoutAlign="center start">
-  <div fxFlex="40" fxLayout="row wrap" fxLayoutAlign="start start">
+<div *ngIf="!edit" fxLayout="row wrap" fxLayoutAlign="center start">
+  <div fxFlex="95" fxFlex.gt-xs="40" fxLayout="row wrap" fxLayoutAlign="center start">
+    <div fxLayoutAlign="center start">
+      <img class="setImg" src="assets/img/login/user.png">
+    </div>
+    <div fxFlex="100" fxLayoutAlign="center start" class="mt-5">
+      <div fxLayout="row wrap" fxLayoutAlign="center end">
+        <span *ngIf="!edit_name" style="font-size: 32px;">{{profile.username.toUpperCase()}}</span>
+        <input *ngIf="edit_name" style="font-size: 32px;text-align: center; " type="text" value="wongsatorn"
+          (change)="cancel()">
+      </div>
+      <!-- <div fxLayout="row wrap" fxLayoutAlign="center end">
+        <button (click)="edit_name = true" *ngIf="!edit_name">
+          <img class="setEdit_1" src="assets/img/icon/pen.png">
+        </button>
+      </div> -->
+    </div>
+
+    <div fxFlex="100" fxLayoutAlign="center start">
+      <div fxLayout="row wrap" fxLayoutAlign="center end">
+        <span *ngIf="!edit_fname"style="font-size: 16px;">{{profile.name}}</span>
+        <input id="fname" *ngIf="edit_fname" style="font-size: 16px;text-align: center; " type="text" [(ngModel)]="profile.name" (key.enter)="confirm()">
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="center end">
+        <button (click)="edit_fname = true;focus_input()" *ngIf="!edit_fname">
+          <img class="setEdit_1" src="assets/img/icon/pen.png">
+        </button>
+      </div>
+    </div>
+
+
+
+
+    <div fxFlex="100" fxLayoutAlign="center center" style="margin-top: 13%;">
+      <button (click)="edit=true">
+        <img style="width: 30px;" src="assets/img/icon/password.png">
+      </button>
+    </div>
+
+
+  </div>
+</div>
+<div *ngIf="edit" fxLayout="row wrap" fxLayoutAlign="center center" class="mt-10">
+  <div fxFlex="95" fxFlex.gt-xs="25" fxLayout="row wrap" fxLayoutAlign="center start" >
+    <div fxLayoutAlign="center start">
+      <img style="width: 50%;" src="assets/img/icon/password_2.png">
+    </div>
     <mat-form-field fxFlex="100" appearance="outline" floatLabel="always" class="setFormat">
-      <mat-label>Full name</mat-label>
-      <input matInput style="text-align: center;">
+      <mat-label>Current Password</mat-label>
+      <input matInput type="password" style="text-align: center;" [(ngModel)]="password_check.Current_P" >
     </mat-form-field>
     <mat-form-field fxFlex="100" appearance="outline" floatLabel="always" class="setFormat">
-      <mat-label>Full name</mat-label>
-      <input matInput style="text-align: center;">
+      <mat-label>New Password</mat-label>
+      <input matInput type="password" style="text-align: center;"  [(ngModel)]="password_check.New_P">
     </mat-form-field>
-    <mat-form-field fxFlex="100" appearance="outline" floatLabel="always" class="setFormat">
-      <mat-label>Full name</mat-label>
-      <input matInput style="text-align: center;">
+    <mat-form-field fxFlex="100" appearance="outline" floatLabel="always" class="setFormat borderRed" >
+      <mat-label>Confirm Password</mat-label>
+      <input matInput type="password" style="text-align: center;"  [(ngModel)]="password_check.Con_P">
     </mat-form-field>
-    <mat-form-field fxFlex="100" appearance="outline" floatLabel="always" class="setFormat">
-      <mat-label>Full name</mat-label>
-      <input matInput style="text-align: center;">
-    </mat-form-field>
+  </div>
+</div>
+
+
+
+
+
+<div class="footer">
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <div style="position: absolute; bottom: 48px;">
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <div *ngIf="password_check.Current_P && password_check.New_P && password_check.Con_P">
+          <button mat-button (click)="confirm_p()" style="color: green;">CONFIRM</button>
+        </div>
+        <div *ngIf="password_check.Current_P || password_check.New_P || password_check.Con_P || edit">
+          <button mat-button (click)="edit = false ; password_check = {}" style="color: red;">CANCEL</button>
+        </div>
+
+
+        <div *ngIf="edit_name || edit_fname">
+          <button mat-button (click)="confirm()" style="color: green;">CONFIRM</button>
+        </div>
+        <div *ngIf="edit_name || edit_fname">
+          <button mat-button (click)="cancel()" style="color: red;">CANCEL</button>
+        </div>
+        <div *ngIf="!(edit_name || edit_fname || password_check.Current_P ||password_check.New_P || password_check.Con_P || edit )">
+          <button mat-button (click)="close()">CLOSE</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

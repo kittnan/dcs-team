@@ -1,22 +1,26 @@
 <div *ngIf="checkLogin()" class="example-container" [class.example-is-mobile]="mobileQuery.matches">
-  <mat-toolbar color="primary" class="example-toolbar">
+  <mat-toolbar color="primary" class="example-toolbar" *ngIf="hide_for_profile()">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
     <!-- <h1 class="example-app-name">DEVELOP</h1> -->
     <img class="mx-auto h-10 w-auto" src="assets/img/logo/logo-removebg-preview.png" alt="Your Company">
     <div class="flex-auto"></div>
 
     <button class="pe-2" (click)="onClickProfile()">
-      <div class="flex justify-around items-center gap-1">
-        <img src="assets/img/login/user.png"
-          style="width: 25px;margin-right: 5px;margin-bottom: 4px;border-radius: 70%;">
-        <span class="text-sm">
-          Admin
-        </span>
-        <span class="text-sm">
-          ({{displayAccess()}})
-        </span>
+      <div class="flex justify-around items-center gap-1" >
+        <div  fxLayout="row wrap" fxLayoutAlign="end none" style="width: -webkit-fill-available;">
+          <img src="assets/img/login/user.png"style="width: 25px;margin-right: 5px;margin-bottom: 4px;border-radius: 70%;" >
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="center none">
+          <span  class="text-sm">
+            {{profile?.username?.toUpperCase()}}
+          </span>
+          <span  class="text-sm">
+            ({{displayAccess()}})
+          </span>
+        </div>
       </div>
     </button>
+
     <button (click)="onLogout()">
       <div class="flex justify-around items-center gap-1">
         <img src="assets/img/login/log-out.png"
@@ -34,8 +38,8 @@
 
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
-      fixedTopGap="56" [opened]="true">
-      <mat-nav-list>
+      fixedTopGap="56" [opened]="hide_for_profile()">
+      <mat-nav-list *ngIf="hide_for_profile()">
         <ng-container *ngFor="let nav of fillerNav; let i=index">
           <div *ngIf="checkAccess(nav)" class="block p-4" style="max-width: 17rem;">
             <div class="flex justify-start items-center bg-side-menu">
@@ -56,17 +60,16 @@
           </div>
         </ng-container>
 
-
       </mat-nav-list>
     </mat-sidenav>
-
     <mat-sidenav-content class="p-4">
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
   <footer>
     <p>
-      <span class="font-semibold">MED EX PLUS  LIMITED PARTNERSHIP</span> ☎️Tel. : 08-3154-7593 , 09-5682-5262   ✉️Email : Ivddiagnotic@gmail.com © 2024
+      <span class="font-semibold">MED EX PLUS  LIMITED PARTNERSHIP</span> ☎️Tel. : 08-3154-7593 , 09-5682-5262   ✉️Email
+      : Ivddiagnotic@gmail.com © 2024
     </p>
   </footer>
 </div>

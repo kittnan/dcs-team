@@ -1,5 +1,5 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center">
-  <app-title fxFlex="90" [title]="'User manage'"></app-title>
+  <app-title fxFlex="100" [title]="'User manage'"></app-title>
 </div>
 
 <div fxLayout="row wrap" fxLayoutAlign="center center" class="mt-3">
@@ -91,9 +91,12 @@
                   </mat-icon>
                 </button>
               </div>
+
             </div>
           </td>
         </ng-container>
+
+        resetPWD
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
