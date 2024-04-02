@@ -8,6 +8,7 @@ import { SpecialPmReportComponent } from './pm-report/special-pm-report/special-
 import { SpecialPmReportNewComponent } from './pm-report/special-pm-report-new/special-pm-report-new.component';
 import { SpecialPmReportViewComponent } from './pm-report/special-pm-report-view/special-pm-report-view.component';
 import { SpecialPmReportPrintComponent } from './pm-report/special-pm-report-print/special-pm-report-print.component';
+import { SpecialLibrarySearchComponent } from './special-library-search/special-library-search.component';
 
 const routes: Routes = [
   {
@@ -47,6 +48,10 @@ const routes: Routes = [
   {
     path:'pm-report-print',
     component:SpecialPmReportPrintComponent
+  },
+  {
+    path:'library-search',
+    component:SpecialLibrarySearchComponent
   },
 ];
 

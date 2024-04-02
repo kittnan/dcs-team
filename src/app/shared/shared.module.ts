@@ -19,6 +19,8 @@ import { PmReportEngineerPrintComponent } from './engineer/pm/pm-report-engineer
 import { PmReportSpecialViewComponent } from './special/pm/pm-report-special-view/pm-report-special-view.component';
 import { PmReportSpecialPrintComponent } from './special/pm/pm-report-special-print/pm-report-special-print.component';
 import { LibrarySearchComponent } from './library-search/library-search.component';
+import { TableReportComponent } from './library-search/table/table-report/table-report.component';
+import { TableReportPmComponent } from './library-search/table/table-report-pm/table-report-pm.component';
 
 let items = [
   SubTitleComponent,
@@ -42,7 +44,9 @@ let items = [
     PmReportEngineerPrintComponent,
     PmReportSpecialViewComponent,
     PmReportSpecialPrintComponent,
-    LibrarySearchComponent
+    LibrarySearchComponent,
+    TableReportComponent,
+    TableReportPmComponent
   ],
   imports: [
     CommonModule,

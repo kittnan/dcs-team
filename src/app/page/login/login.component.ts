@@ -6,6 +6,7 @@ import { fadeInOnEnterAnimation } from 'angular-animations';
 import { lastValueFrom } from 'rxjs';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
 import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -42,20 +43,30 @@ export class LoginComponent {
     }
   }
   async onLogin() {
-    const payload = this.loginForm.value
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: 'Basic ' + btoa(`${JSON.stringify(payload)}`)
-    })
-    const access: any = await lastValueFrom(this.http.post(`${environment.API}/auth/login`, {}, { headers }))
-    if (access) {
-      this.$local.setRefreshToken(access.refresh_token)
-      this.$local.setToken(access.access_token)
-      this.userLogin = access.profile
-      this.$local.setProfile(JSON.stringify(access.profile))
-      if (this.userLogin.permission && this.userLogin.permission.length === 1) {
-        this.goLink(this.userLogin.permission[0])
+    try {
+
+      const payload = this.loginForm.value
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Basic ' + btoa(`${JSON.stringify(payload)}`)
+      })
+      const access: any = await lastValueFrom(this.http.post(`${environment.API}/auth/login`, {}, { headers }))
+      if (access) {
+        this.$local.setRefreshToken(access.refresh_token)
+        this.$local.setToken(access.access_token)
+        this.userLogin = access.profile
+        this.$local.setProfile(JSON.stringify(access.profile))
+        if (this.userLogin.permission && this.userLogin.permission.length === 1) {
+          this.goLink(this.userLogin.permission[0])
+        }
       }
+    } catch (error) {
+      Swal.fire({
+        title: "Username or Password not correct",
+        icon: 'error',
+      }).then(()=>{
+
+      })
     }
   }
 

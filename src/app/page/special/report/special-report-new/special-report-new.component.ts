@@ -297,6 +297,15 @@ export class SpecialReportNewComponent implements OnInit {
       if (sps2 && sps2.length == 2) {
         this.form.finishDate = moment(this.end).set('hour', sps2[0]).set('minute', sps2[1])
       }
+
+      const newData = this.form.data.map((data: any) => {
+        data.files = data.files.map((file: any) => {
+          delete file.view
+          return file
+        })
+        return data
+      })
+      this.form.data = newData
       const res = await lastValueFrom(this.$report.save(this.form))
       Swal.fire({
         title: "Success",
@@ -394,6 +403,15 @@ export class SpecialReportNewComponent implements OnInit {
           if (sps2 && sps2.length == 2) {
             this.form.finishDate = moment(this.end).set('hour', sps2[0]).set('minute', sps2[1])
           }
+
+          const newData = this.form.data.map((data: any) => {
+            data.files = data.files.map((file: any) => {
+              delete file.view
+              return file
+            })
+            return data
+          })
+          this.form.data = newData
           const res = await lastValueFrom(this.$report.save(this.form))
           Swal.fire({
             title: "Success",

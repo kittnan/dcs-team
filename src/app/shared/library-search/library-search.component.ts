@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { lastValueFrom } from 'rxjs';
 import { HttpMastersService } from 'src/app/http/http-masters.service';
 import { HttpReportSpecialService } from 'src/app/http/http-report-special.service';
@@ -21,11 +22,8 @@ import { LocalStorageService } from 'src/app/service/local-storage.service';
 export class LibrarySearchComponent implements OnInit {
 
 
-  displayedColumns: string[] = ['select', 'reportNo', 'province', 'customer', 'machine', 'sn', 'status'];
+  displayedColumns: string[] = ['select','reportNo', 'report', 'type',  'createdAt', 'province', 'customer', 'machine', 'serviceType', 'status'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource()
-  selection = new SelectionModel<any>(true, []);
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
   userLogin: any
 
@@ -41,6 +39,9 @@ export class LibrarySearchComponent implements OnInit {
   customerOptionStr: any = []
   machineOption: any = []
 
+
+
+  show: boolean = true
   constructor(
     private router: Router,
     private $report: HttpReportService,
@@ -63,7 +64,7 @@ export class LibrarySearchComponent implements OnInit {
       const customers = this.customerOption.map((m: any) => m['Customer'])
       this.customerOptionStr = [...new Set(customers)]
 
-      this.machineOption = [...new Map(machine.map((item:any) =>
+      this.machineOption = [...new Map(machine.map((item: any) =>
         [item['Machine'], item])).values()];
 
     } catch (error) {
@@ -74,14 +75,15 @@ export class LibrarySearchComponent implements OnInit {
 
   // todo onSelectCustomer
   onSelectCustomer(event: any) {
+    this.dataFilter.customer = event
     this.dataFilter.machine = null
     const customer = this.customerOption.find((cus: any) => cus['Customer'] == event)
     this.dataFilter.customer = customer
 
-    if(this.dataFilter.customer){
+    if (this.dataFilter.customer) {
       this.machineOption = this.customerOption.filter((item: any) => item['Customer'] == event)
-    }else{
-      this.machineOption = [...new Map(this.customerOption.map((item:any) =>
+    } else {
+      this.machineOption = [...new Map(this.customerOption.map((item: any) =>
         [item['Machine'], item])).values()];
     }
   }
@@ -89,59 +91,63 @@ export class LibrarySearchComponent implements OnInit {
   async onSubmit() {
     try {
 
-      let params: HttpParams = new HttpParams()
-      if (this.selected == 'engineer') {
-        const res = await lastValueFrom(this.$report.get(params))
-        this.dataSource = new MatTableDataSource(res.map((r: any) => {
-          return {
-            reportNo: r.no,
-            province: r.customer ? r.customer['Province'] : '',
-            customer: r.customer ? r.customer['Customer'] : "",
-            machine: r.customer ? r.customer['Machine'] : '',
-            sn: r.customer ? r.customer['S/N'] : "",
-            status: r.status,
-            _id: r._id
-          }
-        }))
-      }
-      if (this.selected == 'special') {
 
-      }
+      let customer: any = this.dataFilter.customer ? JSON.stringify(this.dataFilter.customer.Customer) : null
+      let machine: any = this.dataFilter.machine ? JSON.stringify(this.dataFilter.machine.Machine) : null
+      let service: any = this.dataFilter.service ? JSON.stringify(this.dataFilter.service.value) : null
+      let report: any = this.dataFilter.report ? JSON.stringify(this.dataFilter.report) : null
+      let type: any = this.dataFilter.type ? JSON.stringify(this.dataFilter.type) : null
+
+      let params: HttpParams = new HttpParams()
+      params = params.set('customer', customer)
+      params = params.set('machine', machine)
+      params = params.set('report', report)
+      params = params.set('service', service)
+      params = params.set('type', type)
+      const res = await lastValueFrom(this.$report.multi(params))
+      this.dataSource = new MatTableDataSource(res.map((item: any) => {
+        return {
+          ...item,
+          reportNo: item.no,
+          createdAt: moment(item.createdAt).format('DD-MMM-YY, HH:mm'),
+          province: item.customer?.Province,
+          customer: item.customer?.Customer,
+          machine: item.customer?.Machine,
+          serviceType: item.serviceType?.name,
+          status: item.status,
+          action: '',
+          _id: item._id
+        }
+      }))
+      this.onRefresh()
+
+      // if (this.selected == 'engineer') {
+      //   const res = await lastValueFrom(this.$report.get(params))
+      //   this.dataSource = new MatTableDataSource(res.map((r: any) => {
+      //     return {
+      //       reportNo: r.no,
+      //       province: r.customer ? r.customer['Province'] : '',
+      //       customer: r.customer ? r.customer['Customer'] : "",
+      //       machine: r.customer ? r.customer['Machine'] : '',
+      //       sn: r.customer ? r.customer['S/N'] : "",
+      //       status: r.status,
+      //       _id: r._id
+      //     }
+      //   }))
+      // }
+      // if (this.selected == 'special') {
+
+      // }
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
   }
 
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  toggleAllRows() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
-    }
-
-    this.selection.select(...this.dataSource.data);
-  }
-
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: any): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
-  }
-
-  onPrint() {
-    this.router.navigate(['engineer/report-multi-print-view'], {
-      queryParams: {
-        _id: this.selection.selected.map((value: any) => value._id)
-      }
-    })
+  onRefresh() {
+    this.show = false
+    setTimeout(() => {
+      this.show = true
+    }, 200);
   }
   public objectComparisonFunction_id = function (option: any, value: any): boolean {
     return option.id === value.id;

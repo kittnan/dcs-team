@@ -16,6 +16,7 @@ import { SpecialPmReportComponent } from './pm-report/special-pm-report/special-
 import { SpecialPmReportNewComponent } from './pm-report/special-pm-report-new/special-pm-report-new.component';
 import { SpecialPmReportViewComponent } from './pm-report/special-pm-report-view/special-pm-report-view.component';
 import { SpecialPmReportPrintComponent } from './pm-report/special-pm-report-print/special-pm-report-print.component';
+import { SpecialLibrarySearchComponent } from './special-library-search/special-library-search.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { SpecialPmReportPrintComponent } from './pm-report/special-pm-report-pri
     SpecialPmReportComponent,
     SpecialPmReportNewComponent,
     SpecialPmReportViewComponent,
-    SpecialPmReportPrintComponent
+    SpecialPmReportPrintComponent,
+    SpecialLibrarySearchComponent
   ],
   imports: [
     CommonModule,
