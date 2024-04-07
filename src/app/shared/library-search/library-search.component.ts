@@ -12,6 +12,7 @@ import { HttpMastersService } from 'src/app/http/http-masters.service';
 import { HttpReportSpecialService } from 'src/app/http/http-report-special.service';
 import { HttpReportService } from 'src/app/http/http-report.service';
 import { HttpServiceTypeService } from 'src/app/http/http-serviceType.service';
+import { HttpUsersService } from 'src/app/http/http-users.service';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
 
 @Component({
@@ -22,7 +23,7 @@ import { LocalStorageService } from 'src/app/service/local-storage.service';
 export class LibrarySearchComponent implements OnInit {
 
 
-  displayedColumns: string[] = ['select','reportNo', 'report', 'type',  'createdAt', 'province', 'customer', 'machine', 'serviceType', 'status'];
+  displayedColumns: string[] = ['select', 'reportNo', 'report', 'type', 'createdAt', 'province', 'customer', 'machine', 'serviceType', 'status'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource()
 
   userLogin: any
@@ -39,6 +40,7 @@ export class LibrarySearchComponent implements OnInit {
   customerOptionStr: any = []
   machineOption: any = []
 
+  userOption: any = []
 
 
   show: boolean = true
@@ -48,7 +50,8 @@ export class LibrarySearchComponent implements OnInit {
     private $reportSpecial: HttpReportSpecialService,
     private $local: LocalStorageService,
     private $serviceType: HttpServiceTypeService,
-    private $master: HttpMastersService
+    private $master: HttpMastersService,
+    private $user: HttpUsersService
   ) {
     let user: any = this.$local.getProfile()
     this.userLogin = user
@@ -58,6 +61,9 @@ export class LibrarySearchComponent implements OnInit {
     try {
       let serviceType = await lastValueFrom(this.$serviceType.getAll())
       this.serviceTypeOption = serviceType
+
+      let userOption = await lastValueFrom(this.$user.getByCondition(new HttpParams().set('permission', JSON.stringify(['engineer', 'special']))))
+      this.userOption = userOption
 
       const machine = await lastValueFrom(this.$master.Master_getall())
       this.customerOption = machine
@@ -97,6 +103,7 @@ export class LibrarySearchComponent implements OnInit {
       let service: any = this.dataFilter.service ? JSON.stringify(this.dataFilter.service.value) : null
       let report: any = this.dataFilter.report ? JSON.stringify(this.dataFilter.report) : null
       let type: any = this.dataFilter.type ? JSON.stringify(this.dataFilter.type) : null
+      let user: any = this.dataFilter.user ? JSON.stringify(this.dataFilter.user) : null
 
       let params: HttpParams = new HttpParams()
       params = params.set('customer', customer)
@@ -104,6 +111,7 @@ export class LibrarySearchComponent implements OnInit {
       params = params.set('report', report)
       params = params.set('service', service)
       params = params.set('type', type)
+      params = params.set('user', user)
       const res = await lastValueFrom(this.$report.multi(params))
       this.dataSource = new MatTableDataSource(res.map((item: any) => {
         return {

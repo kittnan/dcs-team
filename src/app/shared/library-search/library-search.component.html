@@ -44,6 +44,15 @@
         </mat-select>
       </mat-form-field>
 
+      <mat-form-field appearance="outline" floatLabel="always" class="btn-set">
+        <mat-label>PIC</mat-label>
+        <mat-select [(ngModel)]="dataFilter.user" [compareWith]="objectComparisonFunction_id">
+          <mat-option *ngFor="let item of userOption" [value]="item">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
     </div>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around center" fxLayoutGap="20" class="my-4">
       <button fxFlex="100" fxFlex.gt-md="30" mat-raised-button color="primary" (click)="onSubmit()">Search</button>

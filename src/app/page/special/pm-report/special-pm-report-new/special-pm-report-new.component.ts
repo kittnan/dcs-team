@@ -219,62 +219,12 @@ export class SpecialPmReportNewComponent implements OnInit {
     dialog.afterClosed().subscribe(async (data: any) => {
       if (data) {
         this.form.sign = data
-        const res = await lastValueFrom(this.$report.save(this.form))
-        // Swal.fire({
-        //   title: "Success",
-        //   icon: 'success',
-        //   showConfirmButton: false,
-        //   timer: 1500
-        // }).then(() => {
-        // })
+        await this.saveCustom()
       }
     })
   }
 
 
-  // // todo onAddPage
-  // onAddPage() {
-  //   let insertArray = [];
-  //   let lastNo = this.form.data.slice(-1)
-  //   lastNo = lastNo[0].no
-  //   for (let index = 0; index < this.dataPerPage; index++) {
-  //     let newData: any = { ...this.dataTemplate }
-  //     newData.no = lastNo + 1 + index
-  //     insertArray.push(newData)
-  //   }
-  //   this.form.data.push(...insertArray)
-
-  //   this.page = this.calculatorPageBreak(this.form.data.length);
-  //   this.pageArr = Array.from(
-  //     { length: this.page },
-  //     (_, index) => index + 1
-  //   );
-  // }
-
-  //  // todo onDelPage
-  //  onDelPage() {
-  //   Swal.fire({
-  //     title: 'Delete page ?',
-  //     icon: 'question',
-  //     showCancelButton: true
-  //   }).then(async (v: SweetAlertResult) => {
-  //     if (v.isConfirmed) {
-  //       // const deleteItems = this.form.data.slice()
-  //       const indexToRemove = this.form.data.length - this.dataPerPage; // Calculate the index of the third element from the end
-  //       const deleteItems = this.form.data.splice(indexToRemove, this.dataPerPage);
-  //       const res = await lastValueFrom(this.$report.save(this.form))
-  //       for (let i = 0; i < deleteItems.length; i++) {
-  //         const item = deleteItems[i];
-  //         if(item.files.length>0){
-  //           await lastValueFrom(this.$report.delete({
-  //             path_file: item.files[0].delete_path
-  //           }))
-  //         }
-  //       }
-  //     }
-  //   })
-
-  // }
 
   // todo onSave
   onSave() {
@@ -308,7 +258,7 @@ export class SpecialPmReportNewComponent implements OnInit {
       if (sps2 && sps2.length == 2) {
         this.form.finishDate = moment(this.end).set('hour', sps2[0]).set('minute', sps2[1])
       }
-      const res = await lastValueFrom(this.$report.save(this.form))
+      await this.saveCustom()
       Swal.fire({
         title: "Success",
         icon: 'success',
@@ -342,14 +292,12 @@ export class SpecialPmReportNewComponent implements OnInit {
       formData.append('file', file)
       const resFile = await lastValueFrom(this.$report.upload(formData))
       this.form.data[index - 1]['files'] = resFile
-      const res = await lastValueFrom(this.$report.save(this.form))
-      for (let index = 0; index < this.form.data.length; index++) {
-        const data = this.form.data[index];
-        if (data.files.length > 0) {
-          let file = await lastValueFrom(this.$report.getFile(data.files[0].path))
-          data.files[0].view = this.blobToBase64(file)
-        }
-      }
+      await this.saveCustom()
+
+      let newFile = await lastValueFrom(this.$report.getFile(this.form.data[index - 1]['files'][0].path))
+      let fileBase64 = this.blobToBase64(newFile)
+      this.form.data[index - 1]['files'][0]['view'] = fileBase64
+
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
@@ -370,7 +318,7 @@ export class SpecialPmReportNewComponent implements OnInit {
           }))
           const item = this.form.data.find((item: any) => item.no == itemNo)
           item['files'] = []
-          const res = await lastValueFrom(this.$report.save(this.form))
+          await this.saveCustom()
           Swal.fire({
             title: 'Success',
             icon: 'success',
@@ -405,7 +353,7 @@ export class SpecialPmReportNewComponent implements OnInit {
           if (sps2 && sps2.length == 2) {
             this.form.finishDate = moment(this.end).set('hour', sps2[0]).set('minute', sps2[1])
           }
-          const res = await lastValueFrom(this.$report.save(this.form))
+          await this.saveCustom()
           Swal.fire({
             title: "Success",
             icon: 'success',
@@ -430,7 +378,8 @@ export class SpecialPmReportNewComponent implements OnInit {
         showCancelButton:true
       }).then(async (v:SweetAlertResult)=>{
         if(v.isConfirmed){
-          const res = await lastValueFrom(this.$report.save({...this.form,status:'cancel'}))
+          this.form.status = 'cancel'
+          await this.saveCustom()
           Swal.fire({
             title: "Success",
             icon: 'success',
@@ -451,6 +400,20 @@ export class SpecialPmReportNewComponent implements OnInit {
   }
   public objectComparisonFunction_machine = function (option: any, value: any): boolean {
     return option.Machine === value.Machine;
+  }
+
+   // todo custom save without base64
+   saveCustom() {
+    let newForm: any = JSON.parse(JSON.stringify(this.form));
+    const newData = newForm.data.map((data: any) => {
+      data.files = data.files.map((file: any) => {
+        delete file.view
+        return file
+      })
+      return data
+    })
+    newForm.data = newData
+    return lastValueFrom(this.$report.save(newForm))
   }
 
 }

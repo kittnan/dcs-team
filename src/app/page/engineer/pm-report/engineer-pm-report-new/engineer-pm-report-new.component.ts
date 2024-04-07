@@ -135,7 +135,7 @@ export class EngineerPmReportNewComponent implements OnInit {
             for (let index = 0; index < this.dataStarter; index++) {
               const newData: any = { ...this.dataTemplate }
               newData.no = index + 1
-              newData.text = `${this.pmOption[index].no.toString().padStart(2,'0')}.${this.pmOption[index].name}`
+              newData.text = `${this.pmOption[index].no.toString().padStart(2, '0')}.${this.pmOption[index].name}`
               this.form.data.push(newData)
             }
             this.page = this.calculatorPageBreak(this.form.data.length);
@@ -218,7 +218,7 @@ export class EngineerPmReportNewComponent implements OnInit {
     dialog.afterClosed().subscribe(async (data: any) => {
       if (data) {
         this.form.sign = data
-        const res = await lastValueFrom(this.$report.save(this.form))
+        await this.saveCustom()
         // Swal.fire({
         //   title: "Success",
         //   icon: 'success',
@@ -314,7 +314,8 @@ export class EngineerPmReportNewComponent implements OnInit {
       if (sps2 && sps2.length == 2) {
         this.form.finishDate = moment(this.end).set('hour', sps2[0]).set('minute', sps2[1])
       }
-      const res = await lastValueFrom(this.$report.save(this.form))
+
+      await this.saveCustom()
       Swal.fire({
         title: "Success",
         icon: 'success',
@@ -328,6 +329,8 @@ export class EngineerPmReportNewComponent implements OnInit {
     }
   }
 
+
+
   // todo onUpload
   async onUpload($event: any, index: number) {
     try {
@@ -338,14 +341,21 @@ export class EngineerPmReportNewComponent implements OnInit {
       formData.append('file', file)
       const resFile = await lastValueFrom(this.$report.upload(formData))
       this.form.data[index - 1]['files'] = resFile
-      const res = await lastValueFrom(this.$report.save(this.form))
-      for (let index = 0; index < this.form.data.length; index++) {
-        const data = this.form.data[index];
-        if (data.files.length > 0) {
-          let file = await lastValueFrom(this.$report.getFile(data.files[0].path))
-          data.files[0].view = this.blobToBase64(file)
-        }
-      }
+
+
+      await this.saveCustom()
+
+      let newFile = await lastValueFrom(this.$report.getFile(this.form.data[index - 1]['files'][0].path))
+      let fileBase64 = this.blobToBase64(newFile)
+      this.form.data[index - 1]['files'][0]['view'] = fileBase64
+
+      // for (let index = 0; index < this.form.data.length; index++) {
+      //   const data = this.form.data[index];
+      //   if (data.files.length > 0) {
+      //     let file = await lastValueFrom(this.$report.getFile(data.files[0].path))
+      //     data.files[0].view = this.blobToBase64(file)
+      //   }
+      // }
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
@@ -366,7 +376,8 @@ export class EngineerPmReportNewComponent implements OnInit {
           }))
           const item = this.form.data.find((item: any) => item.no == itemNo)
           item['files'] = []
-          const res = await lastValueFrom(this.$report.save(this.form))
+
+          await this.saveCustom()
           Swal.fire({
             title: 'Success',
             icon: 'success',
@@ -401,7 +412,7 @@ export class EngineerPmReportNewComponent implements OnInit {
           if (sps2 && sps2.length == 2) {
             this.form.finishDate = moment(this.end).set('hour', sps2[0]).set('minute', sps2[1])
           }
-          const res = await lastValueFrom(this.$report.save(this.form))
+          await this.saveCustom()
           Swal.fire({
             title: "Success",
             icon: 'success',
@@ -427,8 +438,6 @@ export class EngineerPmReportNewComponent implements OnInit {
       }).then(async (v: SweetAlertResult) => {
         if (v.isConfirmed) {
           this.form.status = 'cancel'
-          console.log(this.form);
-          // const res = await lastValueFrom(this.$report.save(this.form))
           const res = await lastValueFrom(this.$report.update(this.form._id, { status: 'cancel' }))
           Swal.fire({
             title: "Success",
@@ -452,4 +461,17 @@ export class EngineerPmReportNewComponent implements OnInit {
     return option.Machine === value.Machine;
   }
 
+  // todo custom save without base64
+  saveCustom() {
+    let newForm: any = JSON.parse(JSON.stringify(this.form));
+    const newData = newForm.data.map((data: any) => {
+      data.files = data.files.map((file: any) => {
+        delete file.view
+        return file
+      })
+      return data
+    })
+    newForm.data = newData
+    return lastValueFrom(this.$report.save(newForm))
+  }
 }

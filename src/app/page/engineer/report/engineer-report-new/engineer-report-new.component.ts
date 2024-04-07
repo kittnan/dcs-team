@@ -208,7 +208,8 @@ export class EngineerReportNewComponent implements OnInit {
     dialog.afterClosed().subscribe(async (data: any) => {
       if (data) {
         this.form.sign = data
-        const res = await lastValueFrom(this.$report.save(this.form))
+        await this.saveCustom()
+
         // Swal.fire({
         //   title: "Success",
         //   icon: 'success',
@@ -258,7 +259,7 @@ export class EngineerReportNewComponent implements OnInit {
         // const deleteItems = this.form.data.slice()
         const indexToRemove = this.form.data.length - this.dataPerPage; // Calculate the index of the third element from the end
         const deleteItems = this.form.data.splice(indexToRemove, this.dataPerPage);
-        const res = await lastValueFrom(this.$report.save(this.form))
+        await this.saveCustom()
         for (let i = 0; i < deleteItems.length; i++) {
           const item = deleteItems[i];
           if (item.files.length > 0) {
@@ -305,15 +306,8 @@ export class EngineerReportNewComponent implements OnInit {
         this.form.finishDate = moment(this.end).set('hour', sps2[0]).set('minute', sps2[1])
       }
 
-      const newData = this.form.data.map((data: any) => {
-        data.files = data.files.map((file: any) => {
-          delete file.view
-          return file
-        })
-        return data
-      })
-      this.form.data = newData
-      const res = await lastValueFrom(this.$report.save(this.form))
+      await this.saveCustom()
+
       Swal.fire({
         title: "Success",
         icon: 'success',
@@ -337,14 +331,11 @@ export class EngineerReportNewComponent implements OnInit {
       formData.append('file', file)
       const resFile = await lastValueFrom(this.$report.upload(formData))
       this.form.data[index - 1]['files'] = resFile
-      const res = await lastValueFrom(this.$report.save(this.form))
-      for (let index = 0; index < this.form.data.length; index++) {
-        const data = this.form.data[index];
-        if (data.files.length > 0) {
-          let file = await lastValueFrom(this.$report.getFile(data.files[0].path))
-          data.files[0].view = this.blobToBase64(file)
-        }
-      }
+      await this.saveCustom()
+
+      let newFile = await lastValueFrom(this.$report.getFile(this.form.data[index - 1]['files'][0].path))
+      let fileBase64 = this.blobToBase64(newFile)
+      this.form.data[index - 1]['files'][0]['view'] = fileBase64
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
@@ -365,7 +356,8 @@ export class EngineerReportNewComponent implements OnInit {
           }))
           const item = this.form.data.find((item: any) => item.no == itemNo)
           item['files'] = []
-          const res = await lastValueFrom(this.$report.save(this.form))
+          await this.saveCustom()
+
           Swal.fire({
             title: 'Success',
             icon: 'success',
@@ -400,15 +392,8 @@ export class EngineerReportNewComponent implements OnInit {
           if (sps2 && sps2.length == 2) {
             this.form.finishDate = moment(this.end).set('hour', sps2[0]).set('minute', sps2[1])
           }
-          const newData = this.form.data.map((data: any) => {
-            data.files = data.files.map((file: any) => {
-              delete file.view
-              return file
-            })
-            return data
-          })
-          this.form.data = newData
-          const res = await lastValueFrom(this.$report.save(this.form))
+          await this.saveCustom()
+
           Swal.fire({
             title: "Success",
             icon: 'success',
@@ -434,8 +419,6 @@ export class EngineerReportNewComponent implements OnInit {
       }).then(async (v: SweetAlertResult) => {
         if (v.isConfirmed) {
           this.form.status = 'cancel'
-          console.log(this.form);
-          // const res = await lastValueFrom(this.$report.save(this.form))
           const res = await lastValueFrom(this.$report.update(this.form._id, { status: 'cancel' }))
           Swal.fire({
             title: "Success",
@@ -457,5 +440,19 @@ export class EngineerReportNewComponent implements OnInit {
   }
   public objectComparisonFunction_machine = function (option: any, value: any): boolean {
     return option.Machine === value.Machine;
+  }
+
+  // todo custom save without base64
+  saveCustom() {
+    let newForm: any = JSON.parse(JSON.stringify(this.form));
+    const newData = newForm.data.map((data: any) => {
+      data.files = data.files.map((file: any) => {
+        delete file.view
+        return file
+      })
+      return data
+    })
+    newForm.data = newData
+    return lastValueFrom(this.$report.save(newForm))
   }
 }

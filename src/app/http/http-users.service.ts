@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -14,6 +14,11 @@ export class HttpUsersService {
 
   get() {
     return this.http.get(`${AUTH_API}/users`)
+  }
+  getByCondition(params: HttpParams) {
+    return this.http.get(`${AUTH_API}/user/condition`, {
+      params: params
+    })
   }
 
   //#region Master User
