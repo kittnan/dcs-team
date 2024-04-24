@@ -158,7 +158,7 @@ export class LibrarySearchComponent implements OnInit {
     }, 200);
   }
   public objectComparisonFunction_id = function (option: any, value: any): boolean {
-    return option.id === value.id;
+    return option._id === value._id;
   }
   public objectComparisonFunction_machine = function (option: any, value: any): boolean {
     return option.Machine === value.Machine;

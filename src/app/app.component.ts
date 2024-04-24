@@ -82,7 +82,7 @@ export class AppComponent {
         },
         {
           title: 'Library Search',
-          icon: 'assets/img/icon_sidebar/report.png',
+          icon: 'assets/img/icon_sidebar/search.png',
           path: 'engineer/library-search',
           items: [],
           access: ['']
@@ -111,7 +111,7 @@ export class AppComponent {
         },
         {
           title: 'Library Search',
-          icon: 'assets/img/icon_sidebar/report.png',
+          icon: 'assets/img/icon_sidebar/search.png',
           path: 'special/library-search',
           items: [],
           access: ['']

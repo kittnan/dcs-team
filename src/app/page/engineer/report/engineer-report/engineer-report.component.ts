@@ -1,3 +1,4 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
@@ -8,6 +9,7 @@ import * as moment from 'moment';
 import { lastValueFrom } from 'rxjs';
 import { HttpReportService } from 'src/app/http/http-report.service';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-engineer-report',
@@ -17,6 +19,7 @@ import { LocalStorageService } from 'src/app/service/local-storage.service';
 export class EngineerReportComponent implements OnInit {
   displayedColumns: string[] = ['reportNo', 'createdAt', 'province', 'customer', 'machine', 'serviceType', 'status'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource()
+  selection = new SelectionModel<any>(true, []);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -45,6 +48,8 @@ export class EngineerReportComponent implements OnInit {
   filterData: any = {
     status: 'draft'
   }
+
+  isDelete: boolean = false
   constructor(
     private router: Router,
     private $report: HttpReportService,
@@ -130,6 +135,71 @@ export class EngineerReportComponent implements OnInit {
         }
       })
     }
+  }
+
+  onClickDelete() {
+    this.isDelete = true
+    this.displayedColumns = ['select', 'reportNo', 'createdAt', 'province', 'customer', 'machine', 'serviceType', 'status']
+  }
+  onClickDeleteCancel() {
+    this.isDelete = false
+    this.displayedColumns = ['reportNo', 'createdAt', 'province', 'customer', 'machine', 'serviceType', 'status']
+    this.selection.clear()
+  }
+  onClickDeleteConfirm() {
+    Swal.fire({
+      title: 'Delete ?',
+      icon: 'warning',
+      showCancelButton: true
+    }).then((v: SweetAlertResult) => {
+      if (v.isConfirmed) {
+        this.updateDelete()
+      }
+    })
+  }
+  async updateDelete() {
+    try {
+      console.log(this.selection.selected);
+      let dataUpdate = this.selection.selected.map((item: any) => {
+        item.status = 'delete'
+        return item
+      })
+      await lastValueFrom(this.$report.saveMultiple(dataUpdate))
+      Swal.fire({
+        title:"Success",
+        icon:'success',
+        showConfirmButton:false,
+        timer:1500
+      }).then(()=>{
+        location.reload()
+      })
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+
+    this.selection.select(...this.dataSource.data);
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: any): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
 }

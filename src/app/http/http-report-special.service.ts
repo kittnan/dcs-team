@@ -24,6 +24,9 @@ export class HttpReportSpecialService {
   save(data: any): Observable<any> {
     return this.http.post(`${this.API}/${this.SUB}/save`, data)
   }
+  saveMultiple(data: any): Observable<any> {
+    return this.http.post(`${this.API}/${this.SUB}/saveMultiple`, data)
+  }
   getFile(url:string): Observable<any> {
     return this.http.get(url,{ responseType: 'blob' })
   }
