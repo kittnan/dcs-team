@@ -1,0 +1,135 @@
+<button mat-raised-button color="primary" (click)="onGen()">
+  Generate Plan 2024
+</button>
+
+<ng-container *ngFor="let group of items; let i=index">
+  <table class="mb-4 mt-4" style="width: 1900px;">
+    <tr class="no-border">
+      <th style="width: 150px !important;"></th>
+      <th style="width: 300px !important;"></th>
+      <th></th>
+      <th></th>
+
+      <th *ngFor="let month of months; let i=index" style="width: 100px !important;">
+      </th>
+
+    </tr>
+    <tr style="height: 50px; background: cadetblue">
+      <th colspan="16" style="font-size: 22px;"> ตาราง PM ประจำปี</th>
+    </tr>
+    <tr class="sub-head" style="height: 35px;">
+      <th style="background: cornflowerblue;">
+        ชื่อจังหวัด
+      </th>
+      <th style="    background: tan;">
+        ชื่อสถานทื่
+      </th>
+      <!-- <th>
+          เวลาเปิดทำการ
+        </th>
+        <th>
+          เบอร์โทรติดต่อ
+        </th> -->
+      <th style="    background: powderblue;">
+        เครื่อง
+      </th>
+      <th style="background: darkgray">
+        S/N
+      </th>
+      <th *ngFor="let month of months; let i=index" style="    background: antiquewhite;">
+        {{month}}
+      </th>
+    </tr>
+    <tr *ngFor="let data of group.data; let i_data=index"  [ngClass]="{'bg-province': showProvince(data,group.data,i_data,'province')!== ''}">
+      <th >
+        {{showProvince(data,group.data,i_data,'province')}}
+      </th>
+      <th>
+        {{data.customer}}
+      </th>
+      <!-- <th></th>
+        <th></th> -->
+      <th>
+        {{data.machine}}
+
+      </th>
+      <th>
+        {{data.sn}}
+
+      </th>
+
+      <th *ngFor="let month of months; let i_month2=index" style="width: 200px !important;">
+        {{showPIC(data,month)}}
+      </th>
+
+    </tr>
+  </table>
+</ng-container>
+
+<!-- <ng-container *ngFor="let item of items; let i=index">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="overflow-auto b">
+      <div fxFlex="100" fxLayoutAlign="center center">
+        ตาราง PM
+      </div>
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center stretch">
+        <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="10">
+          <div fxLayoutAlign="center center" style="width: 200px;">
+            ชื่อจังหวัด
+          </div>
+          <div fxLayoutAlign="center center" style="width: 200px;">
+            ชื่อจังหวัด
+          </div>
+          <div fxLayoutAlign="center center" style="width: 200px;">
+            ชื่อจังหวัด
+          </div>
+          <div fxLayoutAlign="center center" style="width: 200px;">
+            ชื่อจังหวัด
+          </div>
+          <div fxLayoutAlign="center center" style="width: 200px;">
+            ชื่อจังหวัด
+          </div>
+          <div fxLayoutAlign="center center" style="width: 200px;">
+            ชื่อจังหวัด
+          </div>
+        </div>
+        <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center stretch">
+            PM
+          </div>
+          <div fxFlex="100" fxLayout="row nowrap" fxLayoutAlign="start stretch" fxLayoutGap="10">
+            <span *ngFor="let month of months; let i=index">
+              {{month}}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center stretch"
+        *ngFor="let data of item.data; let i_data=index">
+        <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="10">
+          <div fxLayoutAlign="center center">
+            {{data.province}}
+          </div>
+          <div fxLayoutAlign="center center">
+            {{data.customer}}
+          </div>
+          <div fxLayoutAlign="center center">
+          </div>
+          <div fxLayoutAlign="center center">
+          </div>
+          <div fxLayoutAlign="center center">
+            {{data.machine}}
+          </div>
+          <div fxLayoutAlign="center center">
+            {{data.sn}}
+          </div>
+        </div>
+        <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <div fxFlex="100" fxLayout="row nowrap" fxLayoutAlign="start stretch" fxLayoutGap="10">
+            <span *ngFor="let month of months; let i_month2=index">
+              {{showPIC(data,month)}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container> -->

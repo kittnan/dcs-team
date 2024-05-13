@@ -5,7 +5,7 @@
 
     <mat-form-field class="btn-set" fxFlex="100" fxFlex.gt-md="32" appearance="outline" floatLabel="always">
       <mat-label>Machine</mat-label>
-      <mat-select [(ngModel)]="form.machine" [compareWith]="objectComparisonFunction_machine" >
+      <mat-select [(ngModel)]="form.machine" [compareWith]="objectComparisonFunction_machine"  >
         <mat-option *ngFor="let item of machineOption" [value]="item">
           {{item.Machine}}
         </mat-option>
@@ -38,12 +38,12 @@
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" *ngFor="let p of pageArr; let p_i = index"
     id="print" class="mb-9">
 
-    <div *ngIf="p_i===0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="mb-6">
-      <div  fxLayout="row wrap" fxLayoutAlign="center start" style="width: 630px;">
-        <div fxFlex="30" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="end start">
-          <img src="./assets/img/logo/logo-removebg-preview.png" alt="" style="width: 200px;height: 80px;">
+    <div *ngIf="p_i===0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="mb-6 mt-4">
+      <div fxFlex="100"  fxLayout="row wrap" fxLayoutAlign="center start" fxLayoutGap="30" style="font-family: system-ui" >
+        <div fxFlex="40" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="end start">
+          <img src="./assets/img/logo/logo-removebg-preview.png" alt="" style="width: 250px;height: 100px;">
         </div>
-        <div fxFlex="70" fxFlex.gt-md="70" fxLayout="row wrap" fxLayoutAlign="start start">
+        <div fxFlex="40" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start start">
           <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
             <span style="font-size: 18px; font-weight: 600;">
               หจก. เมด เอ็กซ์ พลัส
@@ -55,9 +55,6 @@
             </span>
           </div>
           <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start end">
-            <span class="pe-2" style="font-size: 23px;font-weight: 600;">
-              Service
-            </span>
             <span class="font-normal" style="font-size: 14px;">
               83 หมู่ 4 ตำบลป่าไผ่ อ.สันทราย จ.เชียงใหม่ 50210
             </span>
@@ -118,20 +115,20 @@
             Machine
           </span>
           <span class="font-normal">
-            {{form.customer?.Machine}}
+            {{form.machine?.Machine}}
           </span>
         </div>
         <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
           <span class="ps-4 pe-4 font-semibold">
             Type
           </span>
-          <span class="font-normal">{{form.customer?.Model}}</span>
+          <span class="font-normal">{{form.machine?.Model}}</span>
         </div>
         <div fxFlex="100" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
           <span class="ps-4 pe-4 font-semibold">
             S/N
           </span>
-          <span *ngIf="form.customer" class="font-normal">{{form.customer['S/N']}}</span>
+          <span *ngIf="form.machine" class="font-normal">{{form.machine['S/N']}}</span>
         </div>
       </div>
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="'bl br'">

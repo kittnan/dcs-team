@@ -5,6 +5,9 @@ import { MasterMachineComponent } from './master-machine/master-machine.componen
 import { MasterManageComponent } from './master-manage/master-manage.component';
 import { MasterServiceTypeOptionComponent } from './master-service-type-option/master-service-type-option.component';
 import { MasterPmCheckListComponent } from './master-pm-check-list/master-pm-check-list.component';
+import { AdminPmPlanViewComponent } from './admin-pm-plan-view/admin-pm-plan-view.component';
+import { PmTasksComponent } from './pm-tasks/pm-tasks.component';
+import { PmTasksGenerateComponent } from './pm-tasks-generate/pm-tasks-generate.component';
 
 const routes: Routes = [
   {
@@ -31,6 +34,18 @@ const routes: Routes = [
   {
     path:'master_pm',
     component:MasterPmCheckListComponent
+  },
+  {
+    path:'pm-tasks',
+    component:PmTasksComponent
+  },
+  {
+    path:'pm-tasks-generate',
+    component:PmTasksGenerateComponent
+  },
+  {
+    path:'pm-plan-view',
+    component:AdminPmPlanViewComponent
   },
 
 ];

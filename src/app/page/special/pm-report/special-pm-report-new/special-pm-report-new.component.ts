@@ -94,6 +94,7 @@ export class SpecialPmReportNewComponent implements OnInit {
 
     let pmOption = await lastValueFrom(this.$pmList.getAll())
     this.pmOption = pmOption
+    console.log("🚀 ~ this.pmOption:", this.pmOption)
     this.pmItems = pmOption
 
     this.route.queryParams.subscribe(async (params: any) => {

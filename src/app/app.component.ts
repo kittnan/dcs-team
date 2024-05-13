@@ -118,6 +118,30 @@ export class AppComponent {
         },
       ]
     },
+    {
+      title: 'PM Plan',
+      icon: 'assets/img/icon_sidebar/special1.png',
+      path: '',
+      access: ['admin', 'fullAdmin', 'special'],
+      items: [
+        {
+          title: 'task',
+          icon: 'assets/img/icon_sidebar/report.png',
+          path: 'admin/pm-tasks',
+          items: [],
+          access: ['']
+        },
+        {
+          title: 'generate',
+          icon: 'assets/img/icon_sidebar/report.png',
+          path: 'admin/pm-tasks-generate',
+          items: [],
+          access: ['']
+        },
+
+
+      ]
+    },
   ]
   login: boolean = false
   private _mobileQueryListener: () => void;

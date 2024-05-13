@@ -21,6 +21,7 @@ import { PmReportSpecialPrintComponent } from './special/pm/pm-report-special-pr
 import { LibrarySearchComponent } from './library-search/library-search.component';
 import { TableReportComponent } from './library-search/table/table-report/table-report.component';
 import { TableReportPmComponent } from './library-search/table/table-report-pm/table-report-pm.component';
+import { PmPlanViewComponent } from './pm-plan/pm-plan-view/pm-plan-view.component';
 
 let items = [
   SubTitleComponent,
@@ -46,7 +47,8 @@ let items = [
     PmReportSpecialPrintComponent,
     LibrarySearchComponent,
     TableReportComponent,
-    TableReportPmComponent
+    TableReportPmComponent,
+    PmPlanViewComponent
   ],
   imports: [
     CommonModule,
@@ -70,7 +72,8 @@ let items = [
     PmReportEngineerPrintComponent,
     PmReportSpecialViewComponent,
     PmReportSpecialPrintComponent,
-    LibrarySearchComponent
+    LibrarySearchComponent,
+    PmPlanViewComponent
   ]
 })
 export class SharedModule { }

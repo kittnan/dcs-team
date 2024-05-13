@@ -1,0 +1,27 @@
+
+.btn-img-add {
+  width: 20px;
+  display: inline;
+  position: relative;
+  top: -1px;
+  left: -1px;
+}
+
+.btn-add {
+  color: black;
+  border-radius: 8px;
+  border: 1px solid;
+  background-color: #8deb8d;
+}
+.mat-cell{
+  padding: 10px !important;
+}
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type{
+  padding: 10px !important;
+}
+th.mat-header-cell{
+  padding: 10px !important;
+}
+.text-green{
+  color: #26c626 !important;
+}

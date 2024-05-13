@@ -16,6 +16,9 @@ import { MasterServiceTypeOptionEditorComponent } from './master-service-type-op
 import {CdkTableModule} from '@angular/cdk/table';
 import { MasterPmCheckListComponent } from './master-pm-check-list/master-pm-check-list.component';
 import { MasterPmCheckListEditorComponent } from './master-pm-check-list-editor/master-pm-check-list-editor.component';
+import { AdminPmPlanViewComponent } from './admin-pm-plan-view/admin-pm-plan-view.component';
+import { PmTasksComponent } from './pm-tasks/pm-tasks.component';
+import { PmTasksGenerateComponent } from './pm-tasks-generate/pm-tasks-generate.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,9 @@ import { MasterPmCheckListEditorComponent } from './master-pm-check-list-editor/
     MasterServiceTypeOptionEditorComponent,
     MasterPmCheckListComponent,
     MasterPmCheckListEditorComponent,
+    AdminPmPlanViewComponent,
+    PmTasksComponent,
+    PmTasksGenerateComponent,
   ],
   imports: [
     CommonModule,

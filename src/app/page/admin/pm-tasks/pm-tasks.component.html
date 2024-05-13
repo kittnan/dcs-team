@@ -1,0 +1,100 @@
+<div fxLayout="row wrap" fxLayoutAlign="center center">
+  <app-title fxFlex="100" [title]="'PM Tasks'"></app-title>
+</div>
+
+<div fxLayout="row wrap" fxLayoutAlign="center center" class="mt-3">
+  <div fxFlex="100" fxFlex.gt-xs="95">
+    <div fxLayout="row wrap" fxLayoutAlign="end stretch">
+      <div>
+        <button mat-button class="btn-add" (click)="add()" style="color: black">
+          <img src="assets/img/master-machine/add-file.png" class="btn-img-add" />
+          เพิ่มข้อมูล
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div fxLayout="row wrap" fxLayoutAlign="center center" class="mt-3">
+  <div fxFlex="100" fxFlex.gt-xs="95">
+    <mat-form-field fxFlex="100"  appearance="standard">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)"  #input>
+    </mat-form-field>
+  </div>
+  <div fxFlex="100" fxFlex.gt-xs="95" fxLayout="row wrap" fxLayoutAlign="space-between start"  class="mat-elevation-z8 overflow-auto">
+    <table fxFlex="100"  mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="capitalize text-nowrap text-black font-bold">  </th>
+        <td mat-cell *matCellDef="let row" class="text-nowrap">
+        <div fxLayout="row nowrap" fxLayoutAlign="center center" fxLayoutGap="5">
+          <mat-slide-toggle [(ngModel)]="row.active" class="text-gray-500" [ngClass]="{'text-green': row.active}">Active</mat-slide-toggle>
+          <button mat-icon-button color="primary">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+        </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="customer" sticky>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="capitalize text-nowrap text-black font-bold"> customer </th>
+        <td mat-cell *matCellDef="let row" class="font-semibold text-blue-500"> {{row.customer}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="province">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="capitalize text-nowrap text-black font-bold"> province </th>
+        <td mat-cell *matCellDef="let row"> {{row.province}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="district">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="capitalize text-nowrap text-black font-bold"> district </th>
+        <td mat-cell *matCellDef="let row"> {{row.district}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="machine">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="capitalize text-nowrap text-black font-bold"> machine </th>
+        <td mat-cell *matCellDef="let row"> {{row.machine}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="model">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="capitalize text-nowrap text-black font-bold"> model </th>
+        <td mat-cell *matCellDef="let row"> {{row.model}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="S/N">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="capitalize text-nowrap text-black font-bold"> S/N </th>
+        <td mat-cell *matCellDef="let row"> {{row['S/N']}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="target">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="capitalize text-nowrap text-black font-bold"> target (Month) </th>
+        <td mat-cell *matCellDef="let row" > {{row.target}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastPM">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="capitalize text-nowrap text-black font-bold"> last PM  </th>
+        <td mat-cell *matCellDef="let row" class="text-nowrap font-semibold "> {{row.lastPM}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="PIC">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="capitalize text-nowrap text-black font-bold"> PIC </th>
+        <td mat-cell *matCellDef="let row" class="text-nowrap font-semibold text-blue-500"> {{row.PIC}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="displayedColumns.length">No data matching the filter "{{input.value}}"</td>
+      </tr>
+    </table>
+
+    <mat-paginator *ngIf="dataSource" fxFlex="100" [pageSizeOptions]="[8, 25, 50, 100,dataSource.filteredData.length]" aria-label="Select page of users"></mat-paginator>
+  </div>
+
+</div>
