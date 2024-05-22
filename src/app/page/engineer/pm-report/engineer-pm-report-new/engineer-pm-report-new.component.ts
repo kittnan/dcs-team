@@ -10,6 +10,7 @@ import { HttpPMService } from 'src/app/http/http-pm.service';
 import { HttpReportPmService } from 'src/app/http/http-report-pm.service';
 import { HttpReportService } from 'src/app/http/http-report.service';
 import { HttpServiceTypeService } from 'src/app/http/http-serviceType.service';
+import { HttpTasksService } from 'src/app/http/http-tasks.service';
 import { GenerateInvoicePdfService } from 'src/app/service/generate-invoice-pdf.service';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
 import { SignaturePadComponent } from 'src/app/shared/signature-pad/signature-pad.component';
@@ -70,6 +71,9 @@ export class EngineerPmReportNewComponent implements OnInit {
   pmItems: any[] = []
   userLogin: any
 
+  formOption: any
+  formSelect: any = 1
+
   @ViewChild('fileUpload') fileUpload!: ElementRef;
   constructor(
     private $pdf: GenerateInvoicePdfService,
@@ -81,7 +85,8 @@ export class EngineerPmReportNewComponent implements OnInit {
     private $report: HttpReportPmService,
     private $serviceType: HttpServiceTypeService,
     public dialog: MatDialog,
-    private $pmList: HttpPMService
+    private $pmList: HttpPMService,
+    private $task: HttpTasksService
   ) {
 
   }
@@ -91,8 +96,27 @@ export class EngineerPmReportNewComponent implements OnInit {
     this.serviceTypeOption = serviceType
 
     let pmOption = await lastValueFrom(this.$pmList.getAll())
-    this.pmOption = pmOption
+    if (pmOption && pmOption.length > 0) {
+      pmOption = pmOption.sort((a: any, b: any) => {
+        if (a.form < b.form) {
+          return -1;
+        } else if (a.form > b.form) {
+          return 1;
+        } else {
+          if (a.no < b.no) {
+            return -1;
+          } else if (a.no > b.no) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      });
+    }
+    this.formOption = [...new Set(pmOption.map((item: any) => item.form))]
     this.pmItems = pmOption
+    this.pmOption = pmOption.filter((data: any) => data.form == this.formSelect)
+    this.dataStarter =this.pmOption.length
 
     this.route.queryParams.subscribe(async (params: any) => {
       if (params && params['_id']) {
@@ -154,24 +178,35 @@ export class EngineerPmReportNewComponent implements OnInit {
         }
       } else {
 
-        // for (let index = 0; index <= this.dataStarter; index++) {
-        //   const newData: any = { ...this.dataTemplate }
-        //   newData.no = index + 1
-        //   this.form.data.push(newData)
-        // }
-        // const machine = await lastValueFrom(this.$master.Master_getall())
-        // this.customerOption = machine
-
-        // this.page = this.calculatorPageBreak(this.form.data.length);
-        // this.pageArr = Array.from(
-        //   { length: this.page },
-        //   (_, index) => index + 1
-        // );
       }
     })
 
     let user: any = this.$local.getProfile()
     this.userLogin = user
+  }
+
+  onSelectForm() {
+    this.pmOption = this.pmItems.filter((data:any)=>data.form == this.formSelect)
+    this.dataStarter =this.pmOption.length
+
+    this.form.data = []
+    for (let index = 0; index < this.dataStarter; index++) {
+      const newData: any = { ...this.dataTemplate }
+      newData.no = index + 1
+      newData.text = `${this.pmOption[index].no.toString().padStart(2, '0')}.${this.pmOption[index].name}`
+      this.form.data.push(newData)
+    }
+    this.page = this.calculatorPageBreak(this.form.data.length);
+    this.pageArr = Array.from(
+      { length: this.page },
+      (_, index) => index + 1
+    );
+
+    if (this.form.customer) {
+      this.customerCtrl.setValue(this.form.customer['Customer'])
+      this.machineOption = this.customerOption.filter((item: any) => item['Customer'] == this.form.customer['Customer'])
+
+    }
   }
 
   blobToBase64(blob: Blob): Promise<string> {
@@ -211,76 +246,19 @@ export class EngineerPmReportNewComponent implements OnInit {
     const dialog = this.dialog.open(SignaturePadComponent, {
       data: null,
       disableClose: true,
-      // width:'100%',
-      // height:'100%'
+
     })
 
     dialog.afterClosed().subscribe(async (data: any) => {
       if (data) {
         this.form.sign = data
         await this.saveCustom()
-        // Swal.fire({
-        //   title: "Success",
-        //   icon: 'success',
-        //   showConfirmButton: false,
-        //   timer: 1500
-        // }).then(() => {
-        // })
+
       }
     })
   }
 
 
-  // // todo onAddPage
-  // onAddPage() {
-  //   Swal.fire({
-  //     title: 'Add page ?',
-  //     icon: 'question',
-  //     showCancelButton: true
-  //   }).then((v: SweetAlertResult) => {
-  //     if (v.isConfirmed) {
-  //       let insertArray = [];
-  //       let lastNo = this.form.data.slice(-1)
-  //       lastNo = lastNo[0].no
-  //       for (let index = 0; index < this.dataPerPage; index++) {
-  //         let newData: any = { ...this.dataTemplate }
-  //         newData.no = lastNo + 1 + index
-  //         insertArray.push(newData)
-  //       }
-  //       this.form.data.push(...insertArray)
-  //       this.page = this.calculatorPageBreak(this.form.data.length);
-  //       this.pageArr = Array.from(
-  //         { length: this.page },
-  //         (_, index) => index + 1
-  //       );
-  //     }
-  //   })
-
-  // }
-  // // todo onDelPage
-  // onDelPage() {
-  //   Swal.fire({
-  //     title: 'Delete page ?',
-  //     icon: 'question',
-  //     showCancelButton: true
-  //   }).then(async (v: SweetAlertResult) => {
-  //     if (v.isConfirmed) {
-  //       // const deleteItems = this.form.data.slice()
-  //       const indexToRemove = this.form.data.length - this.dataPerPage; // Calculate the index of the third element from the end
-  //       const deleteItems = this.form.data.splice(indexToRemove, this.dataPerPage);
-  //       const res = await lastValueFrom(this.$report.save(this.form))
-  //       for (let i = 0; i < deleteItems.length; i++) {
-  //         const item = deleteItems[i];
-  //         if (item.files.length > 0) {
-  //           await lastValueFrom(this.$report.delete({
-  //             path_file: item.files[0].delete_path
-  //           }))
-  //         }
-  //       }
-  //     }
-  //   })
-
-  // }
 
   // todo onSave
   onSave() {
@@ -349,13 +327,6 @@ export class EngineerPmReportNewComponent implements OnInit {
       let fileBase64 = this.blobToBase64(newFile)
       this.form.data[index - 1]['files'][0]['view'] = fileBase64
 
-      // for (let index = 0; index < this.form.data.length; index++) {
-      //   const data = this.form.data[index];
-      //   if (data.files.length > 0) {
-      //     let file = await lastValueFrom(this.$report.getFile(data.files[0].path))
-      //     data.files[0].view = this.blobToBase64(file)
-      //   }
-      // }
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
@@ -413,6 +384,7 @@ export class EngineerPmReportNewComponent implements OnInit {
             this.form.finishDate = moment(this.end).set('hour', sps2[0]).set('minute', sps2[1])
           }
           await this.saveCustom()
+          await lastValueFrom(this.$task.updateLastPM({ machine_id: this.form.machine._id }))
           Swal.fire({
             title: "Success",
             icon: 'success',

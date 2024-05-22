@@ -15,3 +15,8 @@
   top: -1px;
   left: -1px;
 }
+::ng-deep .table-custom>thead>tr>th {
+  text-transform: capitalize !important;
+  font-weight: 700 !important;
+  color: black;
+}

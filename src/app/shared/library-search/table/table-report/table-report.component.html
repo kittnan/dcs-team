@@ -1,13 +1,14 @@
 <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="20" class="mb-1">
-    <button [disabled]="selection.selected.length==0" mat-button class="btn-add" style="color: black" (click)="onPrint()">
+    <button [disabled]="selection.selected.length==0" mat-button class="btn-add" style="color: black"
+      (click)="onPrint()">
       <img src="assets/img/report/printer.png" class="btn-img-add" />
       PRINT PDF
     </button>
   </div>
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="box-glass overflow-auto mt-1 ">
-    <table fxFlex="100" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <table fxFlex="100" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 table-custom">
 
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>

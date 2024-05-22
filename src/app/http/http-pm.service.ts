@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
@@ -15,27 +15,32 @@ export class HttpPMService {
   ) { }
 
 
-//#region Master User
-getAll(): Observable<any> {
-  return this.http.get(this.Url + "/pm-list/")
-}
+  //#region Master User
+  getByParam(params: HttpParams): Observable<any> {
+    return this.http.get(this.Url + "/pm-list/getByParam", {
+      params: params
+    })
+  }
+  getAll(): Observable<any> {
+    return this.http.get(this.Url + "/pm-list/")
+  }
 
-Add(data: any): Observable<any> {
-  return this.http.post(this.Url + "/pm-list/", data)
-}
+  Add(data: any): Observable<any> {
+    return this.http.post(this.Url + "/pm-list/", data)
+  }
 
-Update(id: any, data: any): Observable<any> {
-  return this.http.put(this.Url + "/pm-list/insert/" + id, data)
-}
+  Update(id: any, data: any): Observable<any> {
+    return this.http.put(this.Url + "/pm-list/insert/" + id, data)
+  }
 
-GetByCondition(data: any): Observable<any> {
-  return this.http.post(this.Url + "/pm-list/getByCondition/", data)
-}
+  GetByCondition(data: any): Observable<any> {
+    return this.http.post(this.Url + "/pm-list/getByCondition/", data)
+  }
 
-DelByCondition(data: any): Observable<any> {
-  return this.http.post(this.Url + "/pm-list/delByCondition/", data)
-}
-//#endregion
+  DelByCondition(data: any): Observable<any> {
+    return this.http.post(this.Url + "/pm-list/delByCondition/", data)
+  }
+  //#endregion
 
 
 

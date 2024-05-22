@@ -46,7 +46,9 @@ export class EngineerReportComponent implements OnInit {
     }
   ]
   filterData: any = {
-    status: 'draft'
+    status: 'draft',
+    start: null,
+    end: null
   }
 
   isDelete: boolean = false
@@ -111,13 +113,35 @@ export class EngineerReportComponent implements OnInit {
   }
 
   // todo on change filter status
-  onChangeFilterStatus() {
-    let params: HttpParams = new HttpParams()
-    if (this.filterData.status != 'all') {
-      params = params.set('status', this.filterData.status == 'finished' ? 'finish' : this.filterData.status)
+  onSearch() {
+    try {
+      let params: HttpParams = new HttpParams()
+      if (this.filterData.status != 'all') {
+        params = params.set('status', this.filterData.status == 'finished' ? 'finish' : this.filterData.status)
+      }
+      if (this.filterData.start) {
+        params = params.set('start', moment(this.filterData.start).format('DD-MM-YY'))
+      }
+      if (this.filterData.end) {
+        params = params.set('end', moment(this.filterData.end).format('DD-MM-YY'))
+      }
+      this.onGetData(params)
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
     }
-    this.onGetData(params)
   }
+  // onChangeFilterStatus() {
+  //   let params: HttpParams = new HttpParams()
+  //   if (this.filterData.status != 'all') {
+  //     params = params.set('status', this.filterData.status == 'finished' ? 'finish' : this.filterData.status)
+  //   }
+  //   this.onGetData(params)
+  // }
+
+  // // todo filter date
+  // onChangeFilterDate() {
+
+  // }
 
   // todo onClickReport
   onClickReport(row: any) {
@@ -159,18 +183,17 @@ export class EngineerReportComponent implements OnInit {
   }
   async updateDelete() {
     try {
-      console.log(this.selection.selected);
       let dataUpdate = this.selection.selected.map((item: any) => {
         item.status = 'delete'
         return item
       })
       await lastValueFrom(this.$report.saveMultiple(dataUpdate))
       Swal.fire({
-        title:"Success",
-        icon:'success',
-        showConfirmButton:false,
-        timer:1500
-      }).then(()=>{
+        title: "Success",
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500
+      }).then(() => {
         location.reload()
       })
     } catch (error) {
@@ -184,7 +207,6 @@ export class EngineerReportComponent implements OnInit {
     return numSelected === numRows;
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
     if (this.isAllSelected()) {
       this.selection.clear();
@@ -194,7 +216,6 @@ export class EngineerReportComponent implements OnInit {
     this.selection.select(...this.dataSource.data);
   }
 
-  /** The label for the checkbox on the passed row */
   checkboxLabel(row?: any): string {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;

@@ -112,13 +112,30 @@ export class EngineerPmReportComponent implements OnInit {
   }
 
   // todo on change filter status
-  onChangeFilterStatus() {
-    let params: HttpParams = new HttpParams()
-    if (this.filterData.status != 'all') {
-      params = params.set('status', this.filterData.status == 'finished' ? 'finish' : this.filterData.status)
+  onSearch() {
+    try {
+      let params: HttpParams = new HttpParams()
+      if (this.filterData.status != 'all') {
+        params = params.set('status', this.filterData.status == 'finished' ? 'finish' : this.filterData.status)
+      }
+      if (this.filterData.start) {
+        params = params.set('start', moment(this.filterData.start).format('DD-MM-YY'))
+      }
+      if (this.filterData.end) {
+        params = params.set('end', moment(this.filterData.end).format('DD-MM-YY'))
+      }
+      this.onGetData(params)
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
     }
-    this.onGetData(params)
   }
+  // onChangeFilterStatus() {
+  //   let params: HttpParams = new HttpParams()
+  //   if (this.filterData.status != 'all') {
+  //     params = params.set('status', this.filterData.status == 'finished' ? 'finish' : this.filterData.status)
+  //   }
+  //   this.onGetData(params)
+  // }
 
   // todo onClickReport
   onClickReport(row: any) {

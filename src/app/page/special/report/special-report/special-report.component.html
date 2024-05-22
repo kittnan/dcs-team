@@ -2,40 +2,64 @@
   <app-title fxFlex="100" [title]="'Specialist Report Manage'"></app-title>
   <div fxFlex="100" fxFlex.gt-xs="85" fxLayout="row wrap" fxLayoutAlign="center stretch">
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center " fxLayoutGap="10" class="overflow-auto">
-      <mat-form-field fxFlex.xs="45" appearance="outline" floatLabel="always" class="btn-set">
-        <mat-label>ค้นหา</mat-label>
-        <input matInput (keyup)="applyFilter($event)" #input>
-      </mat-form-field>
-      <mat-form-field fxFlex.xs="45" appearance="outline" floatLabel="always" class="btn-set">
+      <mat-form-field fxFlex.xs="100" appearance="outline" floatLabel="always" class="btn-set">
         <mat-label>สถานะ</mat-label>
-        <mat-select [(ngModel)]="filterData.status" (ngModelChange)="onChangeFilterStatus()">
+        <mat-select [(ngModel)]="filterData.status" >
           <mat-option *ngFor="let item of statusOption" [value]="item.value">
             {{item.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-form-field fxFlex.xs="100" appearance="outline" floatLabel="always" class="btn-set">
+        <mat-label>ช่วงเวลา</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate placeholder="เริ่ม" [(ngModel)]="filterData.start" [max]="filterData.end" >
+          <input matEndDate placeholder="สิ้นสุด" [(ngModel)]="filterData.end" [min]="filterData.start">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker>
+          <mat-datepicker-actions>
+            <button mat-button color="warn" matDatepickerCancel
+              (click)="filterData.start=null;filterData.end=null">ล้างค่า</button>
+            <button mat-button matDatepickerCancel>ปิด</button>
+            <button mat-raised-button color="primary" matDatepickerApply>ยืนยัน</button>
+          </mat-datepicker-actions>
+        </mat-date-range-picker>
+      </mat-form-field>
+      <button fxFlex.xs="100" mat-icon-button color="primary" (click)="onSearch()"  >
+        <mat-icon class="pe-2">search</mat-icon>
+        <span>ค้นหา</span>
+      </button>
+    </div>
 
-
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center " fxLayoutGap="10" class="overflow-auto">
+      <mat-form-field fxFlex.xs="100" appearance="outline" floatLabel="always" class="btn-set">
+        <mat-label>ค้นหา</mat-label>
+        <input matInput (keyup)="applyFilter($event)" #input>
+      </mat-form-field>
       <div fxFlex="auto"></div>
-      <button *ngIf="!isDelete" fxFlex.xs="45" mat-button class="btn-delete" (click)="onClickDelete()" style="color: black">
+      <button *ngIf="!isDelete" fxFlex.xs="100" mat-button class="btn-delete" (click)="onClickDelete()"
+        style="color: black">
         <img src="assets/img/report/file-delete.png" class="btn-img-add" />
         ลบหลายรายการ
       </button>
-      <button *ngIf="isDelete" fxFlex.xs="45" mat-button class="btn-delete" (click)="onClickDeleteCancel()" style="color: black">
+      <button *ngIf="isDelete" fxFlex.xs="100" mat-button class="btn-delete" (click)="onClickDeleteCancel()"
+        style="color: black">
         ยกเลิก
       </button>
-      <button *ngIf="isDelete" fxFlex.xs="45" mat-button class="btn-add" (click)="onClickDeleteConfirm()" style="color: black">
+      <button *ngIf="isDelete" fxFlex.xs="100" mat-button class="btn-add" (click)="onClickDeleteConfirm()"
+        style="color: black">
         ยืนยัน
       </button>
-      <button *ngIf="!isDelete" fxFlex.xs="45" mat-button class="btn-add" (click)="onClickNewReport()" style="color: black">
+      <button *ngIf="!isDelete" fxFlex.xs="100" mat-button class="btn-add" (click)="onClickNewReport()"
+        style="color: black">
         <img src="assets/img/master-machine/add-file.png" class="btn-img-add" />
         เพิ่มข้อมูล
       </button>
-
     </div>
 
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between start" class="overflow-auto box-glass mt-1">
-      <table fxFlex="100" mat-table [dataSource]="dataSource" matSort style="text-wrap: nowrap;">
+      <table fxFlex="100" mat-table [dataSource]="dataSource" matSort class="table-custom" style="text-wrap: nowrap;">
         <ng-container *ngIf="isDelete" matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef style="padding: 10px;">
             <mat-checkbox (change)="$event ? toggleAllRows() : null"

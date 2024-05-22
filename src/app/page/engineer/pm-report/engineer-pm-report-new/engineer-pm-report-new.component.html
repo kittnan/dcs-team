@@ -21,19 +21,16 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <mat-form-field fxFlex="100" fxFlex.gt-md="32" appearance="outline" floatLabel="always" class="btn-set">
+      <mat-label>Form</mat-label>
+      <mat-select [(ngModel)]="formSelect" (ngModelChange)="onSelectForm()" >
+        <mat-option *ngFor="let item of formOption" [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
-  <!-- <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="10" class="mb-4">
 
-    <button mat-button class="btn-add" (click)="onAddPage()" style="color: black;">
-      <img src="assets/img/master-machine/add-file.png" class="btn-img-add" />
-      เพิ่มหน้า
-    </button>
-
-    <button  mat-button class="btn-del" (click)="onDelPage()" style="color: black">
-      <img src="assets/img/master-machine/trash-bin.png" class="btn-img-del" />
-      ลบหน้า
-    </button>
-  </div> -->
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" *ngFor="let p of pageArr; let p_i = index"
     id="print" class="mb-9">
@@ -350,27 +347,7 @@
       <img src="assets/img/report/save.png" class="btn-img-add" />
       Save
     </button>
-    <!-- <button mat-raised-button (click)="onFinish()">
-      <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
-        <mat-icon class="mat-18">
-          done_all
-        </mat-icon>
-        <span>
-          เสร็จสิ้น
-        </span>
-      </div>
-    </button>
 
-    <button mat-raised-button (click)="onSave()">
-      <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
-        <mat-icon class="mat-18">
-          save
-        </mat-icon>
-        <span>
-          บันทึก
-        </span>
-      </div>
-    </button> -->
   </div>
 
 </div>

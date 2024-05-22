@@ -1,9 +1,6 @@
-import { filter } from 'rxjs/operators';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { HttpServiceTypeService } from 'src/app/http/http-serviceType.service';
-import { lastValueFrom } from 'rxjs';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-master-pm-check-list-editor',
@@ -18,7 +15,6 @@ export class MasterPmCheckListEditorComponent implements OnInit {
   constructor(
     private dialog: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private api: HttpServiceTypeService,
   ) { }
   ngOnInit(): void {
     this.rawData = { ...this.data }

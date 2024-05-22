@@ -1,7 +1,8 @@
-import { Component, OnInit, Inject, ElementRef } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { lastValueFrom } from 'rxjs';
 import { HttpMastersService } from 'src/app/http/http-masters.service';
+import { HttpTasksService } from 'src/app/http/http-tasks.service';
 import { HttpUsersService } from 'src/app/http/http-users.service';
 import Swal from 'sweetalert2';
 
@@ -21,14 +22,15 @@ export class MasterMachineEditorComponent implements OnInit {
   province: any = []
   customer: any = []
   machine: any = []
-  district :any = []
+  district: any = []
 
-  input_readonly :any = true
+  input_readonly: any = true
   constructor(
     private dialog: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private user: HttpUsersService,
-    private $master : HttpMastersService
+    private $master: HttpMastersService,
+    private $pmTask: HttpTasksService
   ) { }
 
   ngOnInit(): void {
@@ -114,7 +116,7 @@ export class MasterMachineEditorComponent implements OnInit {
         delete this.rawData.No
         delete this.rawData.updatedAt
         delete this.rawData.name
-        let update = await lastValueFrom(this.$master.Master_update(this.rawData._id,this.rawData))
+        let update = await lastValueFrom(this.$master.Master_update(this.rawData._id, this.rawData))
         //code end
         if (update) {
           this.dialog.close('ok')
@@ -134,6 +136,7 @@ export class MasterMachineEditorComponent implements OnInit {
       if (r.isConfirmed) {
         //code start
         let add = await lastValueFrom(this.$master.Master_add(this.rawData))
+        await lastValueFrom(this.$pmTask.create(add[0]))
         //code end
         if (add) {
           this.dialog.close('ok')

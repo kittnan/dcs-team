@@ -22,4 +22,13 @@ export class HttpTasksService {
   genPM(): Observable<any> {
     return this.http.get(`${this.API}/${this.SUB}/genPM`)
   }
+  create(data: any): Observable<any> {
+    return this.http.post(`${this.API}/${this.SUB}/create`, data)
+  }
+  update(data: any): Observable<any> {
+    return this.http.put(`${this.API}/${this.SUB}/update`,data)
+  }
+  updateLastPM(data: any): Observable<any> {
+    return this.http.put(`${this.API}/${this.SUB}/updateLastPM`,data)
+  }
 }

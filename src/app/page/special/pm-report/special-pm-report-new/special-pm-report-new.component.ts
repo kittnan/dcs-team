@@ -10,6 +10,7 @@ import { HttpPMService } from 'src/app/http/http-pm.service';
 import { HttpReportPmSpecialService } from 'src/app/http/http-report-pm-special.service';
 import { HttpReportSpecialService } from 'src/app/http/http-report-special.service';
 import { HttpServiceTypeService } from 'src/app/http/http-serviceType.service';
+import { HttpTasksService } from 'src/app/http/http-tasks.service';
 import { GenerateInvoicePdfService } from 'src/app/service/generate-invoice-pdf.service';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
 import { SignaturePadComponent } from 'src/app/shared/signature-pad/signature-pad.component';
@@ -72,6 +73,9 @@ export class SpecialPmReportNewComponent implements OnInit {
   pmItems: any[] = []
   userLogin: any
 
+  formOption: any
+  formSelect: any = 1
+
   @ViewChild('fileUpload') fileUpload!: ElementRef;
   constructor(
     private $pdf: GenerateInvoicePdfService,
@@ -83,7 +87,8 @@ export class SpecialPmReportNewComponent implements OnInit {
     private $report: HttpReportPmSpecialService,
     private $serviceType: HttpServiceTypeService,
     public dialog: MatDialog,
-    private $pmList: HttpPMService
+    private $pmList: HttpPMService,
+    private $task:HttpTasksService
   ) {
 
   }
@@ -93,9 +98,27 @@ export class SpecialPmReportNewComponent implements OnInit {
     this.serviceTypeOption = serviceType
 
     let pmOption = await lastValueFrom(this.$pmList.getAll())
-    this.pmOption = pmOption
-    console.log("🚀 ~ this.pmOption:", this.pmOption)
+    if (pmOption && pmOption.length > 0) {
+      pmOption = pmOption.sort((a: any, b: any) => {
+        if (a.form < b.form) {
+          return -1;
+        } else if (a.form > b.form) {
+          return 1;
+        } else {
+          if (a.no < b.no) {
+            return -1;
+          } else if (a.no > b.no) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      });
+    }
+    this.formOption = [...new Set(pmOption.map((item: any) => item.form))]
     this.pmItems = pmOption
+    this.pmOption = pmOption.filter((data: any) => data.form == this.formSelect)
+    this.dataStarter =this.pmOption.length
 
     this.route.queryParams.subscribe(async (params: any) => {
       if (params && params['_id']) {
@@ -156,24 +179,35 @@ export class SpecialPmReportNewComponent implements OnInit {
         }
       } else {
 
-        // for (let index = 0; index <= this.dataStarter; index++) {
-        //   const newData: any = { ...this.dataTemplate }
-        //   newData.no = index + 1
-        //   this.form.data.push(newData)
-        // }
-        // const machine = await lastValueFrom(this.$master.Master_getall())
-        // this.customerOption = machine
-
-        // this.page = this.calculatorPageBreak(this.form.data.length);
-        // this.pageArr = Array.from(
-        //   { length: this.page },
-        //   (_, index) => index + 1
-        // );
       }
     })
 
     let user: any = this.$local.getProfile()
     this.userLogin = user
+  }
+
+  onSelectForm() {
+    this.pmOption = this.pmItems.filter((data:any)=>data.form == this.formSelect)
+    this.dataStarter =this.pmOption.length
+
+    this.form.data = []
+    for (let index = 0; index < this.dataStarter; index++) {
+      const newData: any = { ...this.dataTemplate }
+      newData.no = index + 1
+      newData.text = `${this.pmOption[index].no.toString().padStart(2, '0')}.${this.pmOption[index].name}`
+      this.form.data.push(newData)
+    }
+    this.page = this.calculatorPageBreak(this.form.data.length);
+    this.pageArr = Array.from(
+      { length: this.page },
+      (_, index) => index + 1
+    );
+
+    if (this.form.customer) {
+      this.customerCtrl.setValue(this.form.customer['Customer'])
+      this.machineOption = this.customerOption.filter((item: any) => item['Customer'] == this.form.customer['Customer'])
+
+    }
   }
 
   blobToBase64(blob: Blob): Promise<string> {
@@ -273,15 +307,7 @@ export class SpecialPmReportNewComponent implements OnInit {
     }
   }
 
-  // // todo click img
-  // onClickImage(no:any){
-  //   this._bottomSheet.open(BottomSheetEngComponent).afterDismissed().subscribe((data:any)=>{
-  //     console.log(data);
-  //     if(data && data=='edit'){
-  //       this.fileUpload.nativeElement.click();
-  //     }
-  //   })
-  // }
+
 
   // todo onUpload
   async onUpload($event: any, index: number) {
@@ -355,6 +381,7 @@ export class SpecialPmReportNewComponent implements OnInit {
             this.form.finishDate = moment(this.end).set('hour', sps2[0]).set('minute', sps2[1])
           }
           await this.saveCustom()
+          await lastValueFrom(this.$task.updateLastPM({machine_id:this.form.machine._id}))
           Swal.fire({
             title: "Success",
             icon: 'success',

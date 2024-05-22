@@ -16,6 +16,7 @@ import { MasterMachineEditorComponent } from '../master-machine-editor/master-ma
 import * as moment from 'moment';
 import { MatSort } from '@angular/material/sort';
 import { HttpReportSpecialService } from 'src/app/http/http-report-special.service';
+import { HttpTasksService } from 'src/app/http/http-tasks.service';
 var fs = require('file-saver');
 
 @Component({
@@ -28,7 +29,7 @@ export class MasterMachineComponent {
   displayedColumns: string[] = ['No', 'Province', 'District', 'Customer', 'Machine', 'Model', 'S/N', 'PIC', 'Action'];
   dataSource: any = new MatTableDataSource
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
-  @ViewChild(MatSort) sort:any = MatSort;
+  @ViewChild(MatSort) sort: any = MatSort;
 
   county: any
   dataExcel: any = []
@@ -39,12 +40,13 @@ export class MasterMachineComponent {
   var_Province: any
   data: any
   province: any = ''
-  filterValue :any
+  filterValue: any
   constructor(
     private $user: HttpUsersService,
     private $master: HttpMastersService,
     private http: HttpClient,
     private dialog: MatDialog,
+    private $task: HttpTasksService
   ) { }
 
 
@@ -207,6 +209,7 @@ export class MasterMachineComponent {
         this.dataSource = new MatTableDataSource(data)
         this.dataSource.paginator = this.paginator;
         let del = await lastValueFrom(this.$master.Master_DelByCondition({ _id: e._id }))
+        await lastValueFrom(this.$task.update({ machine_id: e._id }))
         //code end
         setTimeout(() => {
           Swal.fire({

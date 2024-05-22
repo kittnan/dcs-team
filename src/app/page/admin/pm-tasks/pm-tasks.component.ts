@@ -30,9 +30,9 @@ export class PmTasksComponent implements OnInit {
       this.dataSource = new MatTableDataSource(resTasks.map((task: any, i: number) => {
         return {
           ...task,
-          model: task.machine.Model,
-          'S/N': task.machine['S/N'],
-          machine: task.machine.Machine,
+          model: task.machine?.Model,
+          'S/N':  task.machine? task.machine['S/N'] : null,
+          machine: task.machine?.Machine,
           lastPM: task.lastPM ? moment(task.lastPM).format('DD-MMM-YY') : null,
           PIC: task.PIC ? task.PIC.name : null,
         }
