@@ -1,18 +1,22 @@
-<div  fxLayout="row wrap" fxLayoutAlign="start stretch">
+<div  fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="5">
   <button mat-raised-button color="primary" (click)="onGen()">
     Generate Plan 2024
   </button>
-</div>
 
-<div  fxLayout="row wrap" fxLayoutAlign="start stretch">
   <button mat-raised-button color="primary" (click)="onEditMode=true">
     Edit
   </button>
 </div>
 
+<!-- <div  fxLayout="row wrap" fxLayoutAlign="start stretch">
+  <button mat-raised-button color="primary" (click)="onEditMode=true">
+    Edit
+  </button>
+</div> -->
+
 <div  >
   <ng-container *ngFor="let group of items; let i=index">
-    <table class="mb-4 mt-4" style="width: 1900px;">
+    <table class="mb-4 mt-1" style="width: 1900px;">
       <tr class="no-border">
         <th style="width: 150px !important;"></th>
         <th style="width: 300px !important;"></th>

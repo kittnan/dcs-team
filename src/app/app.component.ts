@@ -120,20 +120,20 @@ export class AppComponent {
     },
     {
       title: 'PM Plan',
-      icon: 'assets/img/icon_sidebar/special1.png',
+      icon: 'assets/img/icon_sidebar/content-plan.png',
       path: '',
       access: ['admin', 'fullAdmin', 'special'],
       items: [
         {
           title: 'task',
-          icon: 'assets/img/icon_sidebar/report.png',
+          icon: 'assets/img/icon_sidebar/task.png',
           path: 'admin/pm-tasks',
           items: [],
           access: ['']
         },
         {
           title: 'generate',
-          icon: 'assets/img/icon_sidebar/report.png',
+          icon: 'assets/img/icon_sidebar/generate.png',
           path: 'admin/pm-tasks-generate',
           items: [],
           access: ['']
