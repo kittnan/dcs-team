@@ -33,6 +33,16 @@ export class HttpPMService {
     return this.http.put(this.Url + "/pm-list/insert/" + id, data)
   }
 
+  updateMany(data: any): Observable<any> {
+    return this.http.put(this.Url + "/pm-list/updateMany", data)
+  }
+
+  deleteByForm(param: HttpParams): Observable<any> {
+    return this.http.delete(this.Url + "/pm-list/deleteByForm", {
+      params: param
+    })
+  }
+
   GetByCondition(data: any): Observable<any> {
     return this.http.post(this.Url + "/pm-list/getByCondition/", data)
   }

@@ -12,12 +12,25 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <mat-form-field appearance="outline" floatLabel="always" class="btn-set">
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="formName">
+    </mat-form-field>
+    <button mat-button class="btn-add" (click)="saveForm()" style="color: black;margin-right: 1rem;">
+      <img src="assets/img/master-machine/add-file.png" class="btn-img-add" />
+      บันทึก Form
+    </button>
 
     <div fxFlex="auto"></div>
 
-    <button mat-button class="btn-add" (click)="addForm()" style="color: black;margin-right: 1rem;">
+    <button mat-button class="btn-add-form" (click)="addForm()" style="color: black;margin-right: 1rem;">
       <img src="assets/img/master-machine/add-file.png" class="btn-img-add" />
       เพิ่ม Form
+    </button>
+
+    <button mat-button class="btn-delete" (click)="deleteForm()" style="color: black;margin-right: 1rem;">
+      <img src="assets/img/master-machine/add-file.png" class="btn-img-add" />
+      ลบ Form
     </button>
 
     <button mat-button class="btn-add" (click)="add()" style="color: black">
@@ -32,7 +45,7 @@
   <div fxFlex="100" fxFlex.gt-xs="85" fxLayout="row wrap" fxLayoutAlign="start stretch">
     <mat-form-field fxFlex="100" appearance="outline" floatLabel="always" class="btn-set">
       <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input />
+      <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input />
     </mat-form-field>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between start" class="mat-elevation-z8" style="overflow: auto;">
       <table fxFlex="100"  mat-table [dataSource]="dataSource">

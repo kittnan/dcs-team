@@ -25,7 +25,7 @@ export class MasterPmCheckListComponent implements OnInit {
   data: any
   formOption: any = []
   formSelect: any = null;
-
+  formName: any = null
   constructor(
     private $pm: HttpPMService,
     private dialog: MatDialog
@@ -39,6 +39,9 @@ export class MasterPmCheckListComponent implements OnInit {
 
   async getData() {
     this.data = await lastValueFrom(this.$pm.getByParam(new HttpParams()))
+    if (this.data && this.data.length > 0) {
+      this.formName = this.data[0].formName ? this.data[0].formName : null
+    }
     // this.data = this.data.map((d: any, i: any) => {
     //   return {
     //     ...d,
@@ -55,20 +58,20 @@ export class MasterPmCheckListComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-
   add() {
     let lastData = [...this.dataSource.data].pop()
-    let newData = {...lastData}
-    if(newData){
-      newData.no = newData.no+1
+    let newData = { ...lastData }
+    if (newData) {
+      newData.no = newData.no + 1
       newData.name = null
     }
     let closeDialog = this.dialog.open(MasterPmCheckListEditorComponent, {
       // width: '300px',
       data: {
-        name: newData?.name? newData?.name : null,
-        no:newData?.no? newData?.no: 1,
-        form:  this.formSelect,
+        name: newData?.name ? newData?.name : null,
+        no: newData?.no ? newData?.no : 1,
+        form: this.formSelect,
+        formName: this.formName
       }
     });
     closeDialog.afterClosed().subscribe(data => {
@@ -136,6 +139,58 @@ export class MasterPmCheckListComponent implements OnInit {
     })
   }
 
+  saveForm() {
+    try {
+      Swal.fire({
+        title: `Do you want to Save ?`,
+        icon: 'question',
+        showCancelButton: true,
+      }).then(async r => {
+        if (r.isConfirmed) {
+          let updateData = this.dataSource.data.map((item: any) => {
+            item.formName = this.formName
+            return item
+          })
+          await lastValueFrom(this.$pm.updateMany(updateData))
+          Swal.fire({
+            title: "Success",
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            location.reload()
+          })
+        }
+      })
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+
+  deleteForm() {
+    try {
+      Swal.fire({
+        title: `Do you want to Delete ?`,
+        icon: 'warning',
+        showCancelButton: true,
+      }).then(async r => {
+        if (r.isConfirmed) {
+          await lastValueFrom(this.$pm.deleteByForm(new HttpParams().set('formNum', this.formSelect)))
+          Swal.fire({
+            title: "Success",
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            location.reload()
+          })
+        }
+      })
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+
 
   deleteBySelect(e: any) {
     Swal.fire({
@@ -163,6 +218,7 @@ export class MasterPmCheckListComponent implements OnInit {
   }
 
   addForm() {
+    this.formName = null
     let newForm = [...this.formOption].pop()
     newForm = newForm += 1
     this.formOption.push(newForm)
@@ -170,11 +226,16 @@ export class MasterPmCheckListComponent implements OnInit {
     this.createTable()
   }
 
-  onSelectForm(){
+  onSelectForm() {
+    this.formName = null
     this.createTable()
   }
-  createTable(){
-    this.dataSource = new MatTableDataSource(this.data.filter((data:any)=>data.form==this.formSelect).sort((a:any,b:any)=> a.no - b.no ))
+  createTable() {
+    let newData = this.data.filter((data: any) => data.form == this.formSelect).sort((a: any, b: any) => a.no - b.no)
+    if(newData && newData.length>0 && newData[0].formName){
+    this.formName = newData[0].formName
+    }
+    this.dataSource = new MatTableDataSource(newData)
     this.dataSource.paginator = this.paginator;
   }
 

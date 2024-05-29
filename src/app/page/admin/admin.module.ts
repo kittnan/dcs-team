@@ -19,6 +19,7 @@ import { MasterPmCheckListEditorComponent } from './master-pm-check-list-editor/
 import { AdminPmPlanViewComponent } from './admin-pm-plan-view/admin-pm-plan-view.component';
 import { PmTasksComponent } from './pm-tasks/pm-tasks.component';
 import { PmTasksGenerateComponent } from './pm-tasks-generate/pm-tasks-generate.component';
+import { DialogPmTaskComponent } from './pm-tasks/dialog-pm-task/dialog-pm-task.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { PmTasksGenerateComponent } from './pm-tasks-generate/pm-tasks-generate.
     AdminPmPlanViewComponent,
     PmTasksComponent,
     PmTasksGenerateComponent,
+    DialogPmTaskComponent,
   ],
   imports: [
     CommonModule,

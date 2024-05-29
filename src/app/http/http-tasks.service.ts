@@ -28,6 +28,15 @@ export class HttpTasksService {
   update(data: any): Observable<any> {
     return this.http.put(`${this.API}/${this.SUB}/update`,data)
   }
+  updateDataMany(data: any): Observable<any> {
+    return this.http.put(`${this.API}/${this.SUB}/updateDataMany`,data)
+  }
+  updateData(data: any): Observable<any> {
+    return this.http.put(`${this.API}/${this.SUB}/updateData`,data)
+  }
+  updateDataGroup(data: any): Observable<any> {
+    return this.http.put(`${this.API}/${this.SUB}/updateDataGroup`,data)
+  }
   updateLastPM(data: any): Observable<any> {
     return this.http.put(`${this.API}/${this.SUB}/updateLastPM`,data)
   }

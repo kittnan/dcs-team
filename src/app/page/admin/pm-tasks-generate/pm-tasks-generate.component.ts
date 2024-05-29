@@ -1,7 +1,9 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { lastValueFrom } from 'rxjs';
 import { HttpTasksService } from 'src/app/http/http-tasks.service';
+import { HttpUsersService } from 'src/app/http/http-users.service';
 
 @Component({
   selector: 'app-pm-tasks-generate',
@@ -15,11 +17,18 @@ export class PmTasksGenerateComponent implements OnInit {
   foo = true
 
   year = 2024
+
+  onEditMode: boolean = false
+
+  engineerOption: any = []
   constructor(
-    private $task: HttpTasksService
+    private $task: HttpTasksService,
+    private $user: HttpUsersService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    let resUser :any= await lastValueFrom(this.$user.getByCondition(new HttpParams().set('permission',JSON.stringify(['engineer']))))
+    this.engineerOption = resUser.map((user:any)=>user.name)
     this.onGen()
   }
   async onGen() {
@@ -48,9 +57,9 @@ export class PmTasksGenerateComponent implements OnInit {
     } else {
       let province = data[key]
       let top = groupData[i_data - 1][key]
-      if (province != top){
+      if (province != top) {
         return province
-      }else{
+      } else {
         return ''
       }
     }
