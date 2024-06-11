@@ -17,6 +17,7 @@ import { EngineerPmReportNewComponent } from './pm-report/engineer-pm-report-new
 import { EngineerPmReportViewComponent } from './pm-report/engineer-pm-report-view/engineer-pm-report-view.component';
 import { EngineerPmReportPrintComponent } from './pm-report/engineer-pm-report-print/engineer-pm-report-print.component';
 import { EngineerLibrarySearchComponent } from './engineer-library-search/engineer-library-search.component';
+import { EnginnerPmPlanViewComponent } from './enginner-pm-plan-view/enginner-pm-plan-view.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { EngineerLibrarySearchComponent } from './engineer-library-search/engine
     EngineerPmReportNewComponent,
     EngineerPmReportViewComponent,
     EngineerPmReportPrintComponent,
-    EngineerLibrarySearchComponent
+    EngineerLibrarySearchComponent,
+    EnginnerPmPlanViewComponent
   ],
   imports: [
     CommonModule,

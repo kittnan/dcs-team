@@ -1,0 +1,48 @@
+.b {
+  border: 1px solid black;
+}
+
+.bl {
+  border-left: 1px solid black;
+}
+
+.bt {
+  border-top: 1px solid black;
+}
+
+.br {
+  border-right: 1px solid black;
+}
+
+.bb {
+  border-bottom: 1px solid black;
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px solid;
+  table-layout: fixed;
+  border: 0;
+}
+
+table>* {
+  font-size: 12px !important;
+}
+
+td,
+th {
+  border: 1px solid;
+  padding: 5px;
+}
+
+.no-border ,.no-border > th{
+  border: 0 !important;
+}
+
+.sub-head > th{
+  font-size : 14px !important;
+}
+
+.bg-province{
+  background-color: rgb(144, 228, 203);
+}

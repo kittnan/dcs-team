@@ -1,1 +1,79 @@
-<p>pm-plan-view works!</p>
+<div fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="5">
+  <select [(ngModel)]="yearSelect" (ngModelChange)="onChangeYear()" >
+    <option *ngFor="let year of yearOption; let i=index" [value]="year">
+      {{year}}
+    </option>
+  </select>
+  <select [(ngModel)]="engineerSelect" (ngModelChange)="onChangeEngineer()" >
+    <option value="all">ทั้งหมด</option>
+    <option *ngFor="let item of engineerOption; let i=index" [value]="item">
+      {{item}}
+    </option>
+  </select>
+</div>
+<div>
+  <ng-container *ngFor="let group of displayItems; let i=index">
+    <table class="mb-4 mt-1" style="width: 1900px;">
+      <tr class="no-border">
+        <th style="width: 150px !important;"></th>
+        <th style="width: 300px !important;"></th>
+        <th></th>
+        <th></th>
+
+        <th *ngFor="let month of months; let i=index" style="width: 100px !important;">
+        </th>
+
+      </tr>
+      <tr style="height: 50px; background: cadetblue">
+        <th colspan="16" style="font-size: 22px;"> ตาราง PM ประจำปี {{yearSelect}}</th>
+      </tr>
+      <tr class="sub-head" style="height: 35px;">
+        <th style="background: cornflowerblue;">
+          ชื่อจังหวัด
+        </th>
+        <th style="    background: tan;">
+          ชื่อสถานทื่
+
+        <th style="    background: powderblue;">
+          เครื่อง
+        </th>
+        <th style="background: darkgray">
+          S/N
+        </th>
+        <th *ngFor="let month of months; let i=index" style="    background: antiquewhite;">
+          {{month}}
+        </th>
+      </tr>
+      <tr *ngFor="let data of group.data; let i_data=index"
+        [ngClass]="{'bg-province': showProvince(data,group.data,i_data,'province')!== ''}">
+        <ng-container *ngIf="data.province">
+
+          <th>
+            {{showProvince(data,group.data,i_data,'province')}}
+          </th>
+          <th>
+            {{data.customer}}
+          </th>
+
+          <th>
+            {{data.machine}}
+
+          </th>
+          <th>
+            {{data.sn}}
+
+          </th>
+
+          <th *ngFor="let month of months; let i_month2=index" style="width: 200px !important;">
+            <span class="text-blue-600 font-bold" style="cursor: pointer;" (click)="onClickPIC(data,month)" >
+              {{showPIC(data,month)}}
+            </span>
+
+          </th>
+        </ng-container>
+
+
+      </tr>
+    </table>
+  </ng-container>
+</div>

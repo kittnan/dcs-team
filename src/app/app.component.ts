@@ -20,7 +20,7 @@ interface SideItem {
 export class AppComponent {
   title = 'DCS';
   theme = false;
-  profile :any
+  profile: any
   mobileQuery!: MediaQueryList;
 
   fillerNav: SideItem[] = [
@@ -87,6 +87,13 @@ export class AppComponent {
           items: [],
           access: ['']
         },
+        {
+          title: 'PM plan',
+          icon: 'assets/img/icon_sidebar/task.png',
+          path: 'engineer/pm-plan-view',
+          items: [],
+          access: ['']
+        },
       ]
     },
     {
@@ -116,6 +123,14 @@ export class AppComponent {
           items: [],
           access: ['']
         },
+        {
+          title: 'PM plan',
+          icon: 'assets/img/icon_sidebar/task.png',
+          path: 'special/pm-plan-view',
+          items: [],
+          access: ['']
+        },
+
       ]
     },
     {
@@ -138,7 +153,13 @@ export class AppComponent {
           items: [],
           access: ['']
         },
-
+        {
+          title: 'PM plan',
+          icon: 'assets/img/icon_sidebar/task.png',
+          path: 'admin/pm-plan-view',
+          items: [],
+          access: ['']
+        },
 
       ]
     },

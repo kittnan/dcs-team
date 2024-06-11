@@ -1,0 +1,18 @@
+<h2 mat-dialog-title></h2>
+<mat-dialog-content class="mat-typography">
+  <select [(ngModel)]="mode">
+    <option value="month">เฉพาะเดือนนี้</option>
+    <option value="all">ทั้งปี</option>
+  </select>
+  <select [(ngModel)]="data">
+    <option value="engineer"></option>
+    <option *ngFor="let item of pics; let i=index" [value]="item">
+      {{item}}
+    </option>
+  </select>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button color="primary" (click)="onSubmit()">Confirm</button>
+</mat-dialog-actions>

@@ -1,10 +1,14 @@
-<div  fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="5">
+<div fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="5">
+  <select [(ngModel)]="yearSelect" (ngModelChange)="onChangeYear()" >
+    <option *ngFor="let year of yearOption; let i=index" [value]="year">
+      {{year}}
+    </option>
+  </select>
   <button mat-raised-button color="primary" (click)="onGen()">
-    Generate Plan 2024
+    Generate Plan {{yearSelect}}
   </button>
-
-  <button mat-raised-button color="primary" (click)="onEditMode=true">
-    Edit
+  <button mat-raised-button color="primary" (click)="onSave()">
+    Save
   </button>
 </div>
 
@@ -14,8 +18,8 @@
   </button>
 </div> -->
 
-<div  >
-  <ng-container *ngFor="let group of items; let i=index">
+<div>
+  <ng-container *ngFor="let group of displayItems; let i=index">
     <table class="mb-4 mt-1" style="width: 1900px;">
       <tr class="no-border">
         <th style="width: 150px !important;"></th>
@@ -28,7 +32,7 @@
 
       </tr>
       <tr style="height: 50px; background: cadetblue">
-        <th colspan="16" style="font-size: 22px;"> ตาราง PM ประจำปี</th>
+        <th colspan="16" style="font-size: 22px;"> ตาราง PM ประจำปี {{yearSelect}}</th>
       </tr>
       <tr class="sub-head" style="height: 35px;">
         <th style="background: cornflowerblue;">
@@ -57,33 +61,33 @@
         [ngClass]="{'bg-province': showProvince(data,group.data,i_data,'province')!== ''}">
         <ng-container *ngIf="data.province">
 
-        <th>
-          {{showProvince(data,group.data,i_data,'province')}}
-        </th>
-        <th>
-          {{data.customer}}
-        </th>
-        <!-- <th></th>
+          <th>
+            {{showProvince(data,group.data,i_data,'province')}}
+          </th>
+          <th>
+            {{data.customer}}
+          </th>
+          <!-- <th></th>
           <th></th> -->
-        <th>
-          {{data.machine}}
+          <th>
+            {{data.machine}}
 
-        </th>
-        <th>
-          {{data.sn}}
+          </th>
+          <th>
+            {{data.sn}}
 
-        </th>
+          </th>
 
-        <th *ngFor="let month of months; let i_month2=index" style="width: 200px !important;">
-          <span *ngIf="!onEditMode" class="text-blue-600 font-bold" style="cursor: pointer;">
-            {{showPIC(data,month)}}
-          </span>
-          <!-- <select *ngIf="onEditMode && showPIC(data,month)">
+          <th *ngFor="let month of months; let i_month2=index" style="width: 200px !important;">
+            <span class="text-blue-600 font-bold" style="cursor: pointer;" (click)="onClickPIC(data,month)" >
+              {{showPIC(data,month)}}
+            </span>
+            <!-- <select *ngIf="onEditMode && showPIC(data,month)">
             <option *ngFor="let item of engineerOption; let i=index" [value]="item">
             {{item}}
           </option>
           </select> -->
-        </th>
+          </th>
         </ng-container>
 
 

@@ -19,25 +19,25 @@ export class HttpTasksService {
   get(params: HttpParams): Observable<any> {
     return this.http.get(`${this.API}/${this.SUB}`, { params: params })
   }
-  genPM(): Observable<any> {
-    return this.http.get(`${this.API}/${this.SUB}/genPM`)
+  genPM(params: HttpParams): Observable<any> {
+    return this.http.get(`${this.API}/${this.SUB}/genPM`, { params: params })
   }
   create(data: any): Observable<any> {
     return this.http.post(`${this.API}/${this.SUB}/create`, data)
   }
   update(data: any): Observable<any> {
-    return this.http.put(`${this.API}/${this.SUB}/update`,data)
+    return this.http.put(`${this.API}/${this.SUB}/update`, data)
   }
   updateDataMany(data: any): Observable<any> {
-    return this.http.put(`${this.API}/${this.SUB}/updateDataMany`,data)
+    return this.http.put(`${this.API}/${this.SUB}/updateDataMany`, data)
   }
   updateData(data: any): Observable<any> {
-    return this.http.put(`${this.API}/${this.SUB}/updateData`,data)
+    return this.http.put(`${this.API}/${this.SUB}/updateData`, data)
   }
   updateDataGroup(data: any): Observable<any> {
-    return this.http.put(`${this.API}/${this.SUB}/updateDataGroup`,data)
+    return this.http.put(`${this.API}/${this.SUB}/updateDataGroup`, data)
   }
   updateLastPM(data: any): Observable<any> {
-    return this.http.put(`${this.API}/${this.SUB}/updateLastPM`,data)
+    return this.http.put(`${this.API}/${this.SUB}/updateLastPM`, data)
   }
 }

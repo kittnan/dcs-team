@@ -76,10 +76,11 @@ footer {
   height: 15px;
   width: 100%;
   position: fixed;
-  bottom: 0;
+  bottom: 20px;
   right: 20px;
-  z-index: 999;
   text-align: right;
+  z-index: 1;
+
 }
 
 footer p {
