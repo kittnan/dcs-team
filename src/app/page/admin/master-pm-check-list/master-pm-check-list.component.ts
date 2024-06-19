@@ -49,7 +49,7 @@ export class MasterPmCheckListComponent implements OnInit {
     //   }
     // })
     this.formOption = [...new Set(this.data.map((item: any) => item.form))]
-    this.formSelect = this.formOption[0]
+    // this.formSelect = this.formOption[0]
     this.createTable()
   }
 

@@ -23,14 +23,13 @@
     </mat-form-field>
     <mat-form-field fxFlex="100" fxFlex.gt-md="32" appearance="outline" floatLabel="always" class="btn-set">
       <mat-label>Form</mat-label>
-      <mat-select [(ngModel)]="formSelect" (ngModelChange)="onSelectForm()" >
-        <mat-option *ngFor="let item of formOption" [value]="item">
-          {{item}}
+      <mat-select [(ngModel)]="formSelect" (ngModelChange)="onSelectForm()" [compareWith]="objectComparisonFunction_form" >
+        <mat-option *ngFor="let item of formOption" [value]="item.form">
+          ชื่อฟอร์ม: {{item.formName}} , ฟอร์มที่:{{item.form}}
         </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
-
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" *ngFor="let p of pageArr; let p_i = index"
     id="print" class="mb-9">

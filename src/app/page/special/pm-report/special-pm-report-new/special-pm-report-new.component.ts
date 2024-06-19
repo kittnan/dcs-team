@@ -115,7 +115,9 @@ export class SpecialPmReportNewComponent implements OnInit {
         }
       });
     }
-    this.formOption = [...new Set(pmOption.map((item: any) => item.form))]
+    // this.formOption = [...new Set(pmOption.map((item: any) => item.form))]
+    this.formOption = [...new Map(pmOption.map((item: any) =>
+      [item['form'], item])).values()];
     this.pmItems = pmOption
     this.pmOption = pmOption.filter((data: any) => data.form == this.formSelect)
     this.dataStarter =this.pmOption.length
@@ -187,8 +189,8 @@ export class SpecialPmReportNewComponent implements OnInit {
   }
 
   onSelectForm() {
-    this.pmOption = this.pmItems.filter((data:any)=>data.form == this.formSelect)
-    this.dataStarter =this.pmOption.length
+    this.pmOption = this.pmItems.filter((data: any) => data.form == this.formSelect)
+    this.dataStarter = this.pmOption.length
 
     this.form.data = []
     for (let index = 0; index < this.dataStarter; index++) {
@@ -428,6 +430,9 @@ export class SpecialPmReportNewComponent implements OnInit {
   }
   public objectComparisonFunction_machine = function (option: any, value: any): boolean {
     return option.Machine === value.Machine;
+  }
+  public objectComparisonFunction_form = function (option: any, value: any): boolean {
+    return option === value;
   }
 
    // todo custom save without base64
