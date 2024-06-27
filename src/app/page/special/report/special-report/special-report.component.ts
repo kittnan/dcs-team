@@ -77,7 +77,7 @@ export class SpecialReportComponent implements OnInit {
         createdAt: moment(item.createdAt).format('DD-MMM-YY, HH:mm'),
         province: item.customer?.Province,
         customer: item.customer?.Customer,
-        machine: item.customer?.Machine,
+        machine: item.machine?.Machine,
         serviceType: item.serviceType?.name,
         status: item.status,
         action: '',
