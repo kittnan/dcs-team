@@ -128,6 +128,7 @@ export class SpecialPmReportNewComponent implements OnInit {
         const resReport = await lastValueFrom(this.$report.get(new HttpParams().set('_id', _id)))
         if (resReport && resReport.length > 0) {
           this.form = resReport[0]
+          this.formSelect = this.form.form ? this.form.form : 1
           if (this.form.startDate) {
             this.date = moment(this.form.startDate)
             this.time = moment(this.form.startDate).format('HH:mm')
@@ -282,6 +283,7 @@ export class SpecialPmReportNewComponent implements OnInit {
   }
   async save() {
     try {
+      this.form.form = this.formSelect
       this.form.userLogin = this.userLogin
       this.form.data = this.form.data
       let timeStr1: string = this.time ? this.time.toString() : ''
@@ -370,6 +372,7 @@ export class SpecialPmReportNewComponent implements OnInit {
         showCancelButton: true
       }).then(async (v: SweetAlertResult) => {
         if (v.isConfirmed) {
+          this.form.form = this.formSelect
           this.form.status = 'finish'
           let timeStr1: string = this.time ? this.time.toString() : ''
           let sps1: any = timeStr1.split(':')
