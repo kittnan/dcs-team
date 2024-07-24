@@ -12,11 +12,6 @@
   </button>
 </div>
 
-<!-- <div  fxLayout="row wrap" fxLayoutAlign="start stretch">
-  <button mat-raised-button color="primary" (click)="onEditMode=true">
-    Edit
-  </button>
-</div> -->
 
 <div>
   <ng-container *ngFor="let group of displayItems; let i=index">
@@ -41,12 +36,7 @@
         <th style="    background: tan;">
           ชื่อสถานทื่
         </th>
-        <!-- <th>
-            เวลาเปิดทำการ
-          </th>
-          <th>
-            เบอร์โทรติดต่อ
-          </th> -->
+
         <th style="    background: powderblue;">
           เครื่อง
         </th>
@@ -67,8 +57,7 @@
           <th>
             {{data.customer}}
           </th>
-          <!-- <th></th>
-          <th></th> -->
+
           <th>
             {{data.machine}}
 
@@ -82,11 +71,6 @@
             <span class="text-blue-600 font-bold" style="cursor: pointer;" (click)="onClickPIC(data,month)" >
               {{showPIC(data,month)}}
             </span>
-            <!-- <select *ngIf="onEditMode && showPIC(data,month)">
-            <option *ngFor="let item of engineerOption; let i=index" [value]="item">
-            {{item}}
-          </option>
-          </select> -->
           </th>
         </ng-container>
 

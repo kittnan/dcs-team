@@ -91,7 +91,6 @@ export class PmTasksGenerateComponent implements OnInit {
   }
 
   onClickPIC(data: any, month: any) {
-    console.log("🚀 ~ data:", data)
     let newMonth = moment(`01-${month}-${this.yearSelect}`, 'DD-MMMM-YYYY').format('MM-YY')
     let items = data.data
     let item = items.find((a: any) => a.pmDate == newMonth)

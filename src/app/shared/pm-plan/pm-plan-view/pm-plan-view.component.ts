@@ -23,6 +23,7 @@ export class PmPlanViewComponent implements OnInit {
   engineerOption: any = []
 
   pmPlan: any
+  current: boolean = false
   constructor(
     private $task: HttpTasksService,
     private $user: HttpUsersService,
@@ -44,7 +45,7 @@ export class PmPlanViewComponent implements OnInit {
       this.displayItems = []
       let params: HttpParams = new HttpParams().set('year', this.yearSelect)
       if (PIC) {
-        params = new HttpParams().set('PIC', this.engineerSelect)
+        params = params.set('PIC', this.engineerSelect)
       }
       let resPmPlans = await lastValueFrom(this.$pmPlan.get(params))
       if (resPmPlans && resPmPlans.length > 0) {
@@ -56,9 +57,53 @@ export class PmPlanViewComponent implements OnInit {
       console.log("🚀 ~ error:", error)
     }
   }
+  async onGenNew(PIC: any) {
+    try {
+      this.items = []
+      this.displayItems = []
+      let params: HttpParams = new HttpParams().set('year', this.yearSelect)
+      let resPmPlans = await lastValueFrom(this.$task.genPM(params))
+      if (resPmPlans && resPmPlans.length > 0) {
+        if (PIC) {
+          let data = resPmPlans.map((item: any) => {
+            item.data = item.data.filter((task: any) => {
+              if (task.data.some((data: any) => data.PIC == PIC)) return true
+              return false
+            })
+            return item
+          }).filter((item: any) => item.data.length > 0)
+          this.items = data
+          this.displayItems = data
+        }else{
+          this.items = resPmPlans
+          this.displayItems = resPmPlans
+        }
+      }
+
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
   onChangeYear() {
     this.onGen(null)
   }
+
+  async onChangeCurrent() {
+    if (this.current) {
+      if (this.engineerSelect == 'all') {
+        this.onGenNew(null)
+      } else {
+        this.onGenNew(this.engineerSelect)
+      }
+    } else {
+      if (this.engineerSelect == 'all') {
+        this.onGen(null)
+      } else {
+        this.onGen(this.engineerSelect)
+      }
+    }
+  }
+
   showPIC(data: any, month: any) {
     let newMonth = moment(`01-${month}-${this.yearSelect}`, 'DD-MMMM-YYYY').format('MM-YY')
     let items = data.data
@@ -84,17 +129,36 @@ export class PmPlanViewComponent implements OnInit {
     }
   }
 
-  onClickPIC(data: any, month: any) {
+  showPIC2(data: any, month: any) {
+    let newMonth = moment(`01-${month}-${this.yearSelect}`, 'DD-MMMM-YYYY').format('MM-YY')
+    let items = data.data
+    let item = items.find((a: any) => a.pmDate == newMonth)
+    if (item) {
+      if (this.engineerSelect != 'all') {
+        if (item.PIC == this.engineerSelect) return item.PIC
+      }
+      return item.PIC
+    }
+    return ''
 
   }
 
 
   onChangeEngineer() {
-    if (this.engineerSelect == 'all') {
-      this.onGen(null)
+    if (this.current) {
+      if (this.engineerSelect == 'all') {
+        this.onGenNew(null)
+      } else {
+        this.onGenNew(this.engineerSelect)
+      }
     } else {
-      this.onGen(this.engineerSelect)
+      if (this.engineerSelect == 'all') {
+        this.onGen(null)
+      } else {
+        this.onGen(this.engineerSelect)
+      }
     }
+
   }
 
 }
