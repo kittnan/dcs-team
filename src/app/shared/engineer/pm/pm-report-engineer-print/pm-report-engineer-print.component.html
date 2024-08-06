@@ -1,10 +1,14 @@
 <div *ngIf="form" fxLayout="row wrap" fxLayoutAlign="center center">
   <app-title fxFlex="100" [title]="'Preventive Maintenance Report'"></app-title>
 
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" class="mb-4">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="4" class="mb-4">
     <button mat-button class="btn-add" style="color: black" (click)="onPrint()">
       <img src="assets/img/report/printer.png" class="btn-img-add" />
       PRINT PDF
+    </button>
+    <button mat-button class="btn-add" style="color: black" (click)="reGenerate()">
+      <img src="assets/img/report/printer.png" class="btn-img-add" />
+      Re Generate PDF
     </button>
   </div>
   <div class="overflow-auto">
@@ -108,7 +112,7 @@
           </div>
 
         </div>
-        <div fxFlex="100" fxLayout="row wrap" class="bl br" fxLayoutAlign="start center">
+        <div fxFlex="100" fxLayout="row wrap" class="bl br bb" fxLayoutAlign="start center">
           <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class=" pb-2">
             <label class="ps-4 pe-4">
               งานบริการ
@@ -121,16 +125,16 @@
 
 
       <div id="body" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+        <div  *ngIf="addPage!=0 && p_i != pageArr.length-1 " fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
           <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center">
-            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="bl bb bt br">
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="bl bb br">
               <label class="pb-3">
                 รูปภาพประกอบ
               </label>
             </div>
           </div>
           <div fxFlex="65" fxLayout="row wrap" fxLayoutAlign="start center">
-            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="bb bt br">
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="bb br">
               <label class="pb-3 ">
                 ปัญหาและการแก้ไข
               </label>

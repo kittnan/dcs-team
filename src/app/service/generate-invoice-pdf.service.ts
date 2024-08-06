@@ -43,6 +43,7 @@ export class GenerateInvoicePdfService {
           const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
           const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
+
           if (div.length === 1) {
             doc = await doc.addImage(
               img,
@@ -68,6 +69,11 @@ export class GenerateInvoicePdfService {
                 undefined,
                 'FAST'
               );
+              // Add page number
+              doc.setFontSize(5);
+              const pageWidth = doc.internal.pageSize.getWidth();
+              const pageHeight = doc.internal.pageSize.getHeight();
+              doc.text(`Page ${index + 1} of ${div.length}`, pageWidth - 13, pageHeight - 2);
             } else {
               doc = await doc.addPage('a4', orientation);
               doc = await doc.addImage(
@@ -80,6 +86,12 @@ export class GenerateInvoicePdfService {
                 undefined,
                 'FAST'
               );
+              // Add page number
+              doc.setFontSize(5);
+              const pageWidth = doc.internal.pageSize.getWidth();
+              const pageHeight = doc.internal.pageSize.getHeight();
+              doc.text(`Page ${index + 1} of ${div.length}`, pageWidth - 13, pageHeight - 2);
+
               if (index + 1 === div.length) {
                 //TODO save
 

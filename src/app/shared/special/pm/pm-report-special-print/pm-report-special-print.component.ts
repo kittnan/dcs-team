@@ -18,6 +18,7 @@ export class PmReportSpecialPrintComponent implements OnInit {
   page: number = 1
   pageArr: any[] = [];
   id: any
+  addPage: number = 0
   constructor(
     private $pdf: GenerateInvoicePdfService,
     private router: Router,
@@ -77,7 +78,8 @@ export class PmReportSpecialPrintComponent implements OnInit {
     });
   }
   calculatorPageBreak(len: number) {
-    return Math.ceil(len / this.dataPerPage);
+    this.addPage = len % this.dataPerPage === 0 ? 1 : 0
+    return Math.ceil(len / this.dataPerPage) + this.addPage
   }
 
   async onPrint() {
@@ -110,6 +112,10 @@ export class PmReportSpecialPrintComponent implements OnInit {
       }
     }
   }
+  reGenerate(){
+    this.$pdf.generatePDF(this.id, `engineer-pm-report-${this.form.no}`, 'p')
+  }
+
   getData(page: number) {
     let number = this.dataPerPage
     if (page !== 0) {
