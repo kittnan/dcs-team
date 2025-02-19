@@ -303,9 +303,15 @@
                 </span>
               </div>
               <div fxFlex="100" fxFlex.gt-md="80" fxLayout="row wrap" fxLayoutAlign="start center">
-                <span class="me-1">
+                <mat-form-field appearance="outline" floatLabel="always" class="datepicker">
+                  <mat-label></mat-label>
+                  <input [(ngModel)]="end" matInput [matDatepicker]="pickerEnd">
+                  <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerEnd></mat-datepicker>
+                </mat-form-field>
+                <!-- <span class="me-1">
                   {{end |date:'dd-MMM-YYYY'}}
-                </span>
+                </span> -->
                 <input [(ngModel)]="endTime" type="time" name="" id="">
               </div>
             </div>

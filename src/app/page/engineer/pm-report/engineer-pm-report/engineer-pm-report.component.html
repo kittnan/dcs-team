@@ -11,7 +11,7 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field fxFlex.xs="100" appearance="outline" floatLabel="always" class="btn-set">
-        <mat-label>ช่วงเวลา</mat-label>
+        <mat-label>ช่วงเวลาสร้างรายงาน</mat-label>
         <mat-date-range-input [rangePicker]="picker">
           <input matStartDate placeholder="เริ่ม" [(ngModel)]="filterData.start" [max]="filterData.end">
           <input matEndDate placeholder="สิ้นสุด" [(ngModel)]="filterData.end" [min]="filterData.start">
@@ -21,6 +21,22 @@
           <mat-datepicker-actions>
             <button mat-button color="warn" matDatepickerCancel
               (click)="filterData.start=null;filterData.end=null">ล้างค่า</button>
+            <button mat-button matDatepickerCancel>ปิด</button>
+            <button mat-raised-button color="primary" matDatepickerApply>ยืนยัน</button>
+          </mat-datepicker-actions>
+        </mat-date-range-picker>
+      </mat-form-field>
+      <mat-form-field fxFlex.xs="100" appearance="outline" floatLabel="always" class="btn-set">
+        <mat-label>ช่วงเวลาเสร็จรายงาน</mat-label>
+        <mat-date-range-input [rangePicker]="picker2">
+          <input matStartDate placeholder="เริ่ม" [(ngModel)]="filterData.finishReportStart" [max]="filterData.finishReportEnd">
+          <input matEndDate placeholder="สิ้นสุด" [(ngModel)]="filterData.finishReportEnd" [min]="filterData.finishReportStart">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker2>
+          <mat-datepicker-actions>
+            <button mat-button color="warn" matDatepickerCancel
+              (click)="filterData.finishReportStart=null;filterData.finishReportEnd=null">ล้างค่า</button>
             <button mat-button matDatepickerCancel>ปิด</button>
             <button mat-raised-button color="primary" matDatepickerApply>ยืนยัน</button>
           </mat-datepicker-actions>
@@ -102,6 +118,11 @@
         <ng-container matColumnDef="serviceType">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Service Type </th>
           <td mat-cell class="gap" *matCellDef="let row"> {{row.serviceType}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="PIC">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> PIC </th>
+          <td mat-cell class="gap" *matCellDef="let row"> {{row.PIC}} </td>
         </ng-container>
 
         <ng-container matColumnDef="status">

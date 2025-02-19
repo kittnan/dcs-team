@@ -18,7 +18,7 @@ import Swal, { SweetAlertResult } from 'sweetalert2';
   styleUrls: ['./engineer-pm-report.component.scss']
 })
 export class EngineerPmReportComponent implements OnInit {
-  displayedColumns: string[] = ['reportNo', 'createdAt', 'province', 'customer', 'machine', 'serviceType', 'status'];
+  displayedColumns: string[] = ['reportNo', 'createdAt', 'province', 'customer', 'machine', 'serviceType','PIC', 'status'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource()
   selection = new SelectionModel<any>(true, []);
 
@@ -81,6 +81,7 @@ export class EngineerPmReportComponent implements OnInit {
         machine: item.machine?.Machine,
         serviceType: item.serviceType?.name,
         status: item.status,
+        PIC: item.userActive? item.userActive.name:'',
         action: '',
         _id: item._id
       }
@@ -123,6 +124,12 @@ export class EngineerPmReportComponent implements OnInit {
       }
       if (this.filterData.end) {
         params = params.set('end', moment(this.filterData.end).format('DD-MM-YY'))
+      }
+      if (this.filterData.finishReportStart) {
+        params = params.set('finishReportStart', moment(this.filterData.finishReportStart).format('DD-MM-YY'))
+      }
+      if (this.filterData.finishReportEnd) {
+        params = params.set('finishReportEnd', moment(this.filterData.finishReportEnd).format('DD-MM-YY'))
       }
       this.onGetData(params)
     } catch (error) {

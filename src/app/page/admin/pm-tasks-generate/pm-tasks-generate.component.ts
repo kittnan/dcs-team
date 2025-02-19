@@ -70,7 +70,7 @@ export class PmTasksGenerateComponent implements OnInit {
     let items = data.data
     let item = items.find((a: any) => a.pmDate == newMonth)
     if (item) {
-      return item.PIC
+      return item.PIC + item.remark
     }
     return ''
 
