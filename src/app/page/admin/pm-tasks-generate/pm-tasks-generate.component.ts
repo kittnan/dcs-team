@@ -45,19 +45,19 @@ export class PmTasksGenerateComponent implements OnInit {
   }
   async onGen() {
     try {
-      this.items = []
-      this.displayItems = []
-      let params: HttpParams = new HttpParams().set('year', this.yearSelect)
-      let resPmPlans = await lastValueFrom(this.$pmPlan.get(params))
-      if (resPmPlans && resPmPlans.length > 0) {
-        this.pmPlan = resPmPlans[0]
-        this.items = resPmPlans[0].plans
-        this.displayItems = resPmPlans[0].plans
-      } else {
-        let plans: any = await lastValueFrom(this.$task.genPM(params))
-        this.items = plans
-        this.displayItems = plans
-      }
+      // this.items = []
+      // this.displayItems = []
+      // let params: HttpParams = new HttpParams().set('year', this.yearSelect)
+      // let resPmPlans = await lastValueFrom(this.$pmPlan.get(params))
+      // if (resPmPlans && resPmPlans.length > 0) {
+      //   this.pmPlan = resPmPlans[0]
+      //   this.items = resPmPlans[0].plans
+      //   this.displayItems = resPmPlans[0].plans
+      // } else {
+      //   let plans: any = await lastValueFrom(this.$task.genPM(params))
+      //   this.items = plans
+      //   this.displayItems = plans
+      // }
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

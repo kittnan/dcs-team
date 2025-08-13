@@ -59,26 +59,26 @@ export class PmPlanViewComponent implements OnInit {
   }
   async onGenNew(PIC: any) {
     try {
-      this.items = []
-      this.displayItems = []
-      let params: HttpParams = new HttpParams().set('year', this.yearSelect)
-      let resPmPlans = await lastValueFrom(this.$task.genPM(params))
-      if (resPmPlans && resPmPlans.length > 0) {
-        if (PIC) {
-          let data = resPmPlans.map((item: any) => {
-            item.data = item.data.filter((task: any) => {
-              if (task.data.some((data: any) => data.PIC == PIC)) return true
-              return false
-            })
-            return item
-          }).filter((item: any) => item.data.length > 0)
-          this.items = data
-          this.displayItems = data
-        }else{
-          this.items = resPmPlans
-          this.displayItems = resPmPlans
-        }
-      }
+      // this.items = []
+      // this.displayItems = []
+      // let params: HttpParams = new HttpParams().set('year', this.yearSelect)
+      // let resPmPlans = await lastValueFrom(this.$task.genPM(params))
+      // if (resPmPlans && resPmPlans.length > 0) {
+      //   if (PIC) {
+      //     let data = resPmPlans.map((item: any) => {
+      //       item.data = item.data.filter((task: any) => {
+      //         if (task.data.some((data: any) => data.PIC == PIC)) return true
+      //         return false
+      //       })
+      //       return item
+      //     }).filter((item: any) => item.data.length > 0)
+      //     this.items = data
+      //     this.displayItems = data
+      //   }else{
+      //     this.items = resPmPlans
+      //     this.displayItems = resPmPlans
+      //   }
+      // }
 
     } catch (error) {
       console.log("🚀 ~ error:", error)
