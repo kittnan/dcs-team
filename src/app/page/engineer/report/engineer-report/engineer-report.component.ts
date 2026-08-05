@@ -144,21 +144,38 @@ export class EngineerReportComponent implements OnInit {
   // }
 
   // todo onClickReport
+  // onClickReport(row: any) {
+  //   if (row && row.status == 'draft') {
+  //     this.router.navigate(['engineer/report-new'], {
+  //       queryParams: {
+  //         _id: row._id
+  //       }
+  //     })
+  //   }
+  //   if (row && row.status == 'finish') {
+  //     this.router.navigate(['engineer/report-view'], {
+  //       queryParams: {
+  //         _id: row._id
+  //       }
+  //     })
+  //   }
+  // }
+
   onClickReport(row: any) {
     if (row && row.status == 'draft') {
-      this.router.navigate(['engineer/report-new'], {
-        queryParams: {
-          _id: row._id
-        }
-      })
+      this.openRouteInNewTab('engineer/report-new', row._id)
     }
     if (row && row.status == 'finish') {
-      this.router.navigate(['engineer/report-view'], {
-        queryParams: {
-          _id: row._id
-        }
-      })
+      this.openRouteInNewTab('engineer/report-view', row._id)
     }
+  }
+
+  private openRouteInNewTab(path: string, id: string) {
+    const urlTree = this.router.createUrlTree([path], {
+      queryParams: { _id: id }
+    })
+    const url = this.router.serializeUrl(urlTree)
+    window.open(url, '_blank')
   }
 
   onClickDelete() {

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { lastValueFrom } from 'rxjs';
+import { catchError, firstValueFrom, lastValueFrom, of } from 'rxjs';
 import { HttpReportPmService } from 'src/app/http/http-report-pm.service';
 import { HttpReportService } from 'src/app/http/http-report.service';
 import { GenerateInvoicePdfService } from 'src/app/service/generate-invoice-pdf.service';
@@ -41,8 +41,14 @@ export class PmReportEngineerPrintComponent implements OnInit {
             for (let index = 0; index < this.form.data.length; index++) {
               const data = this.form.data[index];
               if (data.files.length > 0) {
-                let file = await lastValueFrom(this.$report.getFile(data.files[0].path))
-                data.files[0].view = this.blobToBase64(file)
+                const file = await firstValueFrom(
+                  this.$report.getFile(data.files[0].path).pipe(
+                    catchError(() => of(null)) // 👈 ไม่ว่าจะ error อะไร ก็ไม่พัง
+                  )
+                );
+                if(file){
+                  data.files[0].view = this.blobToBase64(file)
+                }
               }
             }
 
@@ -118,7 +124,7 @@ export class PmReportEngineerPrintComponent implements OnInit {
 
   }
 
-  reGenerate(){
+  reGenerate() {
     this.$pdf.generatePDF(this.id, `engineer-pm-report-${this.form.no}`, 'p')
   }
 

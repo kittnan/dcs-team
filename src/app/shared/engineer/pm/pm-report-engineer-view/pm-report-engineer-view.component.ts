@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { lastValueFrom } from 'rxjs';
+import { catchError, firstValueFrom, lastValueFrom, of } from 'rxjs';
 import { HttpReportPmService } from 'src/app/http/http-report-pm.service';
 import { HttpReportService } from 'src/app/http/http-report.service';
 import { GenerateInvoicePdfService } from 'src/app/service/generate-invoice-pdf.service';
@@ -26,35 +26,39 @@ export class PmReportEngineerViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    try {
-      this.route.queryParams.subscribe(async (params: any) => {
-        if (params && params['_id']) {
-          let _id = params['_id']
-          const resReport = await lastValueFrom(this.$report.get(new HttpParams().set('_id', _id)))
-          if (resReport && resReport.length > 0) {
-            this.form = resReport[0]
+    this.route.queryParams.subscribe(async (params: any) => {
+      if (params && params['_id']) {
+        let _id = params['_id']
+        const resReport = await lastValueFrom(this.$report.get(new HttpParams().set('_id', _id)))
+        if (resReport && resReport.length > 0) {
+          this.form = resReport[0]
 
-            for (let index = 0; index < this.form.data.length; index++) {
-              const data = this.form.data[index];
-              if (data.files.length > 0) {
-                let file = await lastValueFrom(this.$report.getFile(data.files[0].path))
+          for (let index = 0; index < this.form.data.length; index++) {
+            const data = this.form.data[index];
+            if (data.files.length > 0) {
+              const file = await firstValueFrom(
+                this.$report.getFile(data.files[0].path).pipe(
+                  catchError(() => of(null)) // 👈 ไม่ว่าจะ error อะไร ก็ไม่พัง
+                )
+              );
+              if (file) {
                 data.files[0].view = this.blobToBase64(file)
               }
             }
-
-            this.page = this.calculatorPageBreak(this.form.data.length);
-            this.pageArr = Array.from(
-              { length: this.page },
-              (_, index) => index + 1
-            );
-
           }
-          console.log( this.page);
+
+          this.page = this.calculatorPageBreak(this.form.data.length);
+          this.pageArr = Array.from(
+            { length: this.page },
+            (_, index) => index + 1
+          );
 
         }
-      })
-    } catch (error) {
-    }
+        console.log(this.page);
+
+      }
+    })
+
   }
 
 
@@ -75,7 +79,7 @@ export class PmReportEngineerViewComponent implements OnInit {
   onPrint() {
     try {
       let url = `engineer/pm-report-print?_id=${this.form._id}`
-      window.open(url,'_blank')
+      window.open(url, '_blank')
     } catch (error) {
     }
   }

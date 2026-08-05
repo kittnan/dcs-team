@@ -140,23 +140,38 @@ export class SpecialPmReportComponent implements OnInit {
 
 
   // todo onClickReport
+  // onClickReport(row: any) {
+  //   if (row && row.status == 'draft') {
+  //     this.router.navigate(['special/pm-report-new'], {
+  //       queryParams: {
+  //         _id: row._id
+  //       }
+  //     })
+  //   }
+  //   if (row && row.status == 'finish') {
+  //     this.router.navigate(['special/pm-report-view'], {
+  //       queryParams: {
+  //         _id: row._id
+  //       }
+  //     })
+  //   }
+  // }
   onClickReport(row: any) {
     if (row && row.status == 'draft') {
-      this.router.navigate(['special/pm-report-new'], {
-        queryParams: {
-          _id: row._id
-        }
-      })
+      this.openRouteInNewTab('special/pm-report-new', row._id)
     }
     if (row && row.status == 'finish') {
-      this.router.navigate(['special/pm-report-view'], {
-        queryParams: {
-          _id: row._id
-        }
-      })
+      this.openRouteInNewTab('special/pm-report-view', row._id)
     }
   }
 
+  private openRouteInNewTab(path: string, id: string) {
+    const urlTree = this.router.createUrlTree([path], {
+      queryParams: { _id: id }
+    })
+    const url = this.router.serializeUrl(urlTree)
+    window.open(url, '_blank')
+  }
   onClickDelete() {
     this.isDelete = true
     this.displayedColumns = ['select', 'reportNo', 'createdAt', 'province', 'customer', 'machine', 'serviceType', 'status']
