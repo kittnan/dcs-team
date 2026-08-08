@@ -12,7 +12,8 @@
     <div fxLayout="row wrap" fxLayoutAlign="start start" *ngFor="let p of pageArr; let p_i = index" id="print"
       class="mb-9">
       <div *ngIf="p_i===0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="mb-6 mt-4">
-        <div fxFlex="100"  fxLayout="row wrap" fxLayoutAlign="center start" fxLayoutGap="30" style="font-family: system-ui" >
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" fxLayoutGap="30"
+          style="font-family: system-ui">
           <div fxFlex="40" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="end start">
             <img src="./assets/img/logo/logo-removebg-preview.png" alt="" style="width: 250px;height: 100px;">
           </div>
@@ -59,7 +60,7 @@
               {{form.customer?.Customer}}
             </span>
           </div>
-          <div fxFlex="100" fxFlex.gt-md="20"  fxLayout="row wrap" fxLayoutAlign="start center" class="">
+          <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" class="">
             <label class="ps-4 pe-4">
               District
             </label>
@@ -72,12 +73,12 @@
             <span class="font-normal">{{form.customer?.Province}}</span>
           </div>
           <div fxFlex="100" fxFlex.gt-md="auto" fxLayout="row wrap" fxLayoutAlign="start center" class=""
-          [ngClass.gt-md]="' flex-start-custom'">
-          <span class="ps-4 pe-4 font-semibold">
-            No.
-          </span>
-          <span class="font-normal pe-1">{{form?.no}}</span>
-        </div>
+            [ngClass.gt-md]="' flex-start-custom'">
+            <span class="ps-4 pe-4 font-semibold">
+              No.
+            </span>
+            <span class="font-normal pe-1">{{form?.no}}</span>
+          </div>
         </div>
         <div fxFlex="100" fxLayout="row wrap" class="bl br bb" fxLayoutAlign="start center">
           <div fxFlex="100" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start center" class=""
@@ -97,13 +98,27 @@
               {{form.machine?.Model}}
             </span>
           </div>
-          <div fxFlex="100" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
+          <!-- <div fxFlex="100" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
             <label class="ps-4 pe-4">
               S/N
             </label>
             <span *ngIf="form.machine" class="font-normal">
               {{form.machine['S/N']}}
             </span>
+          </div> -->
+          <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
+            <span class="font-semibold ps-4 pe-4">
+              S/N
+            </span>
+            <span *ngIf="form.machine" class="font-normal">{{form.machine['S/N']}}</span>
+          </div>
+          <div *ngIf="form.machine?.InstallDate" fxFlex="100" fxFlex.gt-md="auto" fxLayout="row wrap"
+            fxLayoutAlign="start center" class="" [ngClass.gt-md]="'flex-start-custom'">
+            <span class="font-semibold ps-4 pe-4 text-start">
+              Install Date
+            </span>
+            <span *ngIf="form.machine" class="font-normal pe-1"> {{form.machine?.InstallDate |
+              date:'dd/MM/yyyy'}}</span>
           </div>
 
         </div>
@@ -222,12 +237,13 @@
                   </label>
                 </div>
                 <div fxFlex="70" fxLayout="row wrap" fxLayoutAlign="start stretch">
-                  {{ form.userActive.telephone | slice:0:3 }}-{{ form.userActive.telephone | slice:3:6 }}-{{ form.userActive.telephone | slice:6 }}
+                  {{ form.userActive.telephone | slice:0:3 }}-{{ form.userActive.telephone | slice:3:6 }}-{{
+                  form.userActive.telephone | slice:6 }}
                 </div>
               </div>
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
 
-                <div fxFlex="100" fxFlex.gt-md="30"  fxLayout="row wrap" fxLayoutAlign="start stretch">
+                <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
                   <label>
                     Start Date
                   </label>
@@ -240,7 +256,7 @@
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
 
 
-                <div fxFlex="100" fxFlex.gt-md="30"  fxLayout="row wrap" fxLayoutAlign="start stretch">
+                <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
                   <label>
                     Start Time
                   </label>
@@ -254,7 +270,7 @@
               <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
 
 
-                <div fxFlex="100" fxFlex.gt-md="30"  fxLayout="row wrap" fxLayoutAlign="start stretch">
+                <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
                   <label>
                     Finished Time
                   </label>
