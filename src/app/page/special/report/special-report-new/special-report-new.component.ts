@@ -9,6 +9,7 @@ import { HttpMastersService } from 'src/app/http/http-masters.service';
 import { HttpReportSpecialService } from 'src/app/http/http-report-special.service';
 import { HttpReportService } from 'src/app/http/http-report.service';
 import { HttpServiceTypeService } from 'src/app/http/http-serviceType.service';
+import { HttpSignatureService } from 'src/app/http/http-signature.service';
 import { GenerateInvoicePdfService } from 'src/app/service/generate-invoice-pdf.service';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
 import { SignaturePadComponent } from 'src/app/shared/signature-pad/signature-pad.component';
@@ -78,6 +79,7 @@ export class SpecialReportNewComponent implements OnInit {
     private $report: HttpReportSpecialService,
     private $serviceType: HttpServiceTypeService,
     public dialog: MatDialog,
+    private $signature: HttpSignatureService
   ) {
 
   }
@@ -212,6 +214,59 @@ export class SpecialReportNewComponent implements OnInit {
 
       }
     })
+  }
+
+  async copySignatureUrl(): Promise<void> {
+    if (!this.form?._id) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'ยังไม่สามารถคัดลอกลิงก์ได้',
+        text: 'กรุณาบันทึกรายงานก่อน เพื่อสร้าง URL สำหรับลายเซ็นลูกค้า',
+      });
+      return;
+    }
+
+    const url = `${window.location.origin}/signature-pad?_id=${encodeURIComponent(this.form._id)}&m=3`;
+
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(url);
+      } else {
+        this.copyTextFallback(url);
+      }
+
+      await lastValueFrom(this.$signature.updateExp({
+        _id: this.form._id,
+        m: 3,
+        sigExp: moment().add(1, 'days').toISOString() // Set expiration date to 1 days from now
+      }))
+
+      Swal.fire({
+        icon: 'success',
+        title: 'คัดลอก URL แล้ว',
+        text: url,
+        timer: 1800,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'คัดลอกไม่สำเร็จ',
+        text: 'กรุณาลองใหม่อีกครั้ง',
+      });
+    }
+  }
+
+  private copyTextFallback(text: string): void {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.left = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
   }
 
 

@@ -26,7 +26,7 @@ var fs = require('file-saver');
 })
 export class MasterMachineComponent {
 
-  displayedColumns: string[] = ['No', 'Province', 'District', 'Customer', 'Machine', 'Model', 'S/N', 'PIC', 'Action'];
+  displayedColumns: string[] = ['No', 'Province', 'District', 'Customer', 'Machine', 'Model', 'S/N', 'PIC','InstallDate','Brand', 'Action'];
   dataSource: any = new MatTableDataSource
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
   @ViewChild(MatSort) sort: any = MatSort;
@@ -232,7 +232,7 @@ export class MasterMachineComponent {
 
   export() {
     if (this.data.length > 0) {
-      this.http.get('assets/excel/master_mc.xlsx', { responseType: "arraybuffer" })
+      this.http.get('assets/excel/master_mc_revise.xlsx', { responseType: "arraybuffer" })
         // this.http.get('http://localhost:4200/mastereletrical/report product electrical space.xlsx', { responseType: "arraybuffer" })
         .subscribe(
           data => {
@@ -259,9 +259,11 @@ export class MasterMachineComponent {
                         let data = user.filter((s: any) => s._id == e)
                         return data.length != 0 ? data[0].name : ''
                       })
+                      const installDate = d['InstallDate'] ? moment(d['InstallDate']).format('DD/MM/YYYY') : '';
                       return {
                         ...d,
-                        "PIC": koo
+                        "PIC": koo,
+                        "InstallDate": installDate
                       }
                     })
                   }
@@ -276,6 +278,8 @@ export class MasterMachineComponent {
                     'S/N',
                     'CODE',
                     'PIC',
+                    'InstallDate',
+                    'Brand',
                     '_id'
                   ]
 
@@ -353,7 +357,7 @@ export class MasterMachineComponent {
 
   edit(item: any) {
     let closeDialog = this.dialog.open(MasterMachineEditorComponent, {
-      width: '300px',
+      width: '500px',
       data: item
     });
     closeDialog.afterClosed().subscribe(close => {
@@ -376,7 +380,7 @@ export class MasterMachineComponent {
 
   add() {
     let closeDialog = this.dialog.open(MasterMachineEditorComponent, {
-      width: '300px',
+      width: '500px',
       data: null
     });
     closeDialog.afterClosed().subscribe(close => {

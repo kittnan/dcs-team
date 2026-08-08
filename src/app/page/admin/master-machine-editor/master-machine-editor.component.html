@@ -5,19 +5,20 @@
 
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <div fxFlex="100" fxLayoutAlign="center center">
-            <h4  *ngIf="this.data">Edit</h4>
+            <h4 *ngIf="this.data">Edit</h4>
             <h4 *ngIf="!this.data">Add</h4>
           </div>
         </div>
 
-        <div fxLayout="column wrap" fxLayoutAlign="center center" class="mt-3" >
+        <div fxLayout="column wrap" fxLayoutAlign="center center" class="mt-3">
 
           <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
             <mat-label>Province</mat-label>
-            <input  type="text" matInput style="text-align: center;" [matAutocomplete]="auto_1" (change)="debug_before()" [readonly]="input_readonly"
-              [(ngModel)]="rawData['Province']" [disabled]="this.data">
-            <mat-autocomplete  #auto_1="matAutocomplete" >
-              <mat-option *ngFor="let option of filterOptions(rawData['Province'],province)" [value]="option.list" (onSelectionChange)="debug_before()">
+            <input type="text" matInput style="text-align: center;" [matAutocomplete]="auto_1" (change)="debug_before()"
+              [readonly]="input_readonly" [(ngModel)]="rawData['Province']" [disabled]="this.data">
+            <mat-autocomplete #auto_1="matAutocomplete">
+              <mat-option *ngFor="let option of filterOptions(rawData['Province'],province)" [value]="option.list"
+                (onSelectionChange)="debug_before()">
                 {{option.list}}
               </mat-option>
             </mat-autocomplete>
@@ -25,10 +26,11 @@
 
           <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
             <mat-label>District</mat-label>
-            <input  type="text" matInput style="text-align: center;" [matAutocomplete]="auto_2" (change)="debug_before()" [readonly]="input_readonly"
-              [(ngModel)]="rawData['District']" >
-            <mat-autocomplete  #auto_2="matAutocomplete">
-              <mat-option *ngFor="let option of filterOptions(rawData['District'],district)" [value]="option.list" (onSelectionChange)="debug_before()">
+            <input type="text" matInput style="text-align: center;" [matAutocomplete]="auto_2" (change)="debug_before()"
+              [readonly]="input_readonly" [(ngModel)]="rawData['District']">
+            <mat-autocomplete #auto_2="matAutocomplete">
+              <mat-option *ngFor="let option of filterOptions(rawData['District'],district)" [value]="option.list"
+                (onSelectionChange)="debug_before()">
                 {{option.list}}
               </mat-option>
             </mat-autocomplete>
@@ -36,10 +38,11 @@
 
           <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
             <mat-label>Customer</mat-label>
-            <input  type="text" matInput style="text-align: center;" [matAutocomplete]="auto_3" (change)="debug_before()" [readonly]="input_readonly"
-              [(ngModel)]="rawData['Customer']" >
-            <mat-autocomplete  #auto_3="matAutocomplete">
-              <mat-option *ngFor="let option of filterOptions(rawData['Customer'],customer)" [value]="option.list" (onSelectionChange)="debug_before()">
+            <input type="text" matInput style="text-align: center;" [matAutocomplete]="auto_3" (change)="debug_before()"
+              [readonly]="input_readonly" [(ngModel)]="rawData['Customer']">
+            <mat-autocomplete #auto_3="matAutocomplete">
+              <mat-option *ngFor="let option of filterOptions(rawData['Customer'],customer)" [value]="option.list"
+                (onSelectionChange)="debug_before()">
                 {{option.list}}
               </mat-option>
             </mat-autocomplete>
@@ -47,45 +50,67 @@
 
           <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
             <mat-label>Machine</mat-label>
-            <input id="start"  type="text" matInput style="text-align: center;" [matAutocomplete]="auto_4" (change)="debug_before()"
-              [(ngModel)]="rawData['Machine']" >
-            <mat-autocomplete  #auto_4="matAutocomplete">
-              <mat-option *ngFor="let option of filterOptions(rawData['Machine'],machine)" [value]="option.list" (onSelectionChange)="debug_before()">
+            <input id="start" type="text" matInput style="text-align: center;" [matAutocomplete]="auto_4"
+              (change)="debug_before()" [(ngModel)]="rawData['Machine']">
+            <mat-autocomplete #auto_4="matAutocomplete">
+              <mat-option *ngFor="let option of filterOptions(rawData['Machine'],machine)" [value]="option.list"
+                (onSelectionChange)="debug_before()">
                 {{option.list}}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
 
-
-
           <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
             <mat-label>Model</mat-label>
-            <input matInput style="text-align: center;" [(ngModel)]="rawData['Model']" >
+            <input id="start" type="text" matInput style="text-align: center;" [matAutocomplete]="auto_model"
+              (change)="debug_before()" [(ngModel)]="rawData['Model']">
+            <mat-autocomplete #auto_model="matAutocomplete">
+              <mat-option *ngFor="let option of filterModelOptions(rawData['Model'])" [value]="option"
+                (onSelectionChange)="debug_before()">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
+            <mat-label>Brand</mat-label>
+            <input id="start" type="text" matInput style="text-align: center;" [matAutocomplete]="auto_brand"
+              (change)="debug_before()" [(ngModel)]="rawData['Brand']">
+            <mat-autocomplete #auto_brand="matAutocomplete">
+              <mat-option *ngFor="let option of filterBrandOptions(rawData['Brand'])" [value]="option"
+                (onSelectionChange)="debug_before()">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
           </mat-form-field>
 
 
           <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
             <mat-label>S/N</mat-label>
-            <input matInput style="text-align: center;" [(ngModel)]="rawData['S/N']" >
+            <input matInput style="text-align: center;" [(ngModel)]="rawData['S/N']">
           </mat-form-field>
 
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>PIC</mat-label>
+            <mat-select multiple [(ngModel)]="this.rawData['PIC']">
+              <mat-select-trigger>
+                <span>{{this.rawData['PIC']?.length != 0 ? this.rawData['PIC']?.length + ' รายการถูกเลือก' :
+                  'เลือกผู้ใช้งาน'}}</span>
+              </mat-select-trigger>
+              <mat-option *ngFor="let user of PIC" [value]="user._id">{{user.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-          <!-- <mat-form-field appearance="outline" floatLabel="always" class="setFormat">
-            <mat-label>TARGETS</mat-label>
-            <input matInput style="text-align: center;" type="number" [(ngModel)]="rawData['Targets']"
-              (change)="debug_before()">
-          </mat-form-field> -->
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Install Date</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="rawData['InstallDate']">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
         </div>
 
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>PIC</mat-label>
-          <mat-select multiple [(ngModel)]="this.rawData['PIC']" >
-            <mat-select-trigger>
-              <span>{{this.rawData['PIC']?.length != 0 ? this.rawData['PIC']?.length + ' รายการถูกเลือก' : 'เลือกผู้ใช้งาน'}}</span>
-            </mat-select-trigger>
-            <mat-option *ngFor="let user of PIC" [value]="user._id">{{user.name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
+
 
         <div fxLayout="row wrap" fxLayoutAlign="center none" class="mt-1">
           <div fxFlex="100" fxLayoutAlign="center none" *ngIf="!check">
@@ -95,7 +120,7 @@
 
         <div fxLayout="row wrap" fxLayoutAlign="center none" class="mt-5">
           <div fxFlex="100">
-            <div fxLayout="row wrap" fxLayoutAlign="center none" fxLayoutGap="5" >
+            <div fxLayout="row wrap" fxLayoutAlign="center none" fxLayoutGap="5">
               <div>
                 <button mat-raised-button color="primary" (click)="submit()" [disabled]="!check"
                   *ngIf="this.data">OK</button>
@@ -113,3 +138,4 @@
     </div>
   </div>
 </mat-dialog-content>
+

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { lastValueFrom } from 'rxjs';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
 import { HttpMastersService } from 'src/app/http/http-masters.service';
 import { HttpTasksService } from 'src/app/http/http-tasks.service';
 import { HttpUsersService } from 'src/app/http/http-users.service';
@@ -9,8 +9,9 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-master-machine-editor',
   templateUrl: './master-machine-editor.component.html',
-  styleUrls: ['./master-machine-editor.component.scss']
+  styleUrls: ['./master-machine-editor.component.scss'],
 })
+
 export class MasterMachineEditorComponent implements OnInit {
 
   rawData: any = {}
@@ -25,12 +26,15 @@ export class MasterMachineEditorComponent implements OnInit {
   district: any = []
 
   input_readonly: any = true
+
+  modelOptions: any
+  brandOptions: any
   constructor(
     private dialog: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private user: HttpUsersService,
     private $master: HttpMastersService,
-    private $pmTask: HttpTasksService
+    private $pmTask: HttpTasksService,
   ) { }
 
   ngOnInit(): void {
@@ -42,11 +46,15 @@ export class MasterMachineEditorComponent implements OnInit {
       this.rawData['Customer'] = ''
       this.rawData['Machine'] = ''
       this.rawData['District'] = ''
+      this.rawData['Brand'] = ''
+      this.rawData['InstallDate'] = ''
     }
     this.debug_before()
     setTimeout(() => {
       this.getPiC()
       this.getMachine()
+      this.getModel()
+      this.getBrand()
       this.input_readonly = false
     }, 200);
 
@@ -90,12 +98,26 @@ export class MasterMachineEditorComponent implements OnInit {
     this.PIC = await lastValueFrom(this.user.Master_User_getall())
   }
 
+  async getModel() {
+    let resData: any = await firstValueFrom(this.$master.getModelOptions())
+    this.modelOptions = resData.map((d: any) => d._id)
+  }
+  async getBrand() {
+    let resData: any = await firstValueFrom(this.$master.getBrandOptions())
+    this.brandOptions = resData.map((d: any) => d._id)
+  }
+
   debug_before() {
     setTimeout(() => {
+      console.log(this.rawData);
       if (
+        
         this.rawData['Province'] &&
         this.rawData['Customer'] &&
-        this.rawData['Machine']
+        this.rawData['Machine'] &&
+        this.rawData['Model'] &&
+        this.rawData['Brand'] &&
+        this.rawData['InstallDate']
       ) {
         this.check = true
       } else {
@@ -156,8 +178,15 @@ export class MasterMachineEditorComponent implements OnInit {
     return data.filter((option: any) => option.list?.toLowerCase().includes(filterValue));
   }
 
+  filterModelOptions(list: string) {
+    const filterValue = list?.toLowerCase();
+    return this.modelOptions?.filter((option: any) => option?.toLowerCase().includes(filterValue)) || [];
+  }
 
-
+  filterBrandOptions(list: string) {
+    const filterValue = list?.toLowerCase();
+    return this.brandOptions?.filter((option: any) => option?.toLowerCase().includes(filterValue)) || [];
+  }
 
 }
 

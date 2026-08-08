@@ -1,6 +1,6 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center">
   <app-title fxFlex="100" [title]="'Engineer PM Report Manage'"></app-title>
-  <div fxFlex="100" fxFlex.gt-xs="85" fxLayout="row wrap" fxLayoutAlign="center stretch ">
+  <div fxFlex="100" fxFlex.gt-xs="100" fxLayout="row wrap" fxLayoutAlign="center stretch ">
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center " fxLayoutGap="10" class="overflow-auto">
       <mat-form-field fxFlex.xs="100" appearance="outline" floatLabel="always" class="btn-set">
         <mat-label>สถานะ</mat-label>
@@ -29,8 +29,10 @@
       <mat-form-field fxFlex.xs="100" appearance="outline" floatLabel="always" class="btn-set">
         <mat-label>ช่วงเวลาเสร็จรายงาน</mat-label>
         <mat-date-range-input [rangePicker]="picker2">
-          <input matStartDate placeholder="เริ่ม" [(ngModel)]="filterData.finishReportStart" [max]="filterData.finishReportEnd">
-          <input matEndDate placeholder="สิ้นสุด" [(ngModel)]="filterData.finishReportEnd" [min]="filterData.finishReportStart">
+          <input matStartDate placeholder="เริ่ม" [(ngModel)]="filterData.finishReportStart"
+            [max]="filterData.finishReportEnd">
+          <input matEndDate placeholder="สิ้นสุด" [(ngModel)]="filterData.finishReportEnd"
+            [min]="filterData.finishReportStart">
         </mat-date-range-input>
         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
         <mat-date-range-picker #picker2>
@@ -74,7 +76,7 @@
       </button>
     </div>
 
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between start" class="box-glass overflow-auto mt-1 ">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between start" class="mt-1 overflow-auto box-glass ">
       <table fxFlex="100" mat-table [dataSource]="dataSource" matSort class="table-custom" style="text-wrap: nowrap;">
         <ng-container *ngIf="isDelete" matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef style="padding: 10px;">
@@ -91,7 +93,7 @@
         <ng-container matColumnDef="reportNo">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Report No </th>
           <td mat-cell class="gap" *matCellDef="let row">
-            <span class="cursor-pointer text-blue-500" (click)="onClickReport(row)">{{row.reportNo}}</span>
+            <span class="text-blue-500 cursor-pointer" (click)="onClickReport(row)">{{row.reportNo}}</span>
           </td>
         </ng-container>
 
@@ -110,9 +112,19 @@
           <td mat-cell class="gap" *matCellDef="let row"> {{row.customer}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="sn">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> S/N </th>
+          <td mat-cell class="gap" *matCellDef="let row"> {{row.sn}} </td>
+        </ng-container>
+
         <ng-container matColumnDef="machine">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Machine </th>
           <td mat-cell class="gap" *matCellDef="let row"> {{row.machine}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="model">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Model </th>
+          <td mat-cell class="gap" *matCellDef="let row"> {{row.model}} </td>
         </ng-container>
 
         <ng-container matColumnDef="serviceType">
@@ -127,7 +139,7 @@
 
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-          <td mat-cell class="gap" *matCellDef="let row" class="capitalize font-semibold"
+          <td mat-cell class="gap" *matCellDef="let row" class="font-semibold capitalize"
             [ngClass]="{setColorGreen: row.status == 'finish'}" style="letter-spacing: 2px;">
             <span *ngIf="row.status!=='finish'">
               {{row.status}}

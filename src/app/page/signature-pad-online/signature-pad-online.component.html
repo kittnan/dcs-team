@@ -1,0 +1,57 @@
+<section *ngIf="form._id" class="signature-page" (window:resize)="onResize()">
+	<div class="signature-card">
+		<div class="card-header">
+			<div>
+				<p class="eyebrow">Customer Signature</p>
+				<h1>ยืนยันลายเซ็นลูกค้า</h1>
+			</div>
+
+			<div class="status-chip" [class.status-chip--signed]="form?.sign">
+				{{ form?.sign ? 'Signed' : 'Pending' }}
+			</div>
+		</div>
+
+		<div class="customer-grid">
+			<div class="detail-item">
+				<span class="label">Customer</span>
+				<span class="value">{{ form?.Customer || '-' }}</span>
+			</div>
+
+			<div class="detail-item">
+				<span class="label">Machine</span>
+				<span class="value">{{ form?.Machine || '-' }}</span>
+			</div>
+
+			<div class="detail-item">
+				<span class="label">Model</span>
+				<span class="value">{{ form?.Model || '-' }}</span>
+			</div>
+
+			<div class="detail-item">
+				<span class="label">Service Type</span>
+				<span class="value">{{ form?.ServiceTypeName || '-' }}</span>
+			</div>
+
+			<div class="detail-item">
+				<span class="label">Province</span>
+				<span class="value">{{ form?.Province || '-' }}</span>
+			</div>
+		</div>
+
+		<div class="signature-input-card">
+			<div class="signature-input-header">
+				<h2>กล่องเซ็นชื่อ</h2>
+				<p>เซ็นในกรอบด้านล่าง แล้วกดบันทึกลายเซ็น</p>
+			</div>
+
+			<div class="canvas-wrap">
+				<canvas #signCanvas></canvas>
+			</div>
+
+			<div class="signature-actions">
+				<button type="button" mat-stroked-button class="btn-clear" (click)="clearPad()">ล้างลายเซ็น</button>
+				<button type="button" mat-flat-button color="primary" class="btn-save" (click)="savePad()">บันทึกลายเซ็น</button>
+			</div>
+		</div>
+	</div>
+</section>

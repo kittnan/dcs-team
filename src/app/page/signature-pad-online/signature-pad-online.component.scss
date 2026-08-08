@@ -1,0 +1,247 @@
+.signature-page {
+	--surface: #ffffff;
+	--surface-soft: #f4f8fb;
+	--text-main: #11202d;
+	--text-soft: #5f7387;
+	--accent: #1b7fcb;
+	--accent-soft: #e7f4ff;
+	--border: #d4e1ed;
+	--success-bg: #e8fbf0;
+	--success-text: #0f7b48;
+
+	min-height: 100vh;
+	padding: 28px 16px;
+	display: flex;
+	justify-content: center;
+	background:
+		radial-gradient(circle at 12% 8%, #dff4ff 0%, transparent 34%),
+		radial-gradient(circle at 88% 90%, #d9f7e7 0%, transparent 32%),
+		linear-gradient(180deg, #f5fafe 0%, #eef5fb 100%);
+}
+
+.signature-card {
+	width: min(920px, 100%);
+	padding: 24px;
+	border-radius: 24px;
+	background: linear-gradient(145deg, #ffffff 0%, #f8fbff 100%);
+	border: 1px solid rgba(27, 127, 203, 0.12);
+	box-shadow:
+		0 18px 45px rgba(21, 59, 91, 0.12),
+		inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.card-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 22px;
+
+	h1 {
+		margin: 4px 0 0;
+		font-size: clamp(1.1rem, 1.8vw, 1.65rem);
+		line-height: 1.35;
+		color: var(--text-main);
+		font-weight: 700;
+	}
+}
+
+.eyebrow {
+	margin: 0;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+
+.status-chip {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	height: 32px;
+	padding: 0 14px;
+	border-radius: 999px;
+	background: #fff4de;
+	color: #995f00;
+	border: 1px solid #ffd99e;
+	font-size: 0.8rem;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.status-chip--signed {
+	background: var(--success-bg);
+	color: var(--success-text);
+	border-color: #bcefcf;
+}
+
+.customer-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 10px;
+	margin-bottom: 20px;
+}
+
+.detail-item {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding: 12px 14px;
+	border-radius: 14px;
+	background: var(--surface-soft);
+	border: 1px solid var(--border);
+}
+
+.label {
+	font-size: 0.75rem;
+	font-weight: 600;
+	color: var(--text-soft);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.value {
+	font-size: 0.96rem;
+	color: var(--text-main);
+	font-weight: 600;
+	word-break: break-word;
+}
+
+.signature-box {
+	border-radius: 18px;
+	border: 1px dashed #9bc7e7;
+	background: var(--surface-soft);
+	min-height: 210px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 18px;
+	text-align: center;
+}
+
+.signature-box--signed {
+	border-style: solid;
+	border-color: #badbf3;
+	background: #ffffff;
+}
+
+.signature-image {
+	width: 100%;
+	max-width: 660px;
+	max-height: 280px;
+	object-fit: contain;
+}
+
+.placeholder-title {
+	margin: 0;
+	color: var(--text-main);
+	font-size: 1.05rem;
+	font-weight: 700;
+}
+
+.placeholder-subtitle {
+	margin: 8px 0 0;
+	max-width: 420px;
+	color: var(--text-soft);
+	font-size: 0.9rem;
+	line-height: 1.45;
+}
+
+.signature-input-card {
+	margin-top: 18px;
+	border-radius: 18px;
+	border: 1px solid #d2e6f7;
+	background: linear-gradient(180deg, #fbfdff 0%, #f1f8ff 100%);
+	padding: 14px;
+}
+
+.signature-input-header {
+	margin-bottom: 10px;
+
+	h2 {
+		margin: 0;
+		font-size: 1rem;
+		font-weight: 700;
+		color: var(--text-main);
+	}
+
+	p {
+		margin: 4px 0 0;
+		font-size: 0.86rem;
+		color: var(--text-soft);
+	}
+}
+
+.canvas-wrap {
+	border: 1px dashed #8fbde0;
+	border-radius: 12px;
+	background: #ffffff;
+	padding: 8px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+.canvas-wrap canvas {
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	height: 180px;
+	box-sizing: border-box;
+	background: #ffffff;
+	border-radius: 8px;
+	touch-action: none;
+	cursor: crosshair;
+}
+
+.signature-actions {
+	margin-top: 12px;
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+}
+
+.btn-clear,
+.btn-save {
+	border-radius: 10px;
+	font-weight: 600;
+}
+
+@media (max-width: 768px) {
+	.signature-page {
+		padding: 14px 10px;
+	}
+
+	.signature-card {
+		padding: 16px;
+		border-radius: 18px;
+	}
+
+	.card-header {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+
+	.customer-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.signature-box {
+		min-height: 180px;
+		padding: 14px;
+	}
+
+	.signature-input-card {
+		padding: 12px;
+	}
+
+	.signature-actions {
+		justify-content: stretch;
+		flex-direction: column-reverse;
+	}
+
+	.signature-actions button {
+		width: 100%;
+	}
+}

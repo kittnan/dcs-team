@@ -3,22 +3,28 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, NgxUiLoaderRouterModule, PB_DIRECTION, SPINNER } from 'ngx-ui-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material/material.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './page/login/login.component';
 import { ProfileComponent } from './page/profile/profile.component';
-import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, NgxUiLoaderRouterModule, PB_DIRECTION, POSITION, SPINNER } from 'ngx-ui-loader';
 
+import { registerLocaleData } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { TemplateInputComponent } from './page/template-input/template-input.component';
+import en from '@angular/common/locales/en';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
-import { SharedModule } from './shared/shared.module';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
 import { JwtInterceptor } from './auth/jwt.interceptor';
 import { MasterMachineComponent } from './page/admin/master-machine/master-machine.component';
 import { MasterManageComponent } from './page/admin/master-manage/master-manage.component';
+import { SignaturePadOnlineComponent } from './page/signature-pad-online/signature-pad-online.component';
+import { TemplateInputComponent } from './page/template-input/template-input.component';
+import { SharedModule } from './shared/shared.module';
+
+registerLocaleData(en);
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: "#278fff",
   bgsPosition: "bottom-right",
@@ -48,7 +54,8 @@ export const MY_FORMATS = {
     ProfileComponent,
     MasterMachineComponent,
     MasterManageComponent,
-    TemplateInputComponent
+    TemplateInputComponent,
+    SignaturePadOnlineComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +78,8 @@ export const MY_FORMATS = {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true
-    }
+    },
+    { provide: NZ_I18N, useValue: en_US }
   ],
   bootstrap: [AppComponent]
 })

@@ -23,9 +23,10 @@
     </mat-form-field>
     <mat-form-field fxFlex="100" fxFlex.gt-md="32" appearance="outline" floatLabel="always" class="btn-set">
       <mat-label>Form</mat-label>
-      <mat-select [(ngModel)]="formSelect" (ngModelChange)="onSelectForm()" [compareWith]="objectComparisonFunction_form" >
+      <mat-select [(ngModel)]="formSelect" (ngModelChange)="onSelectForm()"
+        [compareWith]="objectComparisonFunction_form">
         <mat-option *ngFor="let item of formOption" [value]="item.form">
-          ชื่อฟอร์ม: {{item.formName}} , ฟอร์มที่:{{item.form}}
+          {{item.form}}: <strong style="color:blue">{{item.formName}} </strong>
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -33,8 +34,9 @@
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" *ngFor="let p of pageArr; let p_i = index"
     id="print" class="mb-9">
-    <div *ngIf="p_i===0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="mb-6 mt-4">
-      <div fxFlex="100"  fxLayout="row wrap" fxLayoutAlign="center start" fxLayoutGap="30" style="font-family: system-ui" >
+    <div *ngIf="p_i===0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="mt-4 mb-6">
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" fxLayoutGap="30"
+        style="font-family: system-ui">
         <div fxFlex="40" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="end start">
           <img src="./assets/img/logo/logo-removebg-preview.png" alt="" style="width: 250px;height: 100px;">
         </div>
@@ -75,7 +77,7 @@
       <div fxFlex="100" class="row " [ngClass.gt-md]="'bt bl br'" fxLayout="row wrap" fxLayoutAlign="start center">
         <div fxFlex="100" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start center" class=""
           [ngClass.gt-md]="''">
-          <span class="ps-4 pe-4 font-semibold">
+          <span class="font-semibold ps-4 pe-4">
             โรงพยาบาล/ลูกค้า
           </span>
           <span class="font-normal">
@@ -83,20 +85,20 @@
           </span>
         </div>
         <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
-          <span class="ps-4 pe-4 font-semibold">
+          <span class="font-semibold ps-4 pe-4">
             อำเภอ
           </span>
           <span class="font-normal">{{form.customer?.District}}</span>
         </div>
         <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
-          <span class="ps-4 pe-4 font-semibold">
+          <span class="font-semibold ps-4 pe-4">
             จังหวัด
           </span>
           <span class="font-normal">{{form.customer?.Province}}</span>
         </div>
         <div fxFlex="100" fxFlex.gt-md="auto" fxLayout="row wrap" fxLayoutAlign="start center" class=""
           [ngClass.gt-md]="' flex-start-custom'">
-          <span class="ps-4 pe-4 font-semibold">
+          <span class="font-semibold ps-4 pe-4">
             เลขที่
           </span>
           <span class="font-normal pe-1">{{form?.no}}</span>
@@ -105,7 +107,7 @@
       <div fxFlex="100" class="row" [ngClass.gt-md]="'bl br bb'" fxLayout="row wrap" fxLayoutAlign="start center">
         <div fxFlex="100" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start center" class=""
           [ngClass.gt-md]="''">
-          <span class="ps-4 pe-4 font-semibold">
+          <span class="font-semibold ps-4 pe-4">
             เครื่อง
           </span>
           <span class="font-normal">
@@ -113,20 +115,27 @@
           </span>
         </div>
         <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
-          <span class="ps-4 pe-4 font-semibold">
+          <span class="font-semibold ps-4 pe-4">
             รุ่น
           </span>
           <span class="font-normal">{{form.machine?.Model}}</span>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
-          <span class="ps-4 pe-4 font-semibold">
+        <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
+          <span class="font-semibold ps-4 pe-4">
             S/N
           </span>
           <span *ngIf="form.machine" class="font-normal">{{form.machine['S/N']}}</span>
         </div>
+        <div fxFlex="100" fxFlex.gt-md="auto" fxLayout="row wrap" fxLayoutAlign="start center" class=""
+          [ngClass.gt-md]="'flex-start-custom'">
+          <span class="font-semibold ps-4 pe-4 text-start">
+            วันที่ติดตั้ง
+          </span>
+          <span *ngIf="form.machine" class="font-normal pe-1"> {{form.machine?.InstallDate | date:'dd/MM/yyyy'}}</span>
+        </div>
       </div>
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="'bl br'">
-        <span class="ps-4 pe-4  font-semibold">
+        <span class="font-semibold ps-4 pe-4">
           งานบริการ
         </span>
         <span class="font-normal">{{form.serviceType?.name}}</span>
@@ -157,12 +166,12 @@
         <ng-container *ngFor="let item of getData(p_i); let i = index">
           <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start stretch" style="height: 250px;">
             <div [matBadge]="item.no" matBadgeColor="warn" matBadgePosition="before" matBadgeOverlap="true" fxFlex="100"
-              fxLayout="row wrap" fxLayoutAlign="center center" class="bl bb br p-3">
+              fxLayout="row wrap" fxLayoutAlign="center center" class="p-3 bl bb br">
 
               <ng-container *ngIf="item?.files.length>0">
                 <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
                   <div>
-                    <img [attr.src]="item.files[0]['view']  | async " class="mb-2 rounded-md cursor-pointer mx-auto"
+                    <img [attr.src]="item.files[0]['view']  | async " class="mx-auto mb-2 rounded-md cursor-pointer"
                       style="max-height: 175px;">
                   </div>
                 </div>
@@ -188,7 +197,7 @@
             </div>
           </div>
           <div fxFlex="65" fxLayout="row wrap" fxLayoutAlign="start stretch" style="height: 250px;">
-            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" class="bb br p-3">
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" class="p-3 bb br">
               <textarea fxFlex="98" rows="5" [(ngModel)]="item.text" class="p-2 rounded-md"
                 style="border: 1px solid; height: 100%;"></textarea>
             </div>
@@ -197,33 +206,33 @@
       </div>
       <ng-container *ngIf="pageArr.length == p_i+1 ">
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="bl bb br">
-          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-2 mt-4">
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-4 ps-2">
             <span>
               อะไหล่ที่ทำการเปลื่ยน
             </span>
           </div>
-          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-4 mb-3">
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mb-3 ps-4">
             <span class="me-3">
               1.
             </span>
             <input [(ngModel)]="form.part1" fxFlex="auto" type="text" class="bg-inherit"
               style="border-bottom: 1px solid;">
           </div>
-          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-4 mb-3">
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mb-3 ps-4">
             <span class="me-3">
               2.
             </span>
             <input [(ngModel)]="form.part2" fxFlex="auto" type="text" class="bg-inherit"
               style="border-bottom: 1px solid;">
           </div>
-          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-4 mb-3">
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mb-3 ps-4">
             <span class="me-3">
               3.
             </span>
             <input [(ngModel)]="form.part3" fxFlex="auto" type="text" class="bg-inherit"
               style="border-bottom: 1px solid;">
           </div>
-          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-4 mb-3">
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mb-3 ps-4">
             <span class="me-3">
               4.
             </span>
@@ -232,13 +241,13 @@
           </div>
         </div>
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="bl bb br">
-          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-2 mt-4 ">
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-4 ps-2 ">
             <span>
               ข้อเสนอแนะ/หมายเหตุ
             </span>
           </div>
-          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="ps-2 mt-4">
-            <textarea [(ngModel)]="form.description" fxFlex="98" rows="3" class="mb-3 p-2 rounded-md"
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-4 ps-2">
+            <textarea [(ngModel)]="form.description" fxFlex="98" rows="3" class="p-2 mb-3 rounded-md"
               style="border: 1px solid;"></textarea>
           </div>
         </div>
@@ -318,15 +327,19 @@
           </div>
           <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start start" class="">
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="mt-3">
-              <span class="ps-3 font-bold me-2">
+              <span class="font-bold ps-3 me-2">
                 สำหรับลูกค้า
               </span>
+              <button mat-mini-fab color="primary" (click)="copySignatureUrl()" matTooltip="Copy URL signature"
+                style="margin-right: 10px;">
+                <mat-icon>content_copy</mat-icon>
+              </button>
               <button mat-mini-fab *ngIf="!form.sign" mat-raised-button (click)="onClickSignature()">
                 <mat-icon>draw</mat-icon>
               </button>
             </div>
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="p-2">
-              <img *ngIf="form.sign" [src]="form.sign" class="w-full h-full  cursor-pointer"
+              <img *ngIf="form.sign" [src]="form.sign" class="w-full h-full cursor-pointer"
                 style="max-width: 300px; max-height: 175px;" (click)="onClickSignature()">
             </div>
           </div>

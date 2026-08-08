@@ -18,7 +18,7 @@ import Swal, { SweetAlertResult } from 'sweetalert2';
   styleUrls: ['./engineer-pm-report.component.scss']
 })
 export class EngineerPmReportComponent implements OnInit {
-  displayedColumns: string[] = ['reportNo', 'createdAt', 'province', 'customer', 'machine', 'serviceType','PIC', 'status'];
+  displayedColumns: string[] = ['reportNo', 'createdAt', 'province', 'customer', 'sn', 'model', 'serviceType', 'PIC', 'status'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource()
   selection = new SelectionModel<any>(true, []);
 
@@ -79,10 +79,12 @@ export class EngineerPmReportComponent implements OnInit {
         province: item.customer?.Province,
         customer: item.customer?.Customer,
         machine: item.machine?.Machine,
+        model: item.machine?.Model,
         serviceType: item.serviceType?.name,
         status: item.status,
-        PIC: item.userActive? item.userActive.name:'',
+        PIC: item.userActive ? item.userActive.name : '',
         action: '',
+        sn: item.machine?.['S/N'],
         _id: item._id
       }
     }))
@@ -191,11 +193,11 @@ export class EngineerPmReportComponent implements OnInit {
       })
       await lastValueFrom(this.$report.saveMultiple(dataUpdate))
       Swal.fire({
-        title:"Success",
-        icon:'success',
-        showConfirmButton:false,
-        timer:1500
-      }).then(()=>{
+        title: "Success",
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500
+      }).then(() => {
         location.reload()
       })
     } catch (error) {

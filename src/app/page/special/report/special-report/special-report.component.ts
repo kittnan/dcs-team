@@ -18,7 +18,7 @@ import Swal, { SweetAlertResult } from 'sweetalert2';
 })
 export class SpecialReportComponent implements OnInit {
 
-  displayedColumns: string[] = ['reportNo', 'createdAt', 'province', 'customer', 'machine', 'serviceType', 'status'];
+  displayedColumns: string[] = ['reportNo', 'createdAt', 'province', 'customer', 'model', 'sn', 'serviceType', 'status'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource()
   selection = new SelectionModel<any>(true, []);
 
@@ -78,9 +78,11 @@ export class SpecialReportComponent implements OnInit {
         province: item.customer?.Province,
         customer: item.customer?.Customer,
         machine: item.machine?.Machine,
+        model: item.machine?.Model,
         serviceType: item.serviceType?.name,
         status: item.status,
         action: '',
+        sn: item.machine?.['S/N'],
         _id: item._id
       }
     }))
@@ -154,7 +156,7 @@ export class SpecialReportComponent implements OnInit {
   //     })
   //   }
   // }
-  
+
   onClickReport(row: any) {
     if (row && row.status == 'draft') {
       this.openRouteInNewTab('special/report-new', row._id)

@@ -1,7 +1,6 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center">
   <app-title fxFlex="100" [title]="'Master manage'"></app-title>
 </div>
-
 <div fxLayout="row wrap" fxLayoutAlign="center center" class="mt-3">
   <div fxFlex="100" fxFlex.gt-xs="85">
     <div fxLayout="row wrap" fxLayoutAlign="space-between stretch">
@@ -110,6 +109,24 @@
           </th>
           <td mat-cell style="padding-right: 16px;" *matCellDef="let element">
             {{ element["name"] }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="InstallDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-size: medium; font-weight: bold">
+            Install Date
+          </th>
+          <td mat-cell style="padding-right: 16px;" *matCellDef="let element">
+            {{ element["InstallDate"] | date: 'dd/MM/yyyy' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Brand">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-size: medium; font-weight: bold">
+            Brand
+          </th>
+          <td mat-cell style="padding-right: 16px;" *matCellDef="let element">
+            {{ element["Brand"] }}
           </td>
         </ng-container>
 

@@ -23,7 +23,7 @@ import { LocalStorageService } from 'src/app/service/local-storage.service';
 export class LibrarySearchComponent implements OnInit {
 
 
-  displayedColumns: string[] = ['select', 'reportNo', 'report', 'type', 'createdAt', 'province', 'customer', 'machine', 'serviceType', 'status'];
+  displayedColumns: string[] = ['select', 'reportNo', 'report', 'type', 'createdAt', 'province', 'customer', 'model', 'serviceType', 'status'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource()
 
   userLogin: any
@@ -121,6 +121,7 @@ export class LibrarySearchComponent implements OnInit {
           province: item.customer?.Province,
           customer: item.customer?.Customer,
           machine: item.customer?.Machine,
+          model: item.customer?.Model,
           serviceType: item.serviceType?.name,
           status: item.status,
           action: '',

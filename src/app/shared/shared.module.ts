@@ -5,6 +5,7 @@ import { TitleComponent } from './title/title.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../material/material.module';
+import { AntDesignModule } from '../ant-design/ant-design.module';
 import { SignaturePadComponent } from './signature-pad/signature-pad.component';
 import { BottomSheetEngComponent } from './bottom-sheet-eng/bottom-sheet-eng.component';
 import { ReportEngineerViewComponent } from './engineer/report/report-engineer-view/report-engineer-view.component';
@@ -55,10 +56,12 @@ let items = [
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    MaterialModule
+    MaterialModule,
+    AntDesignModule
   ],
   exports:[
     ...items,
+    AntDesignModule,
     SignaturePadComponent,
     BottomSheetEngComponent,
     ReportEngineerViewComponent,

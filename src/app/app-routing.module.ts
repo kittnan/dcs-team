@@ -11,6 +11,7 @@ import { TemplateInputComponent } from './page/template-input/template-input.com
 import { AdminGuard } from './guard/admin.guard';
 import { EngineerGuard } from './guard/engineer.guard';
 import { SpecialGuard } from './guard/special.guard';
+import { SignaturePadOnlineComponent } from './page/signature-pad-online/signature-pad-online.component';
 
 
 const routes: Routes = [
@@ -56,6 +57,10 @@ const routes: Routes = [
   {
     path:'profile',
     component:ProfileComponent
+  },
+  {
+    path:'signature-pad',
+    component:SignaturePadOnlineComponent
   },
 
 ];

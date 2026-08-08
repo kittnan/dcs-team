@@ -20,7 +20,7 @@ import Swal, { SweetAlertResult } from 'sweetalert2';
 export class SpecialPmReportComponent implements OnInit {
 
 
-  displayedColumns: string[] = ['reportNo', 'createdAt', 'province', 'customer', 'machine', 'serviceType', 'status'];
+  displayedColumns: string[] = ['reportNo', 'createdAt', 'province', 'customer', 'sn', 'model', 'serviceType', 'status'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource()
   selection = new SelectionModel<any>(true, []);
 
@@ -80,9 +80,12 @@ export class SpecialPmReportComponent implements OnInit {
         province: item.customer?.Province,
         customer: item.customer?.Customer,
         machine: item.machine?.Machine,
+        model: item.machine?.Model,
         serviceType: item.serviceType?.name,
         status: item.status,
         action: '',
+        sn: item.machine?.['S/N'],
+
         _id: item._id
       }
     }))

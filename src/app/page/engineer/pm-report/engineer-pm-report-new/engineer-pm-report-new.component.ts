@@ -2,14 +2,14 @@ import { HttpParams } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { lastValueFrom } from 'rxjs';
 import { HttpMastersService } from 'src/app/http/http-masters.service';
 import { HttpPMService } from 'src/app/http/http-pm.service';
 import { HttpReportPmService } from 'src/app/http/http-report-pm.service';
-import { HttpReportService } from 'src/app/http/http-report.service';
 import { HttpServiceTypeService } from 'src/app/http/http-serviceType.service';
+import { HttpSignatureService } from 'src/app/http/http-signature.service';
 import { HttpTasksService } from 'src/app/http/http-tasks.service';
 import { GenerateInvoicePdfService } from 'src/app/service/generate-invoice-pdf.service';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
@@ -86,15 +86,21 @@ export class EngineerPmReportNewComponent implements OnInit {
     private $serviceType: HttpServiceTypeService,
     public dialog: MatDialog,
     private $pmList: HttpPMService,
-    private $task: HttpTasksService
+    private $task: HttpTasksService,
+    private $signature: HttpSignatureService
   ) {
 
   }
 
   async ngOnInit(): Promise<void> {
-    let serviceType = await lastValueFrom(this.$serviceType.getAll())
+    let serviceType: any = await lastValueFrom(this.$serviceType.getAll())
     this.serviceTypeOption = serviceType
-
+    // const pm = this.serviceTypeOption.find((item: any) => item.value == 4)
+    // if (!this.form.serviceType) {
+    //   this.form = {
+    //     serviceType: pm ? pm : null,
+    //   }
+    // }
     let pmOption = await lastValueFrom(this.$pmList.getAll())
     if (pmOption && pmOption.length > 0) {
       pmOption = pmOption.sort((a: any, b: any) => {
@@ -261,6 +267,55 @@ export class EngineerPmReportNewComponent implements OnInit {
     })
   }
 
+  async copySignatureUrl(): Promise<void> {
+    if (!this.form?._id) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'ยังไม่สามารถคัดลอกลิงก์ได้',
+        text: 'กรุณาบันทึกรายงานก่อน เพื่อสร้าง URL สำหรับลายเซ็นลูกค้า',
+      });
+      return;
+    }
+
+    const url = `${window.location.origin}/signature-pad?_id=${encodeURIComponent(this.form._id)}&m=2`;
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(url);
+      } else {
+        this.copyTextFallback(url);
+      }
+      await lastValueFrom(this.$signature.updateExp({
+        _id: this.form._id,
+        m: 2,
+        sigExp: moment().add(1, 'days').toISOString() // Set expiration date to 1 days from now
+      }))
+      Swal.fire({
+        icon: 'success',
+        title: 'คัดลอก URL แล้ว',
+        text: url,
+        timer: 1800,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'คัดลอกไม่สำเร็จ',
+        text: 'กรุณาลองใหม่อีกครั้ง',
+      });
+    }
+  }
+
+  private copyTextFallback(text: string): void {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.left = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+  }
 
 
   // todo onSave

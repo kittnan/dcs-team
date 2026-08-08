@@ -32,4 +32,10 @@ export class HttpMastersService {
   //#endregion
 
 
+  getModelOptions(): Observable<any> {
+    return this.http.get(this.Url + "/machine/models/")
+  }
+  getBrandOptions(): Observable<any> {
+    return this.http.get(this.Url + "/machine/brands/")
+  }
 }

@@ -10,6 +10,7 @@ import { HttpPMService } from 'src/app/http/http-pm.service';
 import { HttpReportPmSpecialService } from 'src/app/http/http-report-pm-special.service';
 import { HttpReportSpecialService } from 'src/app/http/http-report-special.service';
 import { HttpServiceTypeService } from 'src/app/http/http-serviceType.service';
+import { HttpSignatureService } from 'src/app/http/http-signature.service';
 import { HttpTasksService } from 'src/app/http/http-tasks.service';
 import { GenerateInvoicePdfService } from 'src/app/service/generate-invoice-pdf.service';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
@@ -88,7 +89,8 @@ export class SpecialPmReportNewComponent implements OnInit {
     private $serviceType: HttpServiceTypeService,
     public dialog: MatDialog,
     private $pmList: HttpPMService,
-    private $task:HttpTasksService
+    private $task: HttpTasksService,
+    private $signature: HttpSignatureService
   ) {
 
   }
@@ -120,7 +122,7 @@ export class SpecialPmReportNewComponent implements OnInit {
       [item['form'], item])).values()];
     this.pmItems = pmOption
     this.pmOption = pmOption.filter((data: any) => data.form == this.formSelect)
-    this.dataStarter =this.pmOption.length
+    this.dataStarter = this.pmOption.length
 
     this.route.queryParams.subscribe(async (params: any) => {
       if (params && params['_id']) {
@@ -140,7 +142,7 @@ export class SpecialPmReportNewComponent implements OnInit {
           const machine = await lastValueFrom(this.$master.Master_getall())
           this.customerOption = machine
           const customers = this.customerOption.map((m: any) => m['Customer'])
-          this.customerOptionStr =  [...new Set(customers)]
+          this.customerOptionStr = [...new Set(customers)]
 
 
           if (this.form.data && this.form.data.length > 0) {
@@ -163,7 +165,7 @@ export class SpecialPmReportNewComponent implements OnInit {
             for (let index = 0; index < this.dataStarter; index++) {
               const newData: any = { ...this.dataTemplate }
               newData.no = index + 1
-              newData.text = `${this.pmOption[index].no.toString().padStart(2,'0')}.${this.pmOption[index].name}`
+              newData.text = `${this.pmOption[index].no.toString().padStart(2, '0')}.${this.pmOption[index].name}`
               this.form.data.push(newData)
             }
             this.page = this.calculatorPageBreak(this.form.data.length);
@@ -236,9 +238,9 @@ export class SpecialPmReportNewComponent implements OnInit {
   }
 
   // todo onSelectCustomer
-  onSelectCustomer(event:any) {
+  onSelectCustomer(event: any) {
     this.form.machine = null
-    const customer = this.customerOption.find((cus:any)=>cus['Customer']==event)
+    const customer = this.customerOption.find((cus: any) => cus['Customer'] == event)
     this.form.customer = customer
     this.machineOption = this.customerOption.filter((item: any) => item['Customer'] == event)
   }
@@ -262,6 +264,57 @@ export class SpecialPmReportNewComponent implements OnInit {
     })
   }
 
+  async copySignatureUrl(): Promise<void> {
+    if (!this.form?._id) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'ยังไม่สามารถคัดลอกลิงก์ได้',
+        text: 'กรุณาบันทึกรายงานก่อน เพื่อสร้าง URL สำหรับลายเซ็นลูกค้า',
+      });
+      return;
+    }
+
+    const url = `${window.location.origin}/signature-pad?_id=${encodeURIComponent(this.form._id)}&m=4`;
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(url);
+      } else {
+        this.copyTextFallback(url);
+      }
+
+      await lastValueFrom(this.$signature.updateExp({
+        _id: this.form._id,
+        m: 4,
+        sigExp: moment().add(1, 'days').toISOString() // Set expiration date to 1 days from now
+      }))
+
+      Swal.fire({
+        icon: 'success',
+        title: 'คัดลอก URL แล้ว',
+        text: url,
+        timer: 1800,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'คัดลอกไม่สำเร็จ',
+        text: 'กรุณาลองใหม่อีกครั้ง',
+      });
+    }
+  }
+
+  private copyTextFallback(text: string): void {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.left = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+  }
 
 
   // todo onSave
@@ -386,7 +439,7 @@ export class SpecialPmReportNewComponent implements OnInit {
             this.form.finishDate = moment(this.end).set('hour', sps2[0]).set('minute', sps2[1])
           }
           await this.saveCustom()
-          await lastValueFrom(this.$task.updateLastPM({machine_id:this.form.machine._id}))
+          await lastValueFrom(this.$task.updateLastPM({ machine_id: this.form.machine._id }))
           Swal.fire({
             title: "Success",
             icon: 'success',
@@ -403,14 +456,14 @@ export class SpecialPmReportNewComponent implements OnInit {
     }
   }
 
-  onCancel(){
+  onCancel() {
     try {
       Swal.fire({
-        title:'Cancel ?',
-        icon:'warning',
-        showCancelButton:true
-      }).then(async (v:SweetAlertResult)=>{
-        if(v.isConfirmed){
+        title: 'Cancel ?',
+        icon: 'warning',
+        showCancelButton: true
+      }).then(async (v: SweetAlertResult) => {
+        if (v.isConfirmed) {
           this.form.status = 'cancel'
           await this.saveCustom()
           Swal.fire({
@@ -438,8 +491,8 @@ export class SpecialPmReportNewComponent implements OnInit {
     return option === value;
   }
 
-   // todo custom save without base64
-   saveCustom() {
+  // todo custom save without base64
+  saveCustom() {
     let newForm: any = JSON.parse(JSON.stringify(this.form));
     const newData = newForm.data.map((data: any) => {
       data.files = data.files.map((file: any) => {

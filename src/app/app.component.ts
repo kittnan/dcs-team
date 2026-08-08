@@ -197,6 +197,10 @@ export class AppComponent {
       true
   }
 
+  useStandaloneOutlet() {
+    return this.router.url.includes('/signature-pad');
+  }
+
 
   checkLogin() {
     this.profile = this.$local.getProfile()

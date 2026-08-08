@@ -1,17 +1,19 @@
 <div *ngIf="form" fxLayout="row wrap" fxLayoutAlign="center center">
   <app-title fxFlex="100" [title]="'Preventive Maintenance Report'"></app-title>
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between stretch" >
-    <app-auto-complete  *ngIf="customerOptionStr.length>0" fxFlex="100" fxFlex.gt-md="32" [title]="'Customer'" [myControl]="customerCtrl" [options]="customerOptionStr" (optionsChange)="onSelectCustomer($event)" class="btn-set"></app-auto-complete>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between stretch">
+    <app-auto-complete *ngIf="customerOptionStr.length>0" fxFlex="100" fxFlex.gt-md="32" [title]="'Customer'"
+      [myControl]="customerCtrl" [options]="customerOptionStr" (optionsChange)="onSelectCustomer($event)"
+      class="btn-set"></app-auto-complete>
 
     <mat-form-field class="btn-set" fxFlex="100" fxFlex.gt-md="32" appearance="outline" floatLabel="always">
       <mat-label>Machine</mat-label>
-      <mat-select [(ngModel)]="form.machine" [compareWith]="objectComparisonFunction_machine" >
+      <mat-select [(ngModel)]="form.machine" [compareWith]="objectComparisonFunction_machine">
         <mat-option *ngFor="let item of machineOption" [value]="item">
           {{item.Machine}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field  class="btn-set" fxFlex="100" fxFlex.gt-md="32" appearance="outline" floatLabel="always">
+    <mat-form-field class="btn-set" fxFlex="100" fxFlex.gt-md="32" appearance="outline" floatLabel="always">
       <mat-label>Service</mat-label>
       <mat-select [(ngModel)]="form.serviceType" [compareWith]="objectComparisonFunction_id">
         <mat-option *ngFor="let item of serviceTypeOption" [value]="item">
@@ -21,7 +23,8 @@
     </mat-form-field>
     <mat-form-field fxFlex="100" fxFlex.gt-md="32" appearance="outline" floatLabel="always" class="btn-set">
       <mat-label>Form</mat-label>
-      <mat-select [(ngModel)]="formSelect" (ngModelChange)="onSelectForm()" [compareWith]="objectComparisonFunction_form" >
+      <mat-select [(ngModel)]="formSelect" (ngModelChange)="onSelectForm()"
+        [compareWith]="objectComparisonFunction_form">
         <mat-option *ngFor="let item of formOption" [value]="item.form">
           Form name: {{item.formName}} , Form No:{{item.form}}
         </mat-option>
@@ -47,7 +50,8 @@
     id="print" class="mb-9">
 
     <div *ngIf="p_i===0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" class="mb-6 mt-4">
-      <div fxFlex="100"  fxLayout="row wrap" fxLayoutAlign="center start" fxLayoutGap="30" style="font-family: system-ui" >
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" fxLayoutGap="30"
+        style="font-family: system-ui">
         <div fxFlex="40" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="end start">
           <img src="./assets/img/logo/logo-removebg-preview.png" alt="" style="width: 250px;height: 100px;">
         </div>
@@ -116,7 +120,7 @@
           <span class="font-normal pe-1">{{form?.no}}</span>
         </div>
       </div>
-      <div fxFlex="100" class="row" [ngClass.gt-md]="'bl br bb'" fxLayout="row wrap" fxLayoutAlign="start center" >
+      <div fxFlex="100" class="row" [ngClass.gt-md]="'bl br bb'" fxLayout="row wrap" fxLayoutAlign="start center">
         <div fxFlex="100" fxFlex.gt-md="40" fxLayout="row wrap" fxLayoutAlign="start center" class=""
           [ngClass.gt-md]="''">
           <span class="ps-4 pe-4 font-semibold">
@@ -280,7 +284,8 @@
                 </span>
               </div>
               <div fxFlex="100" fxFlex.gt-md="80" fxLayout="row wrap" fxLayoutAlign="start stretch">
-                {{ userLogin.telephone | slice:0:3 }}-{{ userLogin.telephone | slice:3:6 }}-{{ userLogin.telephone | slice:6 }}
+                {{ userLogin.telephone | slice:0:3 }}-{{ userLogin.telephone | slice:3:6 }}-{{ userLogin.telephone |
+                slice:6 }}
               </div>
             </div>
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mb-2">
@@ -327,6 +332,10 @@
               <span class="ps-3 font-bold me-2">
                 Customer sign
               </span>
+              <button mat-mini-fab color="primary" (click)="copySignatureUrl()" matTooltip="Copy URL signature"
+                style="margin-right: 10px;">
+                <mat-icon>content_copy</mat-icon>
+              </button>
               <button mat-mini-fab *ngIf="!form.sign" mat-raised-button (click)="onClickSignature()">
                 <mat-icon>draw</mat-icon>
               </button>
