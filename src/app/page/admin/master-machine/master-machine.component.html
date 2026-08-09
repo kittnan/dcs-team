@@ -2,7 +2,7 @@
   <app-title fxFlex="100" [title]="'Master manage'"></app-title>
 </div>
 <div fxLayout="row wrap" fxLayoutAlign="center center" class="mt-3">
-  <div fxFlex="100" fxFlex.gt-xs="85">
+  <div fxFlex="100" fxFlex.gt-xs="100">
     <div fxLayout="row wrap" fxLayoutAlign="space-between stretch">
 
       <!-- <mat-form-field appearance="outline" floatLabel="always" class="setFormat koo" style="margin: 0;" >
@@ -30,13 +30,25 @@
   </div>
 </div>
 
-<div fxLayout="row wrap" fxLayoutAlign="center center">
-  <div fxFlex="100" fxFlex.gt-xs="85">
+<div fxLayout="row wrap" fxLayoutAlign="center center" style="margin-top: 10px;">
+  <div fxFlex="100" fxFlex.gt-xs="100">
+    <div fxLayout="row wrap" fxLayoutAlign="start center" class="status-summary-wrap">
+      <button mat-stroked-button class="status-chip all" [class.selected]="statusFilter === 'all'" (click)="setStatusFilter('all')">
+        ทั้งหมด: {{ data?.length || 0 }}
+      </button>
+      <button mat-stroked-button class="status-chip active" [class.selected]="statusFilter === 'active'" (click)="setStatusFilter('active')">
+        Active: {{ activeCount }}
+      </button>
+      <button mat-stroked-button class="status-chip inactive" [class.selected]="statusFilter === 'inactive'" (click)="setStatusFilter('inactive')">
+        Inactive: {{ inactiveCount }}
+      </button>
+    </div>
+
     <mat-form-field style="width: -webkit-fill-available;padding: 0px;">
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input />
     </mat-form-field>
-    <div class="mat-elevation-z8" style="overflow-x:auto;">
+    <div class="mat-elevation-z8 compact-table-wrap" style="overflow-x:auto;">
       <table mat-table [dataSource]="dataSource" matSort style="text-wrap: nowrap;">
 
         <ng-container matColumnDef="No" >
@@ -62,7 +74,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-size: medium; font-weight: bold">
             Customer
           </th>
-          <td mat-cell style="padding-right: 16px;" *matCellDef="let element" >
+          <td mat-cell style="padding-right: 16px;white-space: pre-wrap;" *matCellDef="let element" >
             {{ element["Customer"] }}
           </td>
         </ng-container>
@@ -130,6 +142,15 @@
           </td>
         </ng-container>
 
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-size: medium; font-weight: bold">
+            Description
+          </th>
+          <td mat-cell style="padding-right: 16px; white-space: pre-wrap;" *matCellDef="let element">
+            {{ element["description"] }}
+          </td>
+        </ng-container>
+
         <ng-container matColumnDef="TARGETS">
           <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-size: medium; font-weight: bold">
             Targets
@@ -165,7 +186,11 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          [ngClass]="isRowActive(row) ? 'row-active' : 'row-inactive'"
+        ></tr>
       </table>
     </div>
     <mat-paginator [pageSizeOptions]="[8, 20, 100]" showFirstLastButtons aria-label="Select page of periodic elements"

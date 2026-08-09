@@ -14,8 +14,12 @@ export class HttpMastersService {
   ) { }
 
    //#region Master Machine
-  Master_getall(): Observable<any> {
+  Master_get(): Observable<any> {
     return this.http.get(this.Url + "/machine/")
+  }
+
+  Master_getall(): Observable<any> {
+    return this.http.get(this.Url + "/machine/all")
   }
 
   Master_add(data: any): Observable<any> {

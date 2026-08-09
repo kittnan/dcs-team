@@ -139,7 +139,7 @@ export class SpecialPmReportNewComponent implements OnInit {
             this.end = moment(this.form.finishDate)
             this.endTime = moment(this.form.finishDate).format('HH:mm')
           }
-          const machine = await lastValueFrom(this.$master.Master_getall())
+          const machine = await lastValueFrom(this.$master.Master_get())
           this.customerOption = machine
           const customers = this.customerOption.map((m: any) => m['Customer'])
           this.customerOptionStr = [...new Set(customers)]

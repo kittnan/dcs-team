@@ -41,6 +41,8 @@ export class MasterMachineEditorComponent implements OnInit {
 
     if (this.data) {
       this.rawData = { ...this.data }
+      this.rawData['active'] = this.normalizeActiveValue(this.rawData['active'] ?? this.rawData['Active'])
+      this.rawData['description'] = this.rawData['description'] || ''
     } else {
       this.rawData['Province'] = ''
       this.rawData['Customer'] = ''
@@ -48,6 +50,8 @@ export class MasterMachineEditorComponent implements OnInit {
       this.rawData['District'] = ''
       this.rawData['Brand'] = ''
       this.rawData['InstallDate'] = ''
+      this.rawData['active'] = 'active'
+      this.rawData['description'] = ''
     }
     this.debug_before()
     setTimeout(() => {
@@ -117,7 +121,8 @@ export class MasterMachineEditorComponent implements OnInit {
         this.rawData['Machine'] &&
         this.rawData['Model'] &&
         this.rawData['Brand'] &&
-        this.rawData['InstallDate']
+        this.rawData['InstallDate'] &&
+        this.rawData['active']
       ) {
         this.check = true
       } else {
@@ -126,15 +131,27 @@ export class MasterMachineEditorComponent implements OnInit {
     }, 1000);
   }
 
+  normalizeActiveValue(status: any): 'active' | 'inactive' {
+    if (typeof status === 'string') {
+      return status.toLowerCase() === 'active' ? 'active' : 'inactive'
+    }
+    return status === true || status === 1 ? 'active' : 'inactive'
+  }
+
+  syncActiveFields() {
+    this.rawData['active'] = this.normalizeActiveValue(this.rawData['active'])
+  }
+
   submit() {
     Swal.fire({
-      title: 'Do you want to add data ?',
+      title: 'Do you want to save data ?',
       icon: 'question',
       showCancelButton: true,
     }).then(async r => {
 
       if (r.isConfirmed) {
         //code start
+        this.syncActiveFields()
         delete this.rawData.No
         delete this.rawData.updatedAt
         delete this.rawData.name
@@ -151,12 +168,13 @@ export class MasterMachineEditorComponent implements OnInit {
 
   submit_add() {
     Swal.fire({
-      title: 'Do you want to add data ?',
+      title: 'Do you want to save data ?',
       icon: 'question',
       showCancelButton: true,
     }).then(async r => {
       if (r.isConfirmed) {
         //code start
+        this.syncActiveFields()
         let add = await lastValueFrom(this.$master.Master_add(this.rawData))
         await lastValueFrom(this.$pmTask.create(add[0]))
         //code end

@@ -65,7 +65,7 @@ export class LibrarySearchComponent implements OnInit {
       let userOption = await lastValueFrom(this.$user.getByCondition(new HttpParams().set('permission', JSON.stringify(['engineer', 'special']))))
       this.userOption = userOption
 
-      const machine = await lastValueFrom(this.$master.Master_getall())
+      const machine = await lastValueFrom(this.$master.Master_get())
       this.customerOption = machine
       const customers = this.customerOption.map((m: any) => m['Customer'])
       this.customerOptionStr = [...new Set(customers)]

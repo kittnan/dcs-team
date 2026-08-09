@@ -26,7 +26,7 @@ var fs = require('file-saver');
 })
 export class MasterMachineComponent {
 
-  displayedColumns: string[] = ['No', 'Province', 'District', 'Customer', 'Machine', 'Model', 'S/N', 'PIC','InstallDate','Brand', 'Action'];
+  displayedColumns: string[] = ['No', 'Province', 'District', 'Customer', 'Machine', 'Model', 'S/N', 'PIC','InstallDate','Brand','description', 'Action'];
   dataSource: any = new MatTableDataSource
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
   @ViewChild(MatSort) sort: any = MatSort;
@@ -41,6 +41,10 @@ export class MasterMachineComponent {
   data: any
   province: any = ''
   filterValue: any
+  statusFilter: 'all' | 'active' | 'inactive' = 'all'
+  searchText: string = ''
+  activeCount: number = 0
+  inactiveCount: number = 0
   constructor(
     private $user: HttpUsersService,
     private $master: HttpMastersService,
@@ -73,10 +77,67 @@ export class MasterMachineComponent {
           "name": koo
         }
       })
-      this.dataSource = new MatTableDataSource(this.data)
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.dataSource.filter = this.filterValue?.trim().toLowerCase();
+      this.updateStatusCounts(this.data)
+      this.setupDataSource(this.data)
+    } else {
+      this.data = []
+      this.updateStatusCounts([])
+      this.setupDataSource([])
+    }
+  }
+
+  setupDataSource(data: any[]) {
+    this.dataSource = new MatTableDataSource(data)
+    this.dataSource.paginator = this.paginator
+    this.dataSource.sort = this.sort
+    this.dataSource.filterPredicate = (row: any, filter: string) => {
+      let parsedFilter: any = { text: '', status: 'all' }
+      try {
+        parsedFilter = JSON.parse(filter || '{}')
+      } catch (error) {
+        parsedFilter = { text: (filter || '').toLowerCase(), status: 'all' }
+      }
+
+      const text = (parsedFilter.text || '').toLowerCase().trim()
+      const status = parsedFilter.status || 'all'
+      const rowText = Object.values(row || {}).join(' ').toLowerCase()
+      const textMatched = !text || rowText.includes(text)
+      const activeMatched = this.isRowActive(row)
+      const statusMatched = status === 'all' || (status === 'active' ? activeMatched : !activeMatched)
+
+      return textMatched && statusMatched
+    }
+    this.applyCombinedFilter()
+  }
+
+  isRowActive(row: any): boolean {
+    const status = row?.active ?? row?.Active
+    if (typeof status === 'string') {
+      return status.toLowerCase() === 'active'
+    }
+    return status === true || status === 1
+  }
+
+  updateStatusCounts(data: any[]) {
+    this.activeCount = (data || []).filter((row: any) => this.isRowActive(row)).length
+    this.inactiveCount = (data || []).length - this.activeCount
+  }
+
+  setStatusFilter(status: 'all' | 'active' | 'inactive') {
+    this.statusFilter = status
+    this.applyCombinedFilter()
+  }
+
+  applyCombinedFilter() {
+    if (!this.dataSource) {
+      return
+    }
+    this.dataSource.filter = JSON.stringify({
+      text: this.searchText,
+      status: this.statusFilter
+    })
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage()
     }
   }
 
@@ -97,7 +158,8 @@ export class MasterMachineComponent {
 
   applyFilter(event: Event) {
     this.filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = this.filterValue.trim().toLowerCase();
+    this.searchText = this.filterValue || ''
+    this.applyCombinedFilter()
   }
 
 
