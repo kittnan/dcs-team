@@ -26,7 +26,7 @@ var fs = require('file-saver');
 })
 export class MasterMachineComponent {
 
-  displayedColumns: string[] = ['No', 'Province', 'District', 'Customer', 'Machine', 'Model', 'S/N', 'PIC','InstallDate','Brand','description', 'Action'];
+  displayedColumns: string[] = ['No', 'Province', 'District', 'Customer', 'Machine', 'Model', 'S/N', 'PIC', 'InstallDate', 'Brand', 'description', 'Action'];
   dataSource: any = new MatTableDataSource
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
   @ViewChild(MatSort) sort: any = MatSort;
@@ -294,7 +294,7 @@ export class MasterMachineComponent {
 
   export() {
     if (this.data.length > 0) {
-      this.http.get('assets/excel/master_mc_revise.xlsx', { responseType: "arraybuffer" })
+      this.http.get('assets/excel/master_machine_revise.xlsx', { responseType: "arraybuffer" })
         // this.http.get('http://localhost:4200/mastereletrical/report product electrical space.xlsx', { responseType: "arraybuffer" })
         .subscribe(
           data => {
@@ -314,7 +314,8 @@ export class MasterMachineComponent {
                   worksheet._name = timestamp
 
                   let user = await lastValueFrom(this.$user.Master_User_getall())
-
+                    console.log(this.data);
+                    
                   if (user.length) {
                     this.data = this.data.map((d: any, i: any) => {
                       let koo = d['PIC']?.map((e: any) => {
@@ -342,6 +343,8 @@ export class MasterMachineComponent {
                     'PIC',
                     'InstallDate',
                     'Brand',
+                    'description',
+                    'active',
                     '_id'
                   ]
 
