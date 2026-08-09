@@ -18,6 +18,9 @@ export class HttpReportService {
   get(params: HttpParams): Observable<any> {
     return this.http.get(`${this.API}/${this.SUB}`, { params: params })
   }
+  table(params: HttpParams): Observable<any> {
+    return this.http.get(`${this.API}/${this.SUB}/table`, { params: params })
+  }
   multi(params: HttpParams): Observable<any> {
     return this.http.get(`${this.API}/${this.SUB}/multi`, { params: params })
   }
@@ -30,8 +33,8 @@ export class HttpReportService {
   saveMultiple(data: any): Observable<any> {
     return this.http.post(`${this.API}/${this.SUB}/saveMultiple`, data)
   }
-  getFile(url:string): Observable<any> {
-    return this.http.get(url,{ responseType: 'blob' })
+  getFile(url: string): Observable<any> {
+    return this.http.get(url, { responseType: 'blob' })
   }
   upload(data: FormData): Observable<any> {
     return this.http.post(`${this.FILE_UPLOAD}`, data)

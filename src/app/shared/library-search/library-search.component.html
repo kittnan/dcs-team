@@ -1,6 +1,6 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center">
-  <app-title fxFlex="95" [title]="'Library Search'"></app-title>
-  <div fxFlex="95" fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt-3">
+  <app-title fxFlex="100" [title]="'Library Search'"></app-title>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt-3">
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="20">
 
       <mat-form-field appearance="outline" floatLabel="always" class="btn-set">
@@ -22,7 +22,7 @@
       </mat-form-field>
 
       <app-auto-complete class="btn-set" *ngIf="customerOptionStr.length>0" [myControl]="customerCtrl"
-        [options]="customerOptionStr" (optionsChange)="onSelectCustomer($event)"  [title]="'Customer'">
+        [options]="customerOptionStr" (optionsChange)="onSelectCustomer($event)" [title]="'Customer'">
       </app-auto-complete>
 
 
@@ -53,13 +53,55 @@
         </mat-select>
       </mat-form-field>
 
+      <mat-form-field appearance="outline" floatLabel="always" class="btn-set">
+        <mat-label>S/N</mat-label>
+        <input matInput [(ngModel)]="dataFilter.sn"  />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" floatLabel="always" class="btn-set" style="max-width: 320px;">
+        <mat-label>Finish Period Date</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate placeholder="Start date" [(ngModel)]="dataFilter.finishPeriodDateStart" [max]="dataFilter.finishPeriodDateEnd">
+          <input matEndDate placeholder="End date" [(ngModel)]="dataFilter.finishPeriodDateEnd" [min]="dataFilter.finishPeriodDateStart">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker>
+          <mat-datepicker-actions>
+            <button mat-button color="warn" matDatepickerCancel
+              (click)="dataFilter.finishPeriodDateStart = null; dataFilter.finishPeriodDateEnd = null">Clear</button>
+            <button mat-button matDatepickerCancel>Close</button>
+            <button mat-raised-button color="primary" matDatepickerApply>Confirm</button>
+          </mat-datepicker-actions>
+        </mat-date-range-picker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" floatLabel="always" class="btn-set" style="max-width: 320px;">
+        <mat-label>Install Period Date</mat-label>
+        <mat-date-range-input [rangePicker]="pickerInstall">
+          <input matStartDate placeholder="Start date" [(ngModel)]="dataFilter.installPeriodDateStart" [max]="dataFilter.installPeriodDateEnd">
+          <input matEndDate placeholder="End date" [(ngModel)]="dataFilter.installPeriodDateEnd" [min]="dataFilter.installPeriodDateStart">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="pickerInstall"></mat-datepicker-toggle>
+        <mat-date-range-picker #pickerInstall>
+          <mat-datepicker-actions>
+            <button mat-button color="warn" matDatepickerCancel
+              (click)="dataFilter.installPeriodDateStart = null; dataFilter.installPeriodDateEnd = null">Clear</button>
+            <button mat-button matDatepickerCancel>Close</button>
+            <button mat-raised-button color="primary" matDatepickerApply>Confirm</button>
+          </mat-datepicker-actions>
+        </mat-date-range-picker>
+      </mat-form-field>
+
     </div>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around center" fxLayoutGap="20" class="my-4">
-      <button fxFlex="100" fxFlex.gt-md="30" mat-raised-button color="primary" (click)="onSubmit()">Search</button>
+      <button fxFlex="100" fxFlex.gt-md="20" mat-raised-button color="primary" (click)="onSubmit()">Search</button>
+      <button fxFlex="100" fxFlex.gt-md="20" mat-stroked-button color="warn" (click)="onClearFilter()">Clear Filter</button>
+      <button fxFlex="100" fxFlex.gt-md="20" mat-raised-button color="accent" (click)="onExportCsv()" [disabled]="dataSource.data.length === 0">Export CSV</button>
     </div>
 
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center">
-      <app-table-report *ngIf="show" fxFlex="100" [displayedColumns]="displayedColumns" [dataSource]="dataSource" ></app-table-report>
+      <app-table-report *ngIf="show" fxFlex="100" [displayedColumns]="displayedColumns"
+        [dataSource]="dataSource"></app-table-report>
     </div>
 
   </div>

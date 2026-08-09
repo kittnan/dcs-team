@@ -104,6 +104,11 @@ export class LibrarySearchComponent implements OnInit {
       let report: any = this.dataFilter.report ? JSON.stringify(this.dataFilter.report) : null
       let type: any = this.dataFilter.type ? JSON.stringify(this.dataFilter.type) : null
       let user: any = this.dataFilter.user ? JSON.stringify(this.dataFilter.user) : null
+      let sn: any = this.dataFilter.sn ? JSON.stringify(this.dataFilter.sn) : null
+      let finishPeriodDateStart: any = this.dataFilter.finishPeriodDateStart ? JSON.stringify(this.dataFilter.finishPeriodDateStart) : null
+      let finishPeriodDateEnd: any = this.dataFilter.finishPeriodDateEnd ? JSON.stringify(this.dataFilter.finishPeriodDateEnd) : null
+      let installPeriodDateStart: any = this.dataFilter.installPeriodDateStart ? JSON.stringify(this.dataFilter.installPeriodDateStart) : null
+      let installPeriodDateEnd: any = this.dataFilter.installPeriodDateEnd ? JSON.stringify(this.dataFilter.installPeriodDateEnd) : null
 
       let params: HttpParams = new HttpParams()
       params = params.set('customer', customer)
@@ -112,17 +117,22 @@ export class LibrarySearchComponent implements OnInit {
       params = params.set('service', service)
       params = params.set('type', type)
       params = params.set('user', user)
+      params = params.set('sn', sn)
+      params = params.set('finishPeriodDateStart', finishPeriodDateStart)
+      params = params.set('finishPeriodDateEnd', finishPeriodDateEnd)
+      params = params.set('installPeriodDateStart', installPeriodDateStart)
+      params = params.set('installPeriodDateEnd', installPeriodDateEnd)
       const res = await lastValueFrom(this.$report.multi(params))
       this.dataSource = new MatTableDataSource(res.map((item: any) => {
         return {
           ...item,
           reportNo: item.no,
           createdAt: moment(item.createdAt).format('DD-MMM-YY, HH:mm'),
-          province: item.customer?.Province,
-          customer: item.customer?.Customer,
-          machine: item.customer?.Machine,
-          model: item.customer?.Model,
-          serviceType: item.serviceType?.name,
+          province: item.customer?.Province || item.province || '',
+          customer: item.customer?.Customer || item.customer || '',
+          machine: item.customer?.Machine || item.machine || '',
+          model: item.customer?.Model || item.model || '',
+          serviceType: item.serviceType?.name || item.serviceType || '',
           status: item.status,
           action: '',
           _id: item._id
@@ -158,6 +168,52 @@ export class LibrarySearchComponent implements OnInit {
       this.show = true
     }, 200);
   }
+
+  onClearFilter() {
+    this.dataFilter = {}
+    this.customerCtrl.setValue('')
+    this.machineOption = [...new Map(this.customerOption.map((item: any) =>
+      [item['Machine'], item])).values()]
+  }
+
+  onExportCsv() {
+    const rows = this.dataSource.data || []
+    if (rows.length === 0) {
+      return
+    }
+
+    const headers = ['Report No', 'Report', 'Type', 'Created At', 'Province', 'Customer', 'Model', 'Service Type', 'Status']
+    const csvRows = rows.map((item: any) => [
+      item.reportNo,
+      item.report,
+      item.type,
+      item.createdAt,
+      item.province,
+      item.customer,
+      item.model,
+      item.serviceType,
+      item.status
+    ].map((value: any) => this.escapeCsv(value)).join(','))
+
+    const csvContent = [headers.join(','), ...csvRows].join('\r\n')
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+    const url = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.setAttribute('href', url)
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-').replace('T', '_').slice(0, 19)
+    link.setAttribute('download', `library-search-${timestamp}.csv`)
+    link.style.visibility = 'hidden'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    window.URL.revokeObjectURL(url)
+  }
+
+  private escapeCsv(value: any): string {
+    const safeValue = value === null || value === undefined ? '' : String(value)
+    return `"${safeValue.replace(/"/g, '""')}"`
+  }
+
   public objectComparisonFunction_id = function (option: any, value: any): boolean {
     return option._id === value._id;
   }

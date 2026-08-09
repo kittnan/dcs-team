@@ -1,8 +1,8 @@
 export const environment = {
   production: false,
 
-  // API:"https://api.apmedexplus.com",
-  API:"http://localhost:8888",
+  API:"https://api.apmedexplus.com",
+  // API:"http://localhost:8888",
   FILE_UPLOAD:"https://api_file.apmedexplus.com/upload/new",
   FILE_DELETE:"https://api_file.apmedexplus.com/delete",
   // API:"https://0d05-2001-44c8-45cc-f00b-64c5-8ba3-cc29-cfed.ngrok-free.app"

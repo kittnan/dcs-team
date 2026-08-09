@@ -72,19 +72,19 @@ export class EngineerReportComponent implements OnInit {
   }
 
   async onGetData(params: HttpParams) {
-    this.reports = await lastValueFrom(this.$report.get(params))
+    this.reports = await lastValueFrom(this.$report.table(params))
     this.dataSource = new MatTableDataSource(this.reports.map((item: any) => {
       return {
         reportNo: item.no,
         createdAt: moment(item.createdAt).format('DD-MMM-YY, HH:mm'),
-        province: item.customer?.Province,
-        customer: item.customer?.Customer,
-        machine: item.machine?.Machine,
-        model: item.machine?.Model,
-        serviceType: item.serviceType?.name,
+        province: item.customer?.Province || item.province || '',
+        customer: item.customer?.Customer || item.customer || '',
+        machine: item.customer?.Machine || item.machine || '',
+        model: item.customer?.Model || item.model || '',
+        serviceType: item.serviceType?.name || item.serviceType || '',
         status: item.status,
         action: '',
-        sn: item.machine?.['S/N'],
+        sn: item.machine?.['S/N'] || item.customer?.['S/N'] || item.sn || '',
         _id: item._id
       }
     }))
