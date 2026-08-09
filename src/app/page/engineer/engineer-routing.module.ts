@@ -10,6 +10,7 @@ import { EngineerPmReportViewComponent } from './pm-report/engineer-pm-report-vi
 import { EngineerPmReportPrintComponent } from './pm-report/engineer-pm-report-print/engineer-pm-report-print.component';
 import { EngineerLibrarySearchComponent } from './engineer-library-search/engineer-library-search.component';
 import { EnginnerPmPlanViewComponent } from './enginner-pm-plan-view/enginner-pm-plan-view.component';
+import { MasterMachineComponent } from '../admin/master-machine/master-machine.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,10 @@ const routes: Routes = [
   {
     path:'pm-report-print',
     component:EngineerPmReportPrintComponent
+  },
+  {
+    path:'master_machine',
+    component:MasterMachineComponent
   },
   {
     path:'library-search',

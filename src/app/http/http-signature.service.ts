@@ -20,7 +20,7 @@ export class HttpSignatureService {
   }
 
   updateSign(data: any): Observable<any> {
-    return this.http.put(this.Url + "/signature/updateSign", data)
+    return this.http.post(this.Url + "/signature/updateSign", data)
   }
 
   updateExp(data: any): Observable<any> {

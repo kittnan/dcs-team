@@ -87,6 +87,9 @@
             <span class="font-normal">
               {{form.machine?.Machine}}
             </span>
+            <span *ngIf="form.machine?.Brand">
+              <strong>Brand</strong> {{form.machine?.Brand}}
+            </span>
           </div>
           <div fxFlex="20" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="''">
             <label class="ps-4 pe-4">

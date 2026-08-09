@@ -53,7 +53,7 @@ export class MasterMachineEditorComponent implements OnInit {
       this.rawData['active'] = 'active'
       this.rawData['description'] = ''
     }
-    this.debug_before()
+    // this.debug_before()
     setTimeout(() => {
       this.getPiC()
       this.getMachine()
@@ -111,24 +111,40 @@ export class MasterMachineEditorComponent implements OnInit {
     this.brandOptions = resData.map((d: any) => d._id)
   }
 
-  debug_before() {
-    setTimeout(() => {
-      console.log(this.rawData);
-      if (
-        
-        this.rawData['Province'] &&
-        this.rawData['Customer'] &&
-        this.rawData['Machine'] &&
-        this.rawData['Model'] &&
-        this.rawData['Brand'] &&
-        this.rawData['InstallDate'] &&
-        this.rawData['active']
-      ) {
-        this.check = true
-      } else {
-        this.check = false
-      }
-    }, 1000);
+  // debug_before() {
+  //   setTimeout(() => {
+  //     console.log(this.rawData);
+  //     if (
+
+  //       this.rawData['Province'] &&
+  //       this.rawData['Customer'] &&
+  //       this.rawData['Machine'] &&
+  //       this.rawData['Model'] &&
+  //       this.rawData['Brand'] &&
+  //       this.rawData['InstallDate'] &&
+  //       this.rawData['active']
+  //     ) {
+  //       this.check = true
+  //     } else {
+  //       this.check = false
+  //     }
+  //   }, 1000);
+  // }
+
+  disableCheck() {
+    if (
+      this.rawData['Province'] &&
+      this.rawData['Customer'] &&
+      this.rawData['Machine'] &&
+      this.rawData['Model'] &&
+      this.rawData['Brand'] &&
+      this.rawData['InstallDate'] &&
+      this.rawData['active']
+    ) {
+      return false
+    } else {
+      return true
+    }
   }
 
   normalizeActiveValue(status: any): 'active' | 'inactive' {

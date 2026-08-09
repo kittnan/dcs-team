@@ -67,6 +67,13 @@ export class AppComponent {
       access: ['admin', 'fullAdmin', 'engineer'],
       items: [
         {
+          title: 'Machine',
+          icon: 'assets/img/icon_sidebar/master_manage.png',
+          path: 'engineer/master_machine',
+          items: [],
+          access: ['']
+        },
+        {
           title: 'report',
           icon: 'assets/img/icon_sidebar/report.png',
           path: 'engineer/report',
