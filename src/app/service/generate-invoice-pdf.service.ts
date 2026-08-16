@@ -95,7 +95,7 @@ export class GenerateInvoicePdfService {
               if (index + 1 === div.length) {
                 //TODO save
 
-                this.save_file(id, `${name}.pdf`, doc.output('arraybuffer'))
+                await this.save_file(id, `${name}.pdf`, doc.output('arraybuffer'))
                 await doc.save(`${name}.pdf`);
                 this.$loader.stop()
               }
