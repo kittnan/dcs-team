@@ -26,7 +26,7 @@ var fs = require('file-saver');
 })
 export class MasterMachineComponent {
 
-  displayedColumns: string[] = ['No', 'Province', 'District', 'Customer', 'Machine', 'Model', 'S/N', 'PIC', 'InstallDate', 'Brand', 'description', 'Action'];
+  displayedColumns: string[] = ['No', 'Province', 'District', 'Customer', 'Machine', 'Model', 'S/N', 'PIC', 'InstallDate', 'Brand','PM', 'description', 'Action'];
   dataSource: any = new MatTableDataSource
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
   @ViewChild(MatSort) sort: any = MatSort;
@@ -74,7 +74,8 @@ export class MasterMachineComponent {
         return {
           ...d,
           No: i + 1,
-          "name": koo
+          "name": koo,
+          PM: d['PM'] ?? 0
         }
       })
       this.updateStatusCounts(this.data)

@@ -23,7 +23,7 @@ import { LocalStorageService } from 'src/app/service/local-storage.service';
 export class LibrarySearchComponent implements OnInit {
 
 
-  displayedColumns: string[] = ['select', 'reportNo', 'report', 'type', 'createdAt', 'province', 'customer', 'model', 'serviceType', 'status'];
+  displayedColumns: string[] = ['select', 'reportNo', 'report', 'type', 'createdAt', 'province', 'customer', 'model','sn', 'installDate',  'serviceType', 'status'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource()
 
   userLogin: any
@@ -131,13 +131,16 @@ export class LibrarySearchComponent implements OnInit {
           province: item.customer?.Province || item.province || '',
           customer: item.customer?.Customer || item.customer || '',
           machine: item.customer?.Machine || item.machine || '',
-          model: item.customer?.Model || item.model || '',
+          model: item.machine?.Model || item.model || '',
           serviceType: item.serviceType?.name || item.serviceType || '',
           status: item.status,
           action: '',
           _id: item._id
         }
       }))
+
+      console.log(`⚡ ~ :142 ~ LibrarySearchComponent ~ this.dataSource:`, this.dataSource);
+
       this.onRefresh()
 
       // if (this.selected == 'engineer') {
@@ -182,7 +185,7 @@ export class LibrarySearchComponent implements OnInit {
       return
     }
 
-    const headers = ['Report No', 'Report', 'Type', 'Created At', 'Province', 'Customer', 'Model', 'Service Type', 'Status']
+    const headers = ['Report No', 'Report', 'Type', 'Created At', 'Province', 'Customer', 'Model','S/N', 'Install Date', 'Service Type', 'Status']
     const csvRows = rows.map((item: any) => [
       item.reportNo,
       item.report,
@@ -191,6 +194,8 @@ export class LibrarySearchComponent implements OnInit {
       item.province,
       item.customer,
       item.model,
+      item.sn,
+      item.installDate,
       item.serviceType,
       item.status
     ].map((value: any) => this.escapeCsv(value)).join(','))

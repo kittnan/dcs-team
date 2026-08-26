@@ -24,10 +24,10 @@
         </button>
       </div>
 
-     <button mat-button class="btn-import-excel" (click)="export()">
-          <img src="assets/img/master-machine/excel-file.png" class="btn-img-import-excel" />
-          Export
-        </button>
+      <button mat-button class="btn-import-excel" (click)="export()">
+        <img src="assets/img/master-machine/excel-file.png" class="btn-img-import-excel" />
+        Export
+      </button>
 
     </div>
   </div>
@@ -36,13 +36,16 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center" style="margin-top: 10px;">
   <div fxFlex="100" fxFlex.gt-xs="100">
     <div fxLayout="row wrap" fxLayoutAlign="start center" class="status-summary-wrap">
-      <button mat-stroked-button class="status-chip all" [class.selected]="statusFilter === 'all'" (click)="setStatusFilter('all')">
+      <button mat-stroked-button class="status-chip all" [class.selected]="statusFilter === 'all'"
+        (click)="setStatusFilter('all')">
         ทั้งหมด: {{ data?.length || 0 }}
       </button>
-      <button mat-stroked-button class="status-chip active" [class.selected]="statusFilter === 'active'" (click)="setStatusFilter('active')">
+      <button mat-stroked-button class="status-chip active" [class.selected]="statusFilter === 'active'"
+        (click)="setStatusFilter('active')">
         Active: {{ activeCount }}
       </button>
-      <button mat-stroked-button class="status-chip inactive" [class.selected]="statusFilter === 'inactive'" (click)="setStatusFilter('inactive')">
+      <button mat-stroked-button class="status-chip inactive" [class.selected]="statusFilter === 'inactive'"
+        (click)="setStatusFilter('inactive')">
         Inactive: {{ inactiveCount }}
       </button>
     </div>
@@ -54,12 +57,12 @@
     <div class="mat-elevation-z8 compact-table-wrap" style="overflow-x:auto;">
       <table mat-table [dataSource]="dataSource" matSort style="text-wrap: nowrap;">
 
-        <ng-container matColumnDef="No" >
+        <ng-container matColumnDef="No">
           <th mat-header-cell *matHeaderCellDef mat-sort-header
             style="text-align: center; font-size: medium; font-weight: bold">
             No.
           </th>
-          <td mat-cell style="padding-right: 16px;" *matCellDef="let element; let i = index" >
+          <td mat-cell style="padding-right: 16px;" *matCellDef="let element; let i = index">
             {{ element["No"] }}
           </td>
         </ng-container>
@@ -68,16 +71,16 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-size: medium; font-weight: bold">
             Province
           </th>
-          <td mat-cell style="padding-right: 16px;" *matCellDef="let element" >
+          <td mat-cell style="padding-right: 16px;" *matCellDef="let element">
             {{ element["Province"] }}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="Customer" >
+        <ng-container matColumnDef="Customer">
           <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-size: medium; font-weight: bold">
             Customer
           </th>
-          <td mat-cell style="padding-right: 16px;white-space: pre-wrap;" *matCellDef="let element" >
+          <td mat-cell style="padding-right: 16px;white-space: pre-wrap;" *matCellDef="let element">
             {{ element["Customer"] }}
           </td>
         </ng-container>
@@ -145,6 +148,15 @@
           </td>
         </ng-container>
 
+        <ng-container matColumnDef="PM">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-size: medium; font-weight: bold">
+            PM
+          </th>
+          <td mat-cell style="padding-right: 16px;" *matCellDef="let element">
+            {{ element["PM"] }} <span *ngIf="element['LastPM']">{{ element['LastPM'] }} {{ element['LastPMBy'] }}</span>
+          </td>
+        </ng-container>
+
         <ng-container matColumnDef="description">
           <th mat-header-cell *matHeaderCellDef mat-sort-header style="font-size: medium; font-weight: bold">
             Description
@@ -164,8 +176,7 @@
         </ng-container>
 
         <ng-container matColumnDef="Action">
-          <th mat-header-cell *matHeaderCellDef
-            style="font-size: medium; font-weight: bold;text-align: center; ">
+          <th mat-header-cell *matHeaderCellDef style="font-size: medium; font-weight: bold;text-align: center; ">
             Action
           </th>
           <td mat-cell style="padding-right: 16px;" *matCellDef="let element">
@@ -189,11 +200,8 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr
-          mat-row
-          *matRowDef="let row; columns: displayedColumns"
-          [ngClass]="isRowActive(row) ? 'row-active' : 'row-inactive'"
-        ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"
+          [ngClass]="isRowActive(row) ? 'row-active' : 'row-inactive'"></tr>
       </table>
     </div>
     <mat-paginator [pageSizeOptions]="[8, 20, 100]" showFirstLastButtons aria-label="Select page of periodic elements"
@@ -215,6 +223,3 @@
   </div>
 </div>
  -->
-
-
-

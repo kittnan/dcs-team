@@ -52,6 +52,7 @@ export class MasterMachineEditorComponent implements OnInit {
       this.rawData['InstallDate'] = ''
       this.rawData['active'] = 'active'
       this.rawData['description'] = ''
+      this.rawData['PM'] = 0
     }
     // this.debug_before()
     setTimeout(() => {

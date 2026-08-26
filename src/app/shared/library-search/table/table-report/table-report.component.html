@@ -69,6 +69,16 @@
         <td mat-cell *matCellDef="let row"> {{row.model}} </td>
       </ng-container>
 
+      <ng-container matColumnDef="sn">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-black capitalize"> S/N </th>
+        <td mat-cell *matCellDef="let row"> {{row.sn}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="installDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-black capitalize"> Install Date </th>
+        <td mat-cell *matCellDef="let row"> {{row.installDate}} </td>
+      </ng-container>
+
       <ng-container matColumnDef="serviceType">
         <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-black capitalize"> Service </th>
         <td mat-cell *matCellDef="let row"> {{row.serviceType}} </td>

@@ -111,6 +111,11 @@
           </mat-form-field>
 
           <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>PM</mat-label>
+            <input matInput type="number" style="text-align: center;" [(ngModel)]="rawData['PM']">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Description</mat-label>
             <textarea matInput rows="3" [(ngModel)]="rawData['description']"></textarea>
           </mat-form-field>
